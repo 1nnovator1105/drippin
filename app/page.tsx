@@ -10,21 +10,12 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-
-    await supabase.auth.signOut();
-  };
-
   return (
     <>
-      <Hero />
-      <main className="flex-1 flex flex-col gap-6 px-4">
-        <h2 className="font-medium text-xl mb-4">Next steps</h2>
-        {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-      </main>
+      <div className="flex flex-col justify-center items-center gap-4">
+        <h1>Hello World - Drippin</h1>
+        <h3>{user?.user_metadata?.full_name}님 환영합니다.</h3>
+      </div>
     </>
   );
 }
