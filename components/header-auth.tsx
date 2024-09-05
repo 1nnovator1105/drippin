@@ -4,11 +4,21 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
+import KakaoButton from "@/app/auth/callback/kakao-button";
 
 export default async function AuthButton() {
+  const supabase = createClient();
   const {
     data: { user },
-  } = await createClient().auth.getUser();
+  } = await supabase.auth.getUser();
+
+  const signOut = async () => {
+    "use server";
+
+    const supabase = createClient();
+
+    await supabase.auth.signOut();
+  };
 
   if (!hasEnvVars) {
     return (
@@ -23,15 +33,7 @@ export default async function AuthButton() {
             </Badge>
           </div>
           <div className="flex gap-2">
-            <Button
-              asChild
-              size="sm"
-              variant={"outline"}
-              disabled
-              className="opacity-75 cursor-none pointer-events-none"
-            >
-              <Link href="/sign-in">Sign in</Link>
-            </Button>
+            <KakaoButton />
             <Button
               asChild
               size="sm"
@@ -57,9 +59,7 @@ export default async function AuthButton() {
     </div>
   ) : (
     <div className="flex gap-2">
-      <Button asChild size="sm" variant={"outline"}>
-        <Link href="/sign-in">Sign in</Link>
-      </Button>
+      <KakaoButton />
       <Button asChild size="sm" variant={"default"}>
         <Link href="/sign-up">Sign up</Link>
       </Button>
