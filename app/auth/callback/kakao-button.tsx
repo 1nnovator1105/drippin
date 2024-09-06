@@ -13,10 +13,7 @@ export default function KakaoButton() {
   };
 
   return (
-    <button
-      onClick={signInWithKakao}
-      className="w-full rounded-xl bg-slate-100 px-4 py-2"
-    >
+    <button onClick={signInWithKakao} className="btn btn-outline">
       카카오 로그인
     </button>
   );

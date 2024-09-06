@@ -49,19 +49,16 @@ export default async function AuthButton() {
   }
   return user ? (
     <div className="flex items-center gap-4">
-      {user.user_metadata.full_name}
+      {/* {user.user_metadata.full_name} */}
       <form action={signOut}>
-        <Button type="submit" variant={"outline"}>
-          Sign out
-        </Button>
+        <button type="submit" className="btn btn-outline">
+          로그아웃
+        </button>
       </form>
     </div>
   ) : (
-    <div className="flex gap-2">
+    <div className="flex item-center gap-4">
       <KakaoButton />
-      <Button asChild size="sm" variant={"default"}>
-        <Link href="/sign-up">Sign up</Link>
-      </Button>
     </div>
   );
 }
