@@ -12,8 +12,6 @@ export default async function UserProfilePage({
 
   const isMyPage = user?.user_metadata.user_name === decodeURI(params.username);
 
-  console.log(user?.user_metadata);
-
   if (isMyPage) {
     return (
       <div>

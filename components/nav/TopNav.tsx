@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function TopNav() {
   return (
     <div className="sticky top-0 z-50 flex justify-center">
-      <div className="navbar bg-base-100 shadow-lg">
+      <div className="navbar bg-base-100">
         <div className="navbar-start">
           <div className="dropdown">
             <div

@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import TopNav from "@/components/nav/TopNav";
+import BottomTabNav from "@/components/nav/BottomTabNav";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -39,9 +40,14 @@ export default function RootLayout({
                   <ThemeSwitcher />
                 </div>
               </nav> */}
-          <div className="flex max-w-3xl mx-auto flex-col md:border-x-[1px] h-screen">
+          <div className="flex max-w-3xl mx-auto flex-col md:border-x-[1px] h-full">
             <TopNav />
-            <div className="flex flex-col gap-20 p-5">{children}</div>
+
+            <div className="flex flex-1 min-h-screen flex-col gap-20 p-5">
+              {children}
+            </div>
+
+            <BottomTabNav />
           </div>
 
           <div id="modal-root"></div>

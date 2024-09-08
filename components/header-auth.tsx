@@ -4,20 +4,14 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/server";
 import KakaoButton from "@/app/auth/callback/kakao-button";
+import { redirect } from "next/navigation";
+import AuthDropdown from "./auth/AuthDropdown";
 
 export default async function AuthButton() {
   const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-
-    await supabase.auth.signOut();
-  };
 
   if (!hasEnvVars) {
     return (
@@ -49,14 +43,7 @@ export default async function AuthButton() {
   }
   return user ? (
     <div className="flex items-center gap-4">
-      <Link href={`/${user.user_metadata.user_name}`}>
-        {user.user_metadata.full_name}
-      </Link>
-      <form action={signOut}>
-        <button type="submit" className="btn btn-outline">
-          로그아웃
-        </button>
-      </form>
+      <AuthDropdown username={user.user_metadata.user_name} />
     </div>
   ) : (
     <div className="flex item-center gap-4">
