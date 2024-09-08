@@ -49,7 +49,9 @@ export default async function AuthButton() {
   }
   return user ? (
     <div className="flex items-center gap-4">
-      {/* {user.user_metadata.full_name} */}
+      <Link href={`/${user.user_metadata.user_name}`}>
+        {user.user_metadata.full_name}
+      </Link>
       <form action={signOut}>
         <button type="submit" className="btn btn-outline">
           로그아웃
