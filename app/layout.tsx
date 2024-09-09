@@ -7,6 +7,7 @@ import "./globals.css";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import TopNav from "@/components/nav/TopNav";
 import BottomTabNav from "@/components/nav/BottomTabNav";
+import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -24,15 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* <main className="min-h-screen flex flex-col items-center">
+    <ReactQueryClientProvider>
+      <html lang="en" className={GeistSans.className} suppressHydrationWarning>
+        <body className="bg-background text-foreground">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {/* <main className="min-h-screen flex flex-col items-center">
             <div className="flex-1 w-full flex flex-col gap-20 items-center">
               <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
                 <div className="w-full max-w-5xl flex justify-end items-center p-3 px-5 text-sm">
@@ -40,19 +42,20 @@ export default function RootLayout({
                   <ThemeSwitcher />
                 </div>
               </nav> */}
-          <div className="flex max-w-3xl mx-auto flex-col md:border-x-[1px] h-full">
-            <TopNav />
+            <div className="flex max-w-3xl mx-auto flex-col md:border-x-[1px] h-full">
+              <TopNav />
 
-            <div className="flex flex-1 min-h-screen flex-col gap-20 p-5">
-              {children}
+              <div className="flex flex-1 min-h-screen flex-col gap-20 p-5">
+                {children}
+              </div>
+
+              <BottomTabNav />
             </div>
 
-            <BottomTabNav />
-          </div>
-
-          <div id="modal-root"></div>
-        </ThemeProvider>
-      </body>
-    </html>
+            <div id="modal-root"></div>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }
