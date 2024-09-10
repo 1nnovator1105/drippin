@@ -1,23 +1,21 @@
 import ProfileHeader from "@/components/profile/ProfileHeader";
-import { getUserByUserName } from "@/queries/get-note-by-id";
-import { prefetchUserQuery } from "@/queries/user";
-import useSupabaseServer from "@/utils/supabase-server";
+import { getUserByUserName } from "@/queries/user";
+import getQueryClient from "@/utils/getQueryClient";
+import { useSupabaseServer } from "@/utils/supabase/server";
 import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { cookies } from "next/headers";
 
 export default async function UserProfilePage({
   params,
 }: {
   params: { username: string };
 }) {
-  const queryClient = new QueryClient();
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+  const queryClient = getQueryClient();
+  const supabase = useSupabaseServer();
 
   await prefetchQuery(
     queryClient,

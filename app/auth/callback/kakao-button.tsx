@@ -1,14 +1,17 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
+import useSupabaseBrowser from "@/utils/supabase/client";
+import { generateRandomName } from "@/utils/utils";
 
 export default function KakaoButton() {
-  const supabase = createClient();
+  const supabase = useSupabaseBrowser();
 
   const signInWithKakao = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "kakao",
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
   };
 

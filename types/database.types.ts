@@ -28,6 +28,7 @@ export type Database = {
         Row: {
           created_at: string | null
           email: string | null
+          handle: string | null
           id: string
           profile_img_url: string | null
           providers: string | null
@@ -36,6 +37,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           email?: string | null
+          handle?: string | null
           id?: string
           profile_img_url?: string | null
           providers?: string | null
@@ -44,6 +46,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           email?: string | null
+          handle?: string | null
           id?: string
           profile_img_url?: string | null
           providers?: string | null

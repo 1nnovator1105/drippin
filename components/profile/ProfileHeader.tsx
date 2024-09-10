@@ -1,8 +1,7 @@
 "use client";
 
-import { getUserByUserName } from "@/queries/get-note-by-id";
-import useUserQueries from "@/queries/user";
-import useSupabaseBrowser from "@/utils/supabase-browser";
+import { getUserByUserName } from "@/queries/user";
+import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 
 export default function ProfileHeader({ username }: { username: string }) {
@@ -27,7 +26,7 @@ export default function ProfileHeader({ username }: { username: string }) {
 
   return (
     <div>
-      <h1>{decodeURI(username)}님의 Profile</h1>
+      <h1>{username}님의 Profile</h1>
       <p>안녕하세요. {user?.user_name}님</p>
     </div>
   );

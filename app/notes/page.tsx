@@ -1,12 +1,12 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
+import useSupabaseBrowser from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
 export default function Notes() {
   const [notes, setNotes] = useState<any[]>([]);
 
-  const supabase = createClient();
+  const supabase = useSupabaseBrowser();
 
   useEffect(() => {
     const fetchNotes = async () => {

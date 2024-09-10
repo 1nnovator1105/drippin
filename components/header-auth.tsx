@@ -2,13 +2,12 @@ import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { createClient } from "@/utils/supabase/server";
 import KakaoButton from "@/app/auth/callback/kakao-button";
-import { redirect } from "next/navigation";
 import AuthDropdown from "./auth/AuthDropdown";
+import { useSupabaseServer } from "@/utils/supabase/server";
 
 export default async function AuthButton() {
-  const supabase = createClient();
+  const supabase = useSupabaseServer();
   const {
     data: { user },
   } = await supabase.auth.getUser();

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { uniqueNamesGenerator, NumberDictionary } from "unique-names-generator";
 
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
@@ -13,4 +14,15 @@ export function encodedRedirect(
   message: string,
 ) {
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
+}
+
+export function generateRandomName() {
+  const numberDictionary = NumberDictionary.generate({ min: 100, max: 999 });
+  const characterName: string = uniqueNamesGenerator({
+    dictionaries: [["Dangerous"], ["Snake"], numberDictionary],
+    length: 3,
+    separator: "",
+    style: "capital",
+  }); // DangerousSnake123
+  return characterName;
 }

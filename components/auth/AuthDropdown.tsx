@@ -1,10 +1,10 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
+import useSupabaseBrowser from "@/utils/supabase/client";
 import { redirect, useRouter } from "next/navigation";
 
 export default function AuthDropdown({ username }: { username: string }) {
-  const supabase = createClient();
+  const supabase = useSupabaseBrowser();
   const router = useRouter();
 
   const signOut = async () => {

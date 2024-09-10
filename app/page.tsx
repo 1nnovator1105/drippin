@@ -1,8 +1,8 @@
 import ModalOpenTestBtn from "@/components/button/ModalOpenTestBtn";
-import { createClient } from "@/utils/supabase/server";
+import { useSupabaseServer } from "@/utils/supabase/server";
 
 export default async function Index() {
-  const supabase = createClient();
+  const supabase = useSupabaseServer();
   const {
     data: { user },
   } = await supabase.auth.getUser();

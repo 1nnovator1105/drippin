@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
+import useSupabaseBrowser from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ export default function BottomTabNav() {
   const [user, setUser] = useState<User | null>(null);
   const [isMyPage, setIsMyPage] = useState(false);
 
-  const supabase = createClient();
+  const supabase = useSupabaseBrowser();
 
   useEffect(() => {
     const fetchUser = async () => {
