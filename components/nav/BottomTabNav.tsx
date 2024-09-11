@@ -1,6 +1,9 @@
 "use client";
 
+import { fetchMySelf } from "@/queries/user";
+import { Database } from "@/types/database.types";
 import useSupabaseBrowser from "@/utils/supabase/client";
+import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import { User } from "@supabase/supabase-js";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,30 +11,31 @@ import { useEffect, useState } from "react";
 export default function BottomTabNav() {
   const pathname = usePathname();
   const router = useRouter();
-
-  const [user, setUser] = useState<User | null>(null);
-  const [isMyPage, setIsMyPage] = useState(false);
-
   const supabase = useSupabaseBrowser();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    };
-    fetchUser();
-  }, []);
+  const [mySelf, setMySelf] = useState<
+    Database["public"]["Tables"]["profiles"]["Row"] | null
+  >(null);
 
   useEffect(() => {
-    const username = user?.user_metadata?.user_name;
-    setIsMyPage(`/${username}` === decodeURI(pathname));
-  }, [user, pathname]);
+    const fetchMe = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (data.user) {
+        const { data: user, error } = await fetchMySelf(supabase, data.user.id);
+        setMySelf(user);
+      } else {
+        console.log("로그인이 필요함");
+      }
+    };
+
+    fetchMe();
+  }, []);
 
   const route = (path: string) => {
     router.push(path);
   };
+
+  const isMyPage = mySelf?.handle === pathname;
 
   return (
     <div
@@ -80,7 +84,7 @@ export default function BottomTabNav() {
       </button>
       <button
         className={isMyPage ? "active" : ""}
-        onClick={() => route(`/${user?.user_metadata?.user_name}`)}
+        onClick={() => route(`/${mySelf?.handle}`)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

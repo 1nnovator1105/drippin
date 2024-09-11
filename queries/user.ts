@@ -1,9 +1,6 @@
 import { TypedSupabaseClient } from "@/types/TypedSupabaseClient";
 
-export function getUserByUserName(
-  client: TypedSupabaseClient,
-  username: string,
-) {
+export function getUserByHandle(client: TypedSupabaseClient, handle: string) {
   return client
     .from("profiles")
     .select(
@@ -11,7 +8,20 @@ export function getUserByUserName(
         *
       `,
     )
-    .eq("user_name", decodeURIComponent(username))
+    .eq("handle", handle)
+    .throwOnError()
+    .single();
+}
+
+export async function fetchMySelf(client: TypedSupabaseClient, userId: string) {
+  return client
+    .from("profiles")
+    .select(
+      `
+        *
+      `,
+    )
+    .eq("id", userId)
     .throwOnError()
     .single();
 }

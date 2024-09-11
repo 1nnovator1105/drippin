@@ -1,32 +1,25 @@
 import ProfileHeader from "@/components/profile/ProfileHeader";
-import { getUserByUserName } from "@/queries/user";
+import { getUserByHandle } from "@/queries/user";
 import getQueryClient from "@/utils/getQueryClient";
 import { useSupabaseServer } from "@/utils/supabase/server";
 import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 export default async function UserProfilePage({
   params,
 }: {
-  params: { username: string };
+  params: { handle: string };
 }) {
   const queryClient = getQueryClient();
   const supabase = useSupabaseServer();
 
-  await prefetchQuery(
-    queryClient,
-    getUserByUserName(supabase, params.username),
-  );
+  await prefetchQuery(queryClient, getUserByHandle(supabase, params.handle));
 
   // Neat! Serialization is now as easy as passing props.
   // HydrationBoundary is a Client Component, so hydration will happen there.
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProfileHeader username={params.username} />
+      <ProfileHeader handle={params.handle} />
     </HydrationBoundary>
   );
 }
