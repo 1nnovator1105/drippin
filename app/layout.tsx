@@ -35,9 +35,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className="flex max-w-3xl mx-auto flex-col md:border-x-[1px] h-full">
-              <TopNav />
+              {/* <TopNav /> */}
 
-              <div className="flex flex-1 h-screen flex-col gap-20 p-5">
+              <div className="flex flex-1 min-h-screen flex-col pb-[70px]">
                 {children}
               </div>
 

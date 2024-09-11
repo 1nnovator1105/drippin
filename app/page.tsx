@@ -1,4 +1,5 @@
 import ModalOpenTestBtn from "@/components/button/ModalOpenTestBtn";
+import HomeWrapper from "@/components/home/HomeWrapper";
 import { useSupabaseServer } from "@/utils/supabase/server";
 
 export default async function Index() {
@@ -9,10 +10,11 @@ export default async function Index() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center gap-4">
-        <h1>Hello World - Drippin</h1>
+      <div>
+        {/* <h1>Hello World - Drippin</h1>
         <h3>{user?.user_metadata?.full_name}님 환영합니다.</h3>
-        <ModalOpenTestBtn />
+        <ModalOpenTestBtn /> */}
+        <HomeWrapper />
       </div>
     </>
   );
