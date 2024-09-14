@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import CreatableSelector from "@/components/recipe/CreatableSelector";
 import { SelectorOption, createOption } from "@/utils/selector";
+import { Input } from "@/components/ui/input";
 
 export default function RecipeAddPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -222,10 +223,17 @@ export default function RecipeAddPage() {
               </div>
               <div className="flex w-full">
                 <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center">
-                  <input
+                  {/* <input
                     type="text"
                     placeholder="커피의 양(g)"
                     className="input input-ghost border-none focus:outline-none bg-base-300 text-center"
+                    value={coffeeAmount ?? ""}
+                    onChange={onChangeCoffeeAmount}
+                  /> */}
+                  <Input
+                    type="text"
+                    placeholder="커피의 양(g)"
+                    className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                     value={coffeeAmount ?? ""}
                     onChange={onChangeCoffeeAmount}
                   />
@@ -235,18 +243,18 @@ export default function RecipeAddPage() {
                     `1:${(Number(waterAmount) / Number(coffeeAmount)).toFixed(1)}`}
                 </div>
                 <div className="card bg-base-300 rounded-box grid grid-cols-2 h-20 flex-grow place-items-center">
-                  <input
+                  <Input
                     type="text"
                     placeholder="물의 양(g)"
-                    className="input input-ghost border-none focus:outline-none bg-base-300 text-center"
-                    value={waterAmount ?? null}
+                    className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    value={waterAmount ?? ""}
                     onChange={onChangeWaterAmount}
                   />
-                  <input
+                  <Input
                     type="text"
                     placeholder="물의 온도(℃)"
-                    className="input input-ghost border-none focus:outline-none bg-base-300 text-center"
-                    value={waterTemperature ?? null}
+                    className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                    value={waterTemperature ?? ""}
                     onChange={onChangeWaterTemperature}
                   />
                 </div>
@@ -303,7 +311,7 @@ export default function RecipeAddPage() {
 
           {/* 3번 페이지 */}
           <div className="carousel-item flex flex-col h-full w-full">
-            <div>
+            <div className="py-4">
               <ul className="timeline timeline-vertical">
                 <li>
                   <div
