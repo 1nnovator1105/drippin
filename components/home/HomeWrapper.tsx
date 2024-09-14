@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SearchIcon from "../icon/SearchIcon";
 import RecipeCard from "./RecipeCard";
 import LogCard from "./LogCard";
+import { cn } from "@/utils/cn";
 
 export default function HomeWrapper() {
   const [selectedTab, setSelectedTab] = useState<string>("레시피");
@@ -20,7 +21,10 @@ export default function HomeWrapper() {
               type="radio"
               name="my_tabs"
               role="tab"
-              className="tab"
+              className={cn(
+                "tab",
+                selectedTab === "레시피" ? "text-gray-900" : "text-gray-400",
+              )}
               aria-label="레시피"
               style={{
                 borderColor: selectedTab !== "레시피" ? "transparent" : "#000",
@@ -34,7 +38,10 @@ export default function HomeWrapper() {
               type="radio"
               name="my_tabs"
               role="tab"
-              className="tab"
+              className={cn(
+                "tab",
+                selectedTab === "일지" ? "text-gray-900" : "text-gray-400",
+              )}
               aria-label="일지"
               style={{
                 borderColor: selectedTab !== "일지" ? "transparent" : "#000",
