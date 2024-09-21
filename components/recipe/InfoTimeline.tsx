@@ -144,8 +144,7 @@ export default function InfoTimeline({
         {hasNext && (
           <div
             className={cn(
-              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg",
-              water > 0 && time > 0 ? "text-gray-900" : "text-transparent",
+              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg text-gray-900",
             )}
           >
             {totalWater}g/{secToTime(totalTime)}

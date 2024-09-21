@@ -433,12 +433,15 @@ export default function RecipeAddPage() {
                   type="radio"
                   name="options"
                   aria-label="네"
+                  defaultChecked
+                  onChange={() => setIsNoBloom(false)}
                 />
                 <input
                   className="join-item btn min-h-8 h-[32px] flex-1"
                   type="radio"
                   name="options"
                   aria-label="아니오"
+                  onChange={() => setIsNoBloom(true)}
                 />
               </div>
 
