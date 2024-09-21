@@ -126,36 +126,26 @@ export default function InfoTimeline({
 
   return (
     <React.Fragment>
-      <li onClick={openModal} className="cursor-pointer">
+      <li onClick={hasNext ? openModal : undefined} className="cursor-pointer">
         {hasPrev && <hr className={cn(true ? "bg-primary" : "")} />}
-        <div className="timeline-middle">
+        <div className="timeline-middle px-[10px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="text-primary h-5 w-5"
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
           >
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-              clipRule="evenodd"
-            />
+            <circle cx="5" cy="5" r="5" fill="#1E1E1E" />
           </svg>
         </div>
-        <div
-          className={cn(
-            "timeline-box label-text",
-            order % 2 === 0 ? "timeline-start" : "timeline-end",
-          )}
-        >
-          {label}
-        </div>
+        <div className={cn("label-text timeline-start")}>{label}</div>
 
         {hasNext && (
           <div
             className={cn(
-              "label-text",
-              order % 2 === 0 ? "timeline-end" : "timeline-start",
+              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg",
+              water > 0 && time > 0 ? "text-gray-900" : "text-transparent",
             )}
           >
             {totalWater}g/{secToTime(totalTime)}
@@ -172,41 +162,43 @@ export default function InfoTimeline({
         <div className="modal-box h-full">
           <h3 className="font-bold text-lg">{label}</h3>
 
-          <div className="flex flex-col gap-2 py-4">
+          <div className="flex flex-col gap-2">
             {hasNext ? (
               <>
                 <div>
                   <label className="form-control w-full max-w-xs">
                     <div className="label">
-                      <span className="label-text">
-                        몇 그램의 물을 부을까요?
-                      </span>
+                      <span className="label-text">물을 몇 그램 부었나요?</span>
                     </div>
                     <input
                       type="text"
                       value={water?.toString() ?? ""}
                       onChange={onChangeWater}
-                      className="input input-bordered w-full max-w-xs"
+                      className="input input-bordered w-full max-w-xs max-h-10"
                     />
                   </label>
                 </div>
                 <div>
                   <label className="form-control w-full max-w-xs">
                     <div className="label">
-                      <span className="label-text">몇 초동안 부을까요?</span>
+                      <span className="label-text">
+                        물을 몇 초 동안 부었나요?
+                      </span>
                     </div>
                     <input
                       type="text"
                       value={time?.toString() ?? ""}
                       onChange={onChangeTime}
-                      className="input input-bordered w-full max-w-xs"
+                      className="input input-bordered w-full max-w-xs max-h-10"
                     />
                   </label>
                 </div>
                 <div>
                   <label className="form-control w-full max-w-xs">
                     <div className="label">
-                      <span className="label-text">(선택) 추출 옵션</span>
+                      <span className="label-text">
+                        추출 옵션을 선택해주세요.
+                      </span>
                     </div>
                     <Select
                       isMulti
@@ -219,14 +211,21 @@ export default function InfoTimeline({
                       }}
                     />
                   </label>
-                  <input
-                    type="text"
-                    placeholder="메모가 있다면 적어주세요. (100자 이내)"
-                    className="input input-ghost w-full max-w-xs border-none focus:outline-none px-1 focus:text-gray-400"
-                    value={memo}
-                    maxLength={100}
-                    onChange={onChangeMemo}
-                  />
+
+                  <label>
+                    <span className="label-text">
+                      {`메모를 남겨주세요. (${memo.length}/100)`}
+                    </span>
+
+                    <input
+                      type="text"
+                      placeholder="메모"
+                      className="input input-ghost w-full max-w-xs border-none focus:outline-none px-1 focus:text-gray-400"
+                      value={memo}
+                      maxLength={100}
+                      onChange={onChangeMemo}
+                    />
+                  </label>
                 </div>
               </>
             ) : (
