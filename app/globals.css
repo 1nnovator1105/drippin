@@ -78,4 +78,8 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+
+  .timeline-vertical > li > hr {
+    @apply w-[0.5px] bg-primary !important;
+  }
 }
