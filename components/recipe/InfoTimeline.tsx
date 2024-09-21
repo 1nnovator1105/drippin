@@ -91,8 +91,8 @@ export default function InfoTimeline({
       (acc, item) => acc + (item.time || 0),
       0,
     );
-    setTotalWater(totalWater);
-    setTotalTime(totalTime);
+    setTotalWater(totalWater + water);
+    setTotalTime(totalTime + time);
   };
 
   // sec to mm:ss
@@ -104,7 +104,7 @@ export default function InfoTimeline({
 
   useEffect(() => {
     getAllBeforeWater();
-  }, [allInfo]);
+  }, [allInfo, water, time]);
 
   useEffect(() => {
     setWater(phase.water || 0);
@@ -151,14 +151,16 @@ export default function InfoTimeline({
           {label}
         </div>
 
-        <div
-          className={cn(
-            "label-text",
-            order % 2 === 0 ? "timeline-end" : "timeline-start",
-          )}
-        >
-          {totalWater}g/{secToTime(totalTime)}
-        </div>
+        {hasNext && (
+          <div
+            className={cn(
+              "label-text",
+              order % 2 === 0 ? "timeline-end" : "timeline-start",
+            )}
+          >
+            {totalWater}g/{secToTime(totalTime)}
+          </div>
+        )}
 
         {hasNext && <hr className={cn(true ? "bg-primary" : "")} />}
       </li>
