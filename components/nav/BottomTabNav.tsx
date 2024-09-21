@@ -42,7 +42,7 @@ export default function BottomTabNav() {
 
   return (
     <div
-      className="btm-nav max-w-3xl mx-auto md:border-x-[1px] h-[68px]"
+      className="btm-nav max-w-xl mx-auto md:border-x-[1px] h-[68px]"
       style={{
         boxShadow: "0px 0px 5px 0px rgb(0,0,0,0.2)",
       }}

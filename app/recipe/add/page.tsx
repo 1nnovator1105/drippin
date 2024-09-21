@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import CreatableSelector from "@/components/recipe/CreatableSelector";
 import { SelectorOption, createOption } from "@/utils/selector";
 import { Input } from "@/components/ui/input";
+import InfoTimeline from "@/components/recipe/InfoTimeline";
+import { BrewingInfo } from "@/types/brew";
 
 export default function RecipeAddPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [isFade, setIsFade] = useState(false);
-  const [isDripperFade, setIsDripperFade] = useState(false);
+  const [isIceRecipe, setIsIceRecipe] = useState(false);
+  const [isHotRecipe, setIsHotRecipe] = useState(false);
 
   const [recipeName, setRecipeName] = useState("");
   const [dripper, setDripper] = useState<SelectorOption | null>(null);
@@ -23,6 +25,11 @@ export default function RecipeAddPage() {
   const [coffeeAmount, setCoffeeAmount] = useState<string>("");
   const [waterAmount, setWaterAmount] = useState<string>("");
   const [waterTemperature, setWaterTemperature] = useState<string>("");
+
+  const [isNoBloom, setIsNoBloom] = useState<boolean>(false);
+  const [pourCount, setPourCount] = useState<number>(1);
+
+  const [brewingInfo, setBrewingInfo] = useState<BrewingInfo[]>([]);
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const container = event.currentTarget;
@@ -57,6 +64,10 @@ export default function RecipeAddPage() {
     setWaterTemperature(e.target.value);
   };
 
+  const onChangePourCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPourCount(Number(e.target.value));
+  };
+
   const defaultDripperOptions = [
     createOption("Hario V60"),
     createOption("Chemex"),
@@ -69,42 +80,69 @@ export default function RecipeAddPage() {
     createOption("Kalita Filter"),
   ];
 
-  useEffect(() => {
-    if (recipeName) {
-      setIsFade(true);
-    } else {
-      setIsFade(false);
-    }
-  }, [recipeName]);
-
-  useEffect(() => {
-    if (dripper) {
-      setIsDripperFade(true);
-    } else {
-      setIsDripperFade(false);
-    }
-  }, [dripper]);
-
   const showRatio =
     waterAmount &&
     Number(waterAmount) > 0 &&
     coffeeAmount &&
     Number(coffeeAmount) > 0;
 
+  const makebrewingInfo = (isNoBloom: boolean, pourCount: number) => {
+    let first = isNoBloom ? null : "블루밍(뜸들이기)";
+
+    let newBrewingInfo: string[] = [];
+
+    for (let i = 0; i < pourCount; i++) {
+      if (first && i === 0) {
+        newBrewingInfo.push(first);
+      }
+      newBrewingInfo.push(`${i + 1}차 추출`);
+      if (i === pourCount - 1) {
+        newBrewingInfo.push("추출 완료");
+      }
+    }
+
+    setBrewingInfo((prevInfo) => {
+      return newBrewingInfo.map((value, index) => {
+        const existingInfo = prevInfo.find((info) => info.label === value);
+        return {
+          label: value,
+          order: index,
+          water: existingInfo?.water || null,
+          time: existingInfo?.time || null,
+          brewOption: existingInfo?.brewOption || null,
+          memo: existingInfo?.memo || null,
+          isConfirm: existingInfo?.isConfirm || false,
+        };
+      });
+    });
+  };
+
+  useEffect(() => {
+    makebrewingInfo(isNoBloom, pourCount);
+  }, [isNoBloom, pourCount]);
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex flex-none justify-center items-center">
         <ul className="steps">
-          <li className={cn("step", currentPage >= 1 && "step-primary")}>
+          <li
+            className={cn("step text-xs", currentPage >= 1 && "step-primary")}
+          >
             Register
           </li>
-          <li className={cn("step", currentPage >= 2 && "step-primary")}>
+          <li
+            className={cn("step text-xs", currentPage >= 2 && "step-primary")}
+          >
             Choose plan
           </li>
-          <li className={cn("step", currentPage >= 3 && "step-primary")}>
+          <li
+            className={cn("step text-xs", currentPage >= 3 && "step-primary")}
+          >
             Purchase
           </li>
-          <li className={cn("step", currentPage >= 4 && "step-primary")}>
+          <li
+            className={cn("step text-xs", currentPage >= 4 && "step-primary")}
+          >
             Receive Product
           </li>
         </ul>
@@ -117,20 +155,22 @@ export default function RecipeAddPage() {
           {/* 1번 페이지 */}
           <div className="carousel-item flex flex-col h-full w-full gap-4">
             {/* 나는 1번 페이지 {currentPage === 1 && "(현재 페이지)"} */}
-            <label className="form-control w-full max-w-xs">
-              <div className="label flex justify-between items-center">
-                <p className="label-text">레시피 이름이 뭔가요?</p>
-                <p className="label-text-alt text-xs text-gray-500">
-                  레시피는 드립커피 추출방법을 말해요.
-                </p>
-              </div>
-              <input
-                type="text"
-                placeholder="Type here"
-                className="input input-bordered w-full max-w-xs focus:outline-none"
-                onChange={onChangeRecipeName}
-              />
-              {/* <div className="label">
+            <div>
+              <label className="form-control w-full max-w-xs">
+                <div className="label flex justify-between items-center">
+                  <p className="label-text">레시피 이름이 뭔가요?</p>
+                  <p className="label-text-alt text-xs text-gray-500">
+                    레시피는 드립커피 추출방법을 말해요.
+                  </p>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  className="input input-bordered w-full max-w-xs focus:outline-none"
+                  value={recipeName}
+                  onChange={onChangeRecipeName}
+                />
+                {/* <div className="label">
                 {!recipeName && (
                   <span className="label-text-alt">
                     레시피 이름을 입력해주세요.
@@ -138,15 +178,11 @@ export default function RecipeAddPage() {
                 )}
                 
               </div> */}
-            </label>
+              </label>
+            </div>
 
-            {recipeName && (
-              <label
-                className={cn(
-                  "form-control w-full max-w-xs",
-                  isFade && "animate-fade",
-                )}
-              >
+            <div>
+              <label className={"form-control w-full max-w-xs"}>
                 <div className="label flex justify-between items-center">
                   <p className="label-text">사용한 드리퍼는 어떤건가요?</p>
                   {/* <p className="label-text-alt text-xs text-gray-500">
@@ -158,39 +194,54 @@ export default function RecipeAddPage() {
                   setValue={setDripper}
                   defaultOptions={defaultDripperOptions}
                 />
-                {/* <div className="label">
-                <span className="label-text-alt">Bottom Left label</span>
-                <span className="label-text-alt">Bottom Right label</span>
-              </div> */}
               </label>
-            )}
+            </div>
 
-            {dripper && (
-              <label
-                className={cn(
-                  "form-control w-full max-w-xs",
-                  isDripperFade && "animate-fade",
-                )}
-              >
+            <div>
+              <label className={"form-control w-full max-w-xs"}>
                 <div className="label flex justify-between items-center">
                   <p className="label-text">사용한 필터는 어떤건가요?</p>
-                  {/* <p className="label-text-alt text-xs text-gray-500">
-                  레시피는 드립커피 추출방법을 말해요.
-                </p> */}
                 </div>
                 <CreatableSelector
                   value={filter}
                   setValue={setFilter}
                   defaultOptions={defaultFilterOptions}
                 />
-                {/* <div className="label">
-                <span className="label-text-alt">Bottom Left label</span>
-                <span className="label-text-alt">Bottom Right label</span>
-              </div> */}
               </label>
-            )}
+            </div>
 
-            <div className="flex justify-start mt-4">
+            <label className="max-w-xs">
+              <div className="label flex justify-between items-center">
+                <p className="label-text">어떤 온도에 잘 어울리나요?</p>
+              </div>
+
+              <div className="flex flex-row gap-2">
+                <div className="form-control">
+                  <label className="label cursor-pointer flex flex-row gap-2">
+                    <span className="label-text">🧊아이스</span>
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      checked={isIceRecipe}
+                      onChange={() => setIsIceRecipe(!isIceRecipe)}
+                    />
+                  </label>
+                </div>
+                <div className="form-control">
+                  <label className="label cursor-pointer flex flex-row gap-2">
+                    <span className="label-text">☀️핫</span>
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      checked={isHotRecipe}
+                      onChange={() => setIsHotRecipe(!isHotRecipe)}
+                    />
+                  </label>
+                </div>
+              </div>
+            </label>
+
+            {/* <div className="flex justify-start mt-4"> 
               <button
                 className="btn btn-primary self-end"
                 onClick={() => {
@@ -212,7 +263,7 @@ export default function RecipeAddPage() {
               >
                 다음
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* 2번 페이지 */}
@@ -311,132 +362,81 @@ export default function RecipeAddPage() {
 
           {/* 3번 페이지 */}
           <div className="carousel-item flex flex-col h-full w-full">
-            <div className="py-4">
-              <ul className="timeline timeline-vertical">
-                <li>
-                  <div
-                    className="timeline-start timeline-box"
+            <div className="flex flex-col self-center gap-2">
+              {/* <div className="form-control">
+                <label className="label cursor-pointer gap-8">
+                  <span className="label-text">린싱을 하지 않아요</span>
+                  <input type="checkbox" className="toggle toggle-primary" />
+                </label>
+              </div> */}
+              <div className="form-control">
+                <label className="label cursor-pointer gap-8">
+                  <span className="label-text">
+                    블루밍 (뜸들이기)를 하지 않아요
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={isNoBloom}
+                    onChange={() => setIsNoBloom(!isNoBloom)}
+                    className="toggle toggle-primary"
+                  />
+                </label>
+              </div>
+              <div className="flex flex-row gap-2 items-center max-h-[20px] justify-center">
+                <span className="label-text">총</span>
+                <label className="flex items-center gap-2 label-text">
+                  <input
+                    type="number"
+                    className="max-w-[40px] border-none focus:outline-none px-1 text-gray-900 text-center"
+                    value={pourCount}
+                    readOnly
+                    onChange={onChangePourCount}
+                  />
+                  <span className="label-text">번 물을 부을거에요.</span>
+                  <kbd
+                    className="kbd kbd-sm cursor-pointer"
                     onClick={() => {
-                      const modal = document?.getElementById(
-                        "my_modal_1",
-                      ) as HTMLDialogElement;
-                      modal?.showModal();
+                      if (pourCount < 5) {
+                        setPourCount(pourCount + 1);
+                      } else {
+                        alert("최대 5번까지만 가능합니다.");
+                      }
                     }}
                   >
-                    블루밍 (뜸들이기)
-                  </div>
-                  <dialog id="my_modal_1" className="modal">
-                    <div className="modal-box">
-                      <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                          ✕
-                        </button>
-                      </form>
-                      <h3 className="font-bold text-lg">블루밍 (뜸들이기)</h3>
-                      <p className="py-4">
-                        Press ESC key or click on ✕ button to close
-                      </p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
-                  <div className="timeline-middle">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="text-primary h-5 w-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <hr className="bg-primary" />
-                </li>
+                    +
+                  </kbd>
+                  <kbd
+                    className="kbd kbd-sm cursor-pointer"
+                    onClick={() => {
+                      if (pourCount > 1) {
+                        setPourCount(pourCount - 1);
+                      }
+                    }}
+                  >
+                    -
+                  </kbd>
+                </label>
+              </div>
+            </div>
 
-                <li>
-                  <hr className="bg-primary" />
-                  <div className="timeline-middle">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="text-primary h-5 w-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div className="timeline-end timeline-box">1차 추출</div>
-                  <hr className="bg-primary" />
-                </li>
+            <div className="py-4">
+              <ul className="timeline timeline-vertical">
+                {brewingInfo.map((info, index) => {
+                  console.log(info);
 
-                <li>
-                  <hr className="bg-primary" />
-                  <div className="timeline-start timeline-box">2차 추출</div>
-                  <div className="timeline-middle">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="text-primary h-5 w-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <hr />
-                </li>
-
-                <li>
-                  <hr />
-                  <div className="timeline-middle">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-5 w-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div className="timeline-end timeline-box">3차 추출</div>
-                  <hr />
-                </li>
-
-                <li>
-                  <hr />
-                  <div className="timeline-start timeline-box">4차 추출</div>
-                  <div className="timeline-middle">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-5 w-5"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                </li>
+                  return (
+                    <InfoTimeline
+                      key={index}
+                      hasPrev={index > 0}
+                      hasNext={index < brewingInfo.length - 1}
+                      label={info.label}
+                      order={info.order}
+                      phase={info}
+                      allInfo={brewingInfo}
+                      setInfoAction={setBrewingInfo}
+                    />
+                  );
+                })}
               </ul>
             </div>
           </div>
