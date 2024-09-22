@@ -147,10 +147,10 @@ export default function RecipeAddPage() {
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const container = event.currentTarget;
-    const scrollPosition = container.scrollTop;
-    const pageHeight = container.clientHeight;
+    const scrollPosition = container.scrollLeft;
+    const pageWidth = container.clientWidth;
 
-    const newPage = Math.ceil(scrollPosition / pageHeight) + 1;
+    const newPage = Math.ceil(scrollPosition / pageWidth) + 1;
     setCurrentPage(newPage);
   };
 
@@ -387,15 +387,12 @@ export default function RecipeAddPage() {
           </div>
         </div>
       </div>
-      <div className="flex flex-1 p-4">
-        <div
-          className="carousel carousel-vertical h-screen w-full"
-          onScroll={handleScroll}
-        >
+      <div className="flex flex-1 p-3">
+        <div className="carousel h-screen w-full" onScroll={handleScroll}>
           {/* 1번 페이지 */}
           <div className="carousel-item flex flex-col h-full w-full gap-4">
             <div>
-              <label className="form-control w-full max-w-xs">
+              <label className="form-control w-full">
                 <div className="label flex flex-col items-start justify-start">
                   <p className="label-text">레시피 이름을 알려주세요.</p>
                   <p className="label-text text-xs text-gray-500">
@@ -405,7 +402,7 @@ export default function RecipeAddPage() {
                 <input
                   type="text"
                   placeholder="레시피 이름"
-                  className="input input-bordered w-full max-w-xs focus:outline-none"
+                  className="input input-bordered w-full focus:outline-none"
                   value={recipeName}
                   onChange={onChangeRecipeName}
                 />
@@ -413,7 +410,7 @@ export default function RecipeAddPage() {
             </div>
 
             <div>
-              <label className={"form-control w-full max-w-xs"}>
+              <label className={"form-control w-full"}>
                 <div className="label flex justify-between items-center">
                   <p className="label-text">어떤 드리퍼를 사용했나요?</p>
                 </div>
@@ -427,7 +424,7 @@ export default function RecipeAddPage() {
             </div>
 
             <div>
-              <label className={"form-control w-full max-w-xs"}>
+              <label className={"form-control w-full"}>
                 <div className="label flex justify-between items-center">
                   <p className="label-text">어떤 필터를 사용했나요?</p>
                 </div>
@@ -552,14 +549,14 @@ export default function RecipeAddPage() {
                 </div>
 
                 <div className="mt-[30px]">
-                  <label className="form-control w-full max-w-xs">
+                  <label className="form-control w-full">
                     <div className="label flex flex-col items-start justify-start">
                       <p className="label-text">메모를 남겨주세요.</p>
                     </div>
                     <input
                       type="text"
                       placeholder="예) ek43 기준"
-                      className="input input-bordered w-full max-w-xs focus:outline-none"
+                      className="input input-bordered w-full focus:outline-none"
                       value={grindStepMemo}
                       onChange={onChangeGrindStepMemo}
                     />
@@ -663,7 +660,7 @@ export default function RecipeAddPage() {
               </div>
               <textarea
                 ref={textareaRef}
-                className="textarea textarea-bordered max-h-[200px] resize-none"
+                className="textarea textarea-bordered max-h-[200px] resize-none focus:outline-none focus:ring-0 focus:ring-offset-0"
                 placeholder="레시피 설명"
                 value={recipeDescription}
                 onChange={handleDescriptionChange}
