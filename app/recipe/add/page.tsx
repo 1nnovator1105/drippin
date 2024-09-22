@@ -8,9 +8,16 @@ import { SelectorOption, createOption } from "@/utils/selector";
 import { Input } from "@/components/ui/input";
 import InfoTimeline from "@/components/recipe/InfoTimeline";
 import { BrewingInfo } from "@/types/brew";
-import { PlusCircle } from "lucide-react";
+import imageCompression from "browser-image-compression";
+
+import useSupabaseBrowser from "@/utils/supabase/client";
+import { useIsMutating, useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export default function RecipeAddPage() {
+  const supabase = useSupabaseBrowser();
+  const router = useRouter();
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const [isIceRecipe, setIsIceRecipe] = useState(false);
@@ -37,19 +44,104 @@ export default function RecipeAddPage() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  const isMutating = useIsMutating();
+
+  const recipeMutation = useMutation({
+    mutationFn: async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+
+      const { data, error } = await supabase.from("recipes").insert({
+        user_id: sessionData?.session?.user?.id || "",
+        recipe_name: recipeName || "",
+        use_dripper: dripper?.value || "",
+        use_filter: filter?.value || "",
+        is_ice: isIceRecipe,
+        is_hot: isHotRecipe,
+        coffee_amount: Number(coffeeAmount) || -1,
+        water_amount: Number(waterAmount) || -1,
+        water_temperature: Number(waterTemperature) || -1,
+        grind_step: grindStep || -1,
+        grind_step_memo: grindStepMemo || "",
+        is_no_bloom: isNoBloom,
+        pour_count: pourCount || -1,
+        raw_brewing_info: JSON.parse(JSON.stringify(brewingInfo)),
+        recipe_description: recipeDescription || "",
+        image_url: imageUrl || "",
+      });
+
+      return data;
+    },
+    onSuccess: () => {
+      window.alert("레시피가 성공적으로 추가되었습니다.");
+      router.push("/recipe");
+    },
+  });
 
   const handleFileUpload = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    const options = {
+      maxSizeMB: 2.5, // 이미지 최대 용량
+      maxWidthOrHeight: 1920, // 최대 넓이(혹은 높이)
+      useWebWorker: true,
+    };
+
+    try {
+      if (file) {
+        // const reader = new FileReader();
+        // reader.onloadend = async () => {
+        //   setSelectedImage(reader.result as string);
+        //   setImageFile(file);
+        //   const bucket = "images/recipes"; // 버킷 이름으로 변경
+        //   const fileName = file.name;
+
+        //   const { data, error } = await supabase.storage
+        //     .from(bucket)
+        //     .upload(fileName, file);
+
+        //   if (error) {
+        //     window.alert("이미지 업로드에 실패하였습니다.");
+        //     return;
+        //   }
+
+        //   const publicUrl = supabase.storage
+        //     .from(bucket)
+        //     .getPublicUrl(fileName);
+
+        //   setImageUrl(publicUrl.data.publicUrl);
+        // };
+        // reader.readAsDataURL(file);
+        const compressedFile = await imageCompression(file, options);
+        setImageFile(compressedFile);
+        const promise = imageCompression.getDataUrlFromFile(compressedFile);
+        promise.then((result) => {
+          setSelectedImage(result);
+        });
+
+        const bucket = "images/recipes"; // 버킷 이름으로 변경
+        const fileName = `${compressedFile.name}_${Date.now().toString()}`;
+
+        const { data, error } = await supabase.storage
+          .from(bucket)
+          .upload(fileName, compressedFile);
+
+        if (error) {
+          window.alert("이미지 업로드에 실패하였습니다.");
+          return;
+        }
+
+        const publicUrl = supabase.storage.from(bucket).getPublicUrl(fileName);
+
+        setImageUrl(publicUrl.data.publicUrl);
+      }
+    } catch (error) {
+      window.alert("이미지 업로드에 실패하였습니다.");
     }
   };
 
@@ -139,6 +231,89 @@ export default function RecipeAddPage() {
     });
   };
 
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setRecipeDescription(e.target.value);
+  };
+
+  const validateForSubmit = () => {
+    if (!recipeName) {
+      alert("레시피 이름을 입력해주세요.");
+      return false;
+    }
+
+    if (!dripper) {
+      alert("드리퍼를 선택해주세요.");
+      return false;
+    }
+
+    if (!filter) {
+      alert("필터를 선택해주세요.");
+      return false;
+    }
+
+    if (!coffeeAmount) {
+      alert("커피의 양을 입력해주세요.");
+      return false;
+    }
+
+    if (!waterAmount) {
+      alert("물의 양을 입력해주세요.");
+      return false;
+    }
+
+    if (!waterTemperature) {
+      alert("물의 온도를 입력해주세요.");
+      return false;
+    }
+
+    if (!grindStep) {
+      alert("원두 분쇄도를 입력해주세요.");
+      return false;
+    }
+
+    if (!isIceRecipe && !isHotRecipe) {
+      alert("아이스와 핫 중 하나는 선택해주세요.");
+      return false;
+    }
+
+    if (!pourCount) {
+      alert("물을 몇 번 부었나요?");
+      return false;
+    }
+
+    if (!recipeDescription) {
+      alert("레시피 설명을 입력해주세요.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = () => {
+    if (!validateForSubmit()) {
+      return;
+    }
+
+    console.log("레시피 이름", recipeName);
+    console.log("드리퍼", dripper);
+    console.log("필터", filter);
+    console.log("물과 커피의 비율", coffeeAmount, waterAmount);
+    console.log("물의 온도", waterTemperature);
+    console.log("원두 분쇄도", grindStep);
+    console.log("원두 분쇄도 메모", grindStepMemo);
+    console.log("블루밍", isNoBloom);
+    console.log("물을 몇 번 부었나요?", pourCount);
+
+    console.log("추출 정보", brewingInfo);
+
+    console.log("레시피 설명", recipeDescription);
+    console.log("이미지", imageFile);
+
+    recipeMutation.mutate();
+  };
+
   useEffect(() => {
     makebrewingInfo(isNoBloom, pourCount);
   }, [isNoBloom, pourCount]);
@@ -150,37 +325,14 @@ export default function RecipeAddPage() {
     }
   }, [recipeDescription]);
 
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setRecipeDescription(e.target.value);
-  };
-
   return (
-    <div className="flex flex-col h-full">
+    <div
+      className={cn(
+        "flex flex-col h-full overflow-y-hidden",
+        isMutating && "opacity-50",
+      )}
+    >
       <div className="flex flex-none justify-center items-center">
-        {/* <ul className="steps">
-          <li
-            className={cn("step text-xs", currentPage >= 1 && "step-primary")}
-          >
-            기본정보
-          </li>
-          <li
-            className={cn("step text-xs", currentPage >= 2 && "step-primary")}
-          >
-            물과 원두
-          </li>
-          <li
-            className={cn("step text-xs", currentPage >= 3 && "step-primary")}
-          >
-            추출
-          </li>
-          <li
-            className={cn("step text-xs", currentPage >= 4 && "step-primary")}
-          >
-            추가 정보
-          </li>
-        </ul> */}
         <div className="relative grid grid-cols-4 justify-center items-center mt-[10px]">
           <div className="absolute w-[202px] h-[1px] top-[35%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-transparent border-[1px] border-dashed border-black " />
 
@@ -237,7 +389,7 @@ export default function RecipeAddPage() {
       </div>
       <div className="flex flex-1 p-4">
         <div
-          className="carousel carousel-vertical h-full w-full"
+          className="carousel carousel-vertical h-screen w-full"
           onScroll={handleScroll}
         >
           {/* 1번 페이지 */}
@@ -484,8 +636,6 @@ export default function RecipeAddPage() {
             <div className="pt-[30px]">
               <ul className="timeline timeline-vertical">
                 {brewingInfo.map((info, index) => {
-                  console.log(info);
-
                   return (
                     <InfoTimeline
                       key={index}
@@ -532,35 +682,46 @@ export default function RecipeAddPage() {
                   className="hidden"
                   onChange={handleFileChange}
                 />
-                <button
-                  onClick={handleFileUpload}
-                  className="w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md bg-white flex justify-center items-center"
-                  type="button"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="48"
-                    height="48"
-                    viewBox="0 0 48 48"
-                    fill="none"
+                {selectedImage ? (
+                  <button
+                    className="w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
+                    onClick={handleFileUpload}
                   >
-                    <path
-                      d="M41.25 24C41.25 24.1989 41.171 24.3897 41.0303 24.5303C40.8897 24.671 40.6989 24.75 40.5 24.75H24.75V40.5C24.75 40.6989 24.671 40.8897 24.5303 41.0303C24.3897 41.171 24.1989 41.25 24 41.25C23.8011 41.25 23.6103 41.171 23.4697 41.0303C23.329 40.8897 23.25 40.6989 23.25 40.5V24.75H7.5C7.30109 24.75 7.11032 24.671 6.96967 24.5303C6.82902 24.3897 6.75 24.1989 6.75 24C6.75 23.8011 6.82902 23.6103 6.96967 23.4697C7.11032 23.329 7.30109 23.25 7.5 23.25H23.25V7.5C23.25 7.30109 23.329 7.11032 23.4697 6.96967C23.6103 6.82902 23.8011 6.75 24 6.75C24.1989 6.75 24.3897 6.82902 24.5303 6.96967C24.671 7.11032 24.75 7.30109 24.75 7.5V23.25H40.5C40.6989 23.25 40.8897 23.329 41.0303 23.4697C41.171 23.6103 41.25 23.8011 41.25 24Z"
-                      fill="#1E1E1E"
-                    />
-                  </svg>
-                </button>
-                {selectedImage && (
-                  <div className="w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden">
                     <img
                       src={selectedImage}
                       alt="선택된 이미지"
                       className="w-full h-full object-cover"
                     />
-                  </div>
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleFileUpload}
+                    className="w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md bg-white flex justify-center items-center"
+                    type="button"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="48"
+                      height="48"
+                      viewBox="0 0 48 48"
+                      fill="none"
+                    >
+                      <path
+                        d="M41.25 24C41.25 24.1989 41.171 24.3897 41.0303 24.5303C40.8897 24.671 40.6989 24.75 40.5 24.75H24.75V40.5C24.75 40.6989 24.671 40.8897 24.5303 41.0303C24.3897 41.171 24.1989 41.25 24 41.25C23.8011 41.25 23.6103 41.171 23.4697 41.0303C23.329 40.8897 23.25 40.6989 23.25 40.5V24.75H7.5C7.30109 24.75 7.11032 24.671 6.96967 24.5303C6.82902 24.3897 6.75 24.1989 6.75 24C6.75 23.8011 6.82902 23.6103 6.96967 23.4697C7.11032 23.329 7.30109 23.25 7.5 23.25H23.25V7.5C23.25 7.30109 23.329 7.11032 23.4697 6.96967C23.6103 6.82902 23.8011 6.75 24 6.75C24.1989 6.75 24.3897 6.82902 24.5303 6.96967C24.671 7.11032 24.75 7.30109 24.75 7.5V23.25H40.5C40.6989 23.25 40.8897 23.329 41.0303 23.4697C41.171 23.6103 41.25 23.8011 41.25 24Z"
+                        fill="#1E1E1E"
+                      />
+                    </svg>
+                  </button>
                 )}
               </div>
             </label>
+
+            <div
+              className="flex justify-center items-center mt-[30px]"
+              onClick={handleSubmit}
+            >
+              <button className="btn btn-primary w-full">게시하기</button>
+            </div>
           </div>
         </div>
       </div>

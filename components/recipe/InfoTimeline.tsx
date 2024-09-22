@@ -120,10 +120,6 @@ export default function InfoTimeline({
     };
   }, [phase]);
 
-  useEffect(() => {
-    console.log(water, time);
-  }, [water, time]);
-
   return (
     <React.Fragment>
       <li onClick={hasNext ? openModal : undefined} className="cursor-pointer">
@@ -181,7 +177,7 @@ export default function InfoTimeline({
                   <label className="form-control w-full max-w-xs">
                     <div className="label">
                       <span className="label-text">
-                        물을 몇 초 동안 부었나요?
+                        물을 붓고 다음 푸어까지 얼마나 기다릴까요?
                       </span>
                     </div>
                     <input

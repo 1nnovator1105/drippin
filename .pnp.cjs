@@ -41,6 +41,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.2.46"],\
           ["@types/react-dom", "npm:18.2.18"],\
           ["autoprefixer", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:10.4.17"],\
+          ["browser-image-compression", "npm:2.0.2"],\
           ["class-variance-authority", "npm:0.7.0"],\
           ["clsx", "npm:2.1.1"],\
           ["daisyui", "npm:4.12.10"],\
@@ -1972,6 +1973,16 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["braces", "npm:3.0.3"],\
           ["fill-range", "npm:7.1.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["browser-image-compression", [\
+      ["npm:2.0.2", {\
+        "packageLocation": "../../../.yarn/berry/cache/browser-image-compression-npm-2.0.2-21a831f9cb-10c0.zip/node_modules/browser-image-compression/",\
+        "packageDependencies": [\
+          ["browser-image-compression", "npm:2.0.2"],\
+          ["uzip", "npm:0.20201231.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4123,6 +4134,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.2.46"],\
           ["@types/react-dom", "npm:18.2.18"],\
           ["autoprefixer", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:10.4.17"],\
+          ["browser-image-compression", "npm:2.0.2"],\
           ["class-variance-authority", "npm:0.7.0"],\
           ["clsx", "npm:2.1.1"],\
           ["daisyui", "npm:4.12.10"],\
@@ -4727,6 +4739,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/util-deprecate-npm-1.0.2-e3fe1a219c-10c0.zip/node_modules/util-deprecate/",\
         "packageDependencies": [\
           ["util-deprecate", "npm:1.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["uzip", [\
+      ["npm:0.20201231.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/uzip-npm-0.20201231.0-122f770c6a-10c0.zip/node_modules/uzip/",\
+        "packageDependencies": [\
+          ["uzip", "npm:0.20201231.0"]\
         ],\
         "linkType": "HARD"\
       }]\
