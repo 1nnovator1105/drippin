@@ -389,7 +389,7 @@ export default function RecipeAddPage() {
       </div>
       <div className="flex flex-1 p-4">
         <div
-          className="carousel carousel-vertical w-full"
+          className="carousel carousel-vertical h-screen w-full"
           onScroll={handleScroll}
         >
           {/* 1번 페이지 */}
