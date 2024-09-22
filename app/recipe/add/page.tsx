@@ -389,7 +389,7 @@ export default function RecipeAddPage() {
       </div>
       <div className="flex flex-1 p-4">
         <div
-          className="carousel carousel-vertical h-screen w-full"
+          className="carousel carousel-vertical w-full"
           onScroll={handleScroll}
         >
           {/* 1번 페이지 */}
@@ -482,7 +482,7 @@ export default function RecipeAddPage() {
                 <div>
                   <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center">
                     <Input
-                      type="text"
+                      type="number"
                       placeholder="0"
                       className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       value={coffeeAmount ?? ""}
@@ -502,7 +502,7 @@ export default function RecipeAddPage() {
                 <div>
                   <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center">
                     <Input
-                      type="text"
+                      type="number"
                       placeholder="0"
                       className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       value={waterAmount ?? ""}
@@ -515,7 +515,7 @@ export default function RecipeAddPage() {
                 <div>
                   <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center">
                     <Input
-                      type="text"
+                      type="number"
                       placeholder="0"
                       className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       value={waterTemperature ?? ""}

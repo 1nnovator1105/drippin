@@ -140,7 +140,10 @@ export default function InfoTimeline({
         {hasNext && (
           <div
             className={cn(
-              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg text-gray-900",
+              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg",
+              (water === 0 || time === 0) && hasPrev
+                ? "text-gray-200"
+                : "text-gray-900",
             )}
           >
             {totalWater}g/{secToTime(totalTime)}
@@ -161,7 +164,7 @@ export default function InfoTimeline({
             {hasNext ? (
               <>
                 <div>
-                  <label className="form-control w-full max-w-xs">
+                  <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text">물을 몇 그램 부었나요?</span>
                     </div>
@@ -169,12 +172,12 @@ export default function InfoTimeline({
                       type="text"
                       value={water?.toString() ?? ""}
                       onChange={onChangeWater}
-                      className="input input-bordered w-full max-w-xs max-h-10"
+                      className="input input-bordered w-full max-h-10"
                     />
                   </label>
                 </div>
                 <div>
-                  <label className="form-control w-full max-w-xs">
+                  <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text">
                         물을 붓고 다음 푸어까지 얼마나 기다릴까요?
@@ -184,12 +187,12 @@ export default function InfoTimeline({
                       type="text"
                       value={time?.toString() ?? ""}
                       onChange={onChangeTime}
-                      className="input input-bordered w-full max-w-xs max-h-10"
+                      className="input input-bordered w-full max-h-10"
                     />
                   </label>
                 </div>
                 <div>
-                  <label className="form-control w-full max-w-xs">
+                  <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text">
                         추출 옵션을 선택해주세요.
