@@ -62,6 +62,80 @@ export type Database = {
           },
         ]
       }
+      recipes: {
+        Row: {
+          coffee_amount: number
+          created_at: string
+          grind_step: number
+          grind_step_memo: string | null
+          id: number
+          image_url: string | null
+          is_hot: boolean
+          is_ice: boolean
+          is_no_bloom: boolean
+          pour_count: number
+          raw_brewing_info: Json
+          recipe_description: string
+          recipe_name: string
+          updated_at: string | null
+          use_dripper: string
+          use_filter: string
+          user_id: string
+          water_amount: number
+          water_temperature: number
+        }
+        Insert: {
+          coffee_amount: number
+          created_at?: string
+          grind_step: number
+          grind_step_memo?: string | null
+          id?: number
+          image_url?: string | null
+          is_hot?: boolean
+          is_ice?: boolean
+          is_no_bloom: boolean
+          pour_count: number
+          raw_brewing_info: Json
+          recipe_description: string
+          recipe_name: string
+          updated_at?: string | null
+          use_dripper: string
+          use_filter: string
+          user_id: string
+          water_amount: number
+          water_temperature: number
+        }
+        Update: {
+          coffee_amount?: number
+          created_at?: string
+          grind_step?: number
+          grind_step_memo?: string | null
+          id?: number
+          image_url?: string | null
+          is_hot?: boolean
+          is_ice?: boolean
+          is_no_bloom?: boolean
+          pour_count?: number
+          raw_brewing_info?: Json
+          recipe_description?: string
+          recipe_name?: string
+          updated_at?: string | null
+          use_dripper?: string
+          use_filter?: string
+          user_id?: string
+          water_amount?: number
+          water_temperature?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
