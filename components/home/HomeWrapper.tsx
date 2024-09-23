@@ -11,7 +11,7 @@ export default function HomeWrapper() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row justify-between px-3 pt-4 items-center">
+      <div className="flex flex-row justify-between px-3 pt-4 items-center max-h-[52px]">
         <div>
           <div
             role="tablist"
