@@ -36,8 +36,8 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col h-screen max-w-xl mx-auto border-x-[1px]">
-              <div className="flex-1 overflow-y-auto pb-[98px]">{children}</div>
+            <div className="flex flex-col h-screen max-w-xl mx-auto">
+              <div className="flex-1 pb-[72px] border-x-[1px]">{children}</div>
               <BottomTabNav />
             </div>
 
