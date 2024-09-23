@@ -26,3 +26,22 @@ export function generateRandomName() {
   }); // DangerousSnake123
   return characterName;
 }
+
+// sec to mm:ss
+export function secToTime(sec: number) {
+  const minutes = Math.floor(sec / 60);
+  const seconds = sec % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+export function secToKoreanTime(sec: number) {
+  const minutes = Math.floor(sec / 60);
+  const seconds = sec % 60;
+  if (minutes > 0 && seconds > 0) {
+    return `${minutes}분 ${seconds}초`;
+  } else if (minutes > 0) {
+    return `${minutes}분`;
+  } else {
+    return `${seconds}초`;
+  }
+}

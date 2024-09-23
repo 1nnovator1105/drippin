@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["react-daisyui"],
+  experimental: {
+    scrollRestoration: true,
+    //Only For Next.js versions prior to 14.1.0 because it is enabled by default since version 14.1.0
+    windowHistorySupport: true,
+  },
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -19,6 +24,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "cdn.sisajournal.com",
+      },
+      {
+        protocol: "https",
+        hostname: "rpahjyrtfkrbplntumfr.supabase.co",
       },
     ],
   },

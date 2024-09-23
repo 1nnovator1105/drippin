@@ -1,6 +1,7 @@
 import { brewOptions } from "@/constants/brew";
 import { BrewOption, BrewingInfo } from "@/types/brew";
 import { cn } from "@/utils/cn";
+import { secToTime } from "@/utils/utils";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Select from "react-select";
@@ -13,6 +14,7 @@ interface InfoTimelineProps {
   phase: BrewingInfo;
   allInfo: BrewingInfo[];
   setInfoAction: Dispatch<SetStateAction<BrewingInfo[]>>;
+  setCurrentPageAction: Dispatch<SetStateAction<number>>;
 }
 
 export default function InfoTimeline({
@@ -23,6 +25,7 @@ export default function InfoTimeline({
   phase,
   allInfo,
   setInfoAction,
+  setCurrentPageAction,
 }: InfoTimelineProps) {
   const [totalWater, setTotalWater] = useState<number>(0);
   const [totalTime, setTotalTime] = useState<number>(0);
@@ -95,11 +98,8 @@ export default function InfoTimeline({
     setTotalTime(totalTime + time);
   };
 
-  // sec to mm:ss
-  const secToTime = (sec: number) => {
-    const minutes = Math.floor(sec / 60);
-    const seconds = sec % 60;
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  const moveToNextPage = () => {
+    setCurrentPageAction((prev) => prev + 1);
   };
 
   useEffect(() => {
@@ -120,9 +120,19 @@ export default function InfoTimeline({
     };
   }, [phase]);
 
+  const isFillPrevWaterAndTime = () => {
+    const filtered = allInfo.filter(
+      (value) => (!value.water || !value.time) && value.order < phase.order,
+    );
+    return filtered.length === 0;
+  };
+
   return (
     <React.Fragment>
-      <li onClick={hasNext ? openModal : undefined} className="cursor-pointer">
+      <li
+        onClick={hasNext ? openModal : moveToNextPage}
+        className="cursor-pointer"
+      >
         {hasPrev && <hr className={cn(true ? "bg-primary" : "")} />}
         <div className="timeline-middle px-[10px]">
           <svg
@@ -135,7 +145,20 @@ export default function InfoTimeline({
             <circle cx="5" cy="5" r="5" fill="#1E1E1E" />
           </svg>
         </div>
-        <div className={cn("label-text timeline-start")}>{label}</div>
+        {hasNext ? (
+          <div className={cn("label-text timeline-start")}>{label}</div>
+        ) : (
+          <div
+            className={cn(
+              "label-text timeline-start",
+              isFillPrevWaterAndTime()
+                ? "text-rose-500 font-bold"
+                : "text-gray-200",
+            )}
+          >
+            {label}
+          </div>
+        )}
 
         {hasNext && (
           <div

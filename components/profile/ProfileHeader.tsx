@@ -1,12 +1,9 @@
 "use client";
 
 import KakaoButton from "@/app/auth/callback/kakao-button";
-import { getUserByHandle } from "@/queries/user";
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { Session } from "@supabase/supabase-js";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export default function ProfileHeader({ handle }: { handle: string }) {
   const supabase = useSupabaseBrowser();

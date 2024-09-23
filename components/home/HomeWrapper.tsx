@@ -1,17 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import SearchIcon from "../icon/SearchIcon";
 import RecipeCard from "./RecipeCard";
 import LogCard from "./LogCard";
 import { cn } from "@/utils/cn";
+import useSupabaseBrowser from "@/utils/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export default function HomeWrapper() {
+  const supabase = useSupabaseBrowser();
   const [selectedTab, setSelectedTab] = useState<string>("레시피");
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const pathname = usePathname();
+  const feedQuery = useQuery({
+    queryKey: ["drippin", "feed"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("recipes")
+        .select(`*, profiles(handle, email)`)
+        .order("created_at", { ascending: false });
+      return data;
+    },
+  });
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row justify-between px-3 pt-4 items-center max-h-[52px]">
+      <div className="flex flex-row justify-between px-3 py-2 items-center max-h-[52px]">
         <div>
           <div
             role="tablist"
@@ -22,7 +38,7 @@ export default function HomeWrapper() {
               name="my_tabs"
               role="tab"
               className={cn(
-                "tab",
+                "tab max-h-[32px]",
                 selectedTab === "레시피" ? "text-gray-900" : "text-gray-400",
               )}
               aria-label="레시피"
@@ -39,7 +55,7 @@ export default function HomeWrapper() {
               name="my_tabs"
               role="tab"
               className={cn(
-                "tab",
+                "tab max-h-[32px]",
                 selectedTab === "일지" ? "text-gray-900" : "text-gray-400",
               )}
               aria-label="일지"
@@ -59,30 +75,18 @@ export default function HomeWrapper() {
         </div>
       </div>
 
-      <div className="mt-5 px-3">
-        <div className="carousel w-full">
+      <div>
+        <div className="w-full">
           {selectedTab === "레시피" && (
-            <div
-              id="slide1"
-              className="carousel-item relative w-full gap-3 flex-col flex"
-            >
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
+            <div id="slide1" className="relative w-full flex-col flex">
+              {feedQuery.data?.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
             </div>
           )}
 
           {selectedTab === "일지" && (
-            <div
-              id="slide2"
-              className="carousel-item relative w-full gap-3 flex-col flex"
-            >
+            <div id="slide2" className="relative w-full gap-3 flex-col flex">
               <LogCard />
               <LogCard />
               <LogCard />
