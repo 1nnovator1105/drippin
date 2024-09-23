@@ -1,10 +1,7 @@
 "use client";
 
-import { fetchMySelf } from "@/queries/user";
-import { Database } from "@/types/database.types";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import BottomTabHomeIcon from "../icon/BottomTabHomeIcon";
 import BottomTabRecipeIcon from "../icon/BottomTabRecipeIcon";
 import BottomTabLogIcon from "../icon/BottmTabLogIcon";

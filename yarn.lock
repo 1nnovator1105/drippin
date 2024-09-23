@@ -137,6 +137,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@bladl/react-hooks@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "@bladl/react-hooks@npm:1.5.2"
+  dependencies:
+    react: "npm:^18.0"
+  checksum: 10c0/1d57e1ee5d1e9edfea46e33d2833c8c218697da982a21595b54719ecd3dda80915f447d75643da83b58afe7256d7f3e70f8144af9fadd5679f967fe4602d9b47
+  languageName: node
+  linkType: hard
+
 "@emotion/babel-plugin@npm:^11.12.0":
   version: 11.12.0
   resolution: "@emotion/babel-plugin@npm:11.12.0"
@@ -2573,6 +2582,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-scroll-restorer@npm:^0.9.7":
+  version: 0.9.7
+  resolution: "next-scroll-restorer@npm:0.9.7"
+  dependencies:
+    "@bladl/react-hooks": "npm:^1.5.2"
+  peerDependencies:
+    next: ^13.0 || ^14.0
+    react: ^17.0 || ^18.0
+  checksum: 10c0/6842332e6ef2838d16af8d5175a333b53ed6dbdf18523fceb09be2c60294b753611ff573c1fe30555d1131a25febae65c6349237d6277b3ff1d790f3d96cdb12
+  languageName: node
+  linkType: hard
+
 "next-themes@npm:^0.3.0":
   version: 0.3.0
   resolution: "next-themes@npm:0.3.0"
@@ -3111,6 +3132,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react@npm:^18.0":
+  version: 18.3.1
+  resolution: "react@npm:18.3.1"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
+  languageName: node
+  linkType: hard
+
 "read-cache@npm:^1.0.0":
   version: 1.0.0
   resolution: "read-cache@npm:1.0.0"
@@ -3226,6 +3256,7 @@ __metadata:
     geist: "npm:^1.2.1"
     lucide-react: "npm:^0.436.0"
     next: "npm:latest"
+    next-scroll-restorer: "npm:^0.9.7"
     next-themes: "npm:^0.3.0"
     postcss: "npm:8.4.33"
     prettier: "npm:^3.3.3"
