@@ -10,35 +10,38 @@ import BottomTabRecipeIcon from "../icon/BottomTabRecipeIcon";
 import BottomTabLogIcon from "../icon/BottmTabLogIcon";
 import BottomTabMyPageIcon from "../icon/BottmTabMyPageIcon";
 import { cn } from "@/utils/cn";
+import { useQuery } from "@tanstack/react-query";
 
 export default function BottomTabNav() {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = useSupabaseBrowser();
 
-  const [mySelf, setMySelf] = useState<
-    Database["public"]["Tables"]["profiles"]["Row"] | null
-  >(null);
+  const mySessionQuery = useQuery({
+    queryKey: ["drippin", "mySession"],
+    queryFn: async () => {
+      const { data, error } = await supabase.auth.getSession();
+      return data;
+    },
+  });
 
-  useEffect(() => {
-    const fetchMe = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (data.user) {
-        const { data: user, error } = await fetchMySelf(supabase, data.user.id);
-        setMySelf(user);
-      } else {
-        console.log("로그인이 필요함");
-      }
-    };
-
-    fetchMe();
-  }, []);
+  const myProfileQuery = useQuery({
+    queryKey: ["drippin", "myProfile"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", mySessionQuery.data?.session?.user.id!)
+        .throwOnError()
+        .single();
+      return data;
+    },
+    enabled: !!mySessionQuery.data?.session?.user.id,
+  });
 
   const route = (path: string) => {
     router.push(path);
   };
-
-  const isMyPage = mySelf?.handle === pathname;
 
   return (
     <div
@@ -77,13 +80,15 @@ export default function BottomTabNav() {
       </button>
       <button
         // className={isMyPage ? "active" : ""}
-        onClick={() => route(`/${mySelf?.handle}`)}
+        onClick={() => route(`/${myProfileQuery.data?.handle}`)}
       >
         <BottomTabLogIcon />
         <span
           className={cn(
             "btm-nav-label",
-            isMyPage ? "text-gray-900" : "text-gray-400",
+            pathname === `/${myProfileQuery.data?.handle}`
+              ? "text-gray-900"
+              : "text-gray-400",
           )}
         >
           일지
@@ -91,13 +96,13 @@ export default function BottomTabNav() {
       </button>
       <button
         // className={isMyPage ? "active" : ""}
-        onClick={() => route(`/${mySelf?.handle}`)}
+        onClick={() => route(`/my`)}
       >
         <BottomTabMyPageIcon />
         <span
           className={cn(
             "btm-nav-label",
-            isMyPage ? "text-gray-900" : "text-gray-400",
+            pathname === "/my" ? "text-gray-900" : "text-gray-400",
           )}
         >
           내정보

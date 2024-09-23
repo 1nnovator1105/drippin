@@ -14,11 +14,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "i.namu.wiki",
+        hostname: "recipe1.ezmember.co.kr",
       },
       {
         protocol: "https",
-        hostname: "recipe1.ezmember.co.kr",
+        hostname: "cdn.sisajournal.com",
       },
     ],
   },

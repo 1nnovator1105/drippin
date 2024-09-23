@@ -1,4 +1,3 @@
-import ModalOpenTestBtn from "@/components/button/ModalOpenTestBtn";
 import HomeWrapper from "@/components/home/HomeWrapper";
 import { useSupabaseServer } from "@/utils/supabase/server";
 
@@ -8,14 +7,5 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return (
-    <>
-      <div>
-        {/* <h1>Hello World - Drippin</h1>
-        <h3>{user?.user_metadata?.full_name}님 환영합니다.</h3>
-        <ModalOpenTestBtn /> */}
-        <HomeWrapper />
-      </div>
-    </>
-  );
+  return <HomeWrapper />;
 }
