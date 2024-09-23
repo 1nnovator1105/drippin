@@ -8,12 +8,15 @@ import { cn } from "@/utils/cn";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useSearchParams } from "next/navigation";
+import { ArrowDownIcon } from "lucide-react";
 
 export default function HomeWrapper() {
   const supabase = useSupabaseBrowser();
   const [selectedTab, setSelectedTab] = useState<string>("레시피");
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const pathname = usePathname();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const feedQuery = useQuery({
     queryKey: ["drippin", "feed"],
     queryFn: async () => {
@@ -27,7 +30,7 @@ export default function HomeWrapper() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row justify-between px-3 py-2 items-center max-h-[52px]">
+      <div className="flex flex-row justify-between px-3 py-2 items-center max-h-[52px] sticky top-0 bg-white z-[99]">
         <div>
           <div
             role="tablist"
@@ -75,25 +78,23 @@ export default function HomeWrapper() {
         </div>
       </div>
 
-      <div>
-        <div className="w-full">
-          {selectedTab === "레시피" && (
-            <div id="slide1" className="relative w-full flex-col flex">
-              {feedQuery.data?.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
-            </div>
-          )}
+      <div className="w-full" ref={scrollRef}>
+        {selectedTab === "레시피" && (
+          <div id="slide1" className="relative w-full flex-col flex">
+            {feedQuery.data?.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+        )}
 
-          {selectedTab === "일지" && (
-            <div id="slide2" className="relative w-full gap-3 flex-col flex">
-              <LogCard />
-              <LogCard />
-              <LogCard />
-              <LogCard />
-            </div>
-          )}
-        </div>
+        {selectedTab === "일지" && (
+          <div id="slide2" className="relative w-full gap-3 flex-col flex">
+            <LogCard />
+            <LogCard />
+            <LogCard />
+            <LogCard />
+          </div>
+        )}
       </div>
     </div>
   );

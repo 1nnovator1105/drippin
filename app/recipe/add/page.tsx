@@ -409,10 +409,10 @@ export default function RecipeAddPage() {
         </div>
       </div>
       <div className="flex flex-1 p-3">
-        <div className="carousel h-screen w-full" onScroll={handleScroll}>
+        <div className="carousel w-full" onScroll={handleScroll}>
           {/* 1번 페이지 */}
           {currentPage === 1 && (
-            <div className="carousel-item flex flex-col h-full w-full gap-4">
+            <div className="carousel-item flex flex-col w-full gap-4">
               <div>
                 <label className="form-control w-full">
                   <div className="label flex flex-col items-start justify-start">
@@ -504,7 +504,7 @@ export default function RecipeAddPage() {
 
           {/* 2번 페이지 */}
           {currentPage === 2 && (
-            <div className="carousel-item flex flex-col h-full w-full">
+            <div className="carousel-item flex flex-col w-full">
               <div>
                 <div className="label">
                   <p className="label-text">커피와 물의 비율을 알려주세요.</p>
@@ -621,7 +621,7 @@ export default function RecipeAddPage() {
 
           {/* 3번 페이지 */}
           {currentPage === 3 && (
-            <div className="carousel-item flex flex-col h-full w-full">
+            <div className="carousel-item flex flex-col w-full">
               <div className="flex flex-col w-full gap-2">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-8">
@@ -708,7 +708,7 @@ export default function RecipeAddPage() {
 
           {/* 4번 페이지 */}
           {currentPage === 4 && (
-            <div className="carousel-item flex flex-col h-full w-full">
+            <div className="carousel-item flex flex-col w-full">
               <label className="form-control">
                 <div className="label">
                   <span className="label-text">
