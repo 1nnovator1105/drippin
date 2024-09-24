@@ -42,11 +42,9 @@ export default function RecipePage() {
         <KakaoButton />
       )}
 
-      <div className="divider divider-secondary">나의 레시피</div>
-
       <div className="flex flex-col mt-4">
         {myRecipeQuery.data?.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard key={recipe.id} recipe={recipe} summary />
         ))}
       </div>
     </div>

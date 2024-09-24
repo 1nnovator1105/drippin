@@ -38,11 +38,9 @@ export default function RecipePage() {
   ];
 
   const makeChartData = () => {
-    const rawBrewingInfo = JSON.parse(
-      recipeQuery.data?.raw_brewing_info as string,
-    );
+    const rawBrewingInfo = recipeQuery.data?.raw_brewing_info;
 
-    const brewingInfo = rawBrewingInfo?.filter(
+    const brewingInfo = JSON.parse(JSON.stringify(rawBrewingInfo))?.filter(
       (value: any) => value.time && value.water,
     );
 
@@ -72,6 +70,8 @@ export default function RecipePage() {
     // chartData 맨 앞에 water 0, time 0 추가
     return [{ time: 0, water: 0 }, ...chartData];
   };
+
+  if (recipeQuery.isLoading) return <div>Loading...</div>;
 
   return (
     <div>
