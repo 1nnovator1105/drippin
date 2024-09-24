@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import SearchIcon from "../icon/SearchIcon";
-import RecipeCard from "./RecipeCard";
+import RecipeCard from "../share/RecipeCard";
 import LogCard from "./LogCard";
 import { cn } from "@/utils/cn";
 import useSupabaseBrowser from "@/utils/supabase/client";

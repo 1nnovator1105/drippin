@@ -4,7 +4,7 @@ import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import KakaoButton from "../auth/callback/kakao-button";
-import RecipeCard from "@/components/home/RecipeCard";
+import RecipeCard from "@/components/share/RecipeCard";
 
 export default function RecipePage() {
   const supabase = useSupabaseBrowser();
