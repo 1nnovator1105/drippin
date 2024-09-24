@@ -22,7 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "geist": "^1.2.1",
-    "lucide-react": "^0.436.0",
+    "lucide-react": "^0.445.0",
     "next": "latest",
     "next-scroll-restorer": "^0.9.7",
     "next-themes": "^0.3.0",
@@ -32,6 +32,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.53.0",
     "react-select": "^5.8.0",
+    "recharts": "^2.12.7",
     "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {

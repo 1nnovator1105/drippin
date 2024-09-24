@@ -1,11 +1,12 @@
 import Image from "next/image";
 import LikeIcon from "../icon/LikeIcon";
-import TagChip from "../share/TagChip";
+import TagChip from "./TagChip";
 import { useState } from "react";
 import { cn } from "@/utils/cn";
 import { Database } from "@/types/database.types";
 import { secToKoreanTime, secToTime } from "@/utils/utils";
 import Link from "next/link";
+import DefaultThumbnail from "./DefaultThumbnail";
 
 export default function RecipeCard({
   recipe,
@@ -40,12 +41,19 @@ export default function RecipeCard({
       <div>
         <div className={"flex flex-col"}>
           <div className="relative w-full h-[170px]">
-            <Image
-              src={recipe?.image_url || TEMP_DEFAULT_IMAGE}
-              alt="recipe"
-              className="w-full h-full object-cover"
-              fill
-            />
+            {recipe?.image_url ? (
+              <Image
+                src={recipe?.image_url}
+                alt="recipe"
+                className="w-full h-full object-cover"
+                fill
+              />
+            ) : (
+              <DefaultThumbnail
+                title={recipe.recipe_name}
+                handle={recipe.profiles?.handle || ""}
+              />
+            )}
           </div>
 
           <div className="flex flex-col px-3 py-3 gap-3">

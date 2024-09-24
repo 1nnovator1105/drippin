@@ -284,11 +284,6 @@ export default function RecipeAddPage() {
       return false;
     }
 
-    if (!pourCount) {
-      alert("물을 몇 번 부었나요?");
-      return false;
-    }
-
     if (!recipeDescription) {
       alert("레시피 설명을 입력해주세요.");
       return false;
