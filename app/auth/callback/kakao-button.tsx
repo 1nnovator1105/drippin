@@ -16,8 +16,9 @@ export default function KakaoButton() {
   };
 
   return (
-    <button onClick={signInWithKakao} className="btn btn-outline">
-      카카오 로그인
-    </button>
+    <button
+      onClick={signInWithKakao}
+      className="btn bg-[url('/assets/images/kakao_login_large_narrow.png')] bg-cover bg-center text-black font-bold w-[183px] h-[45px]"
+    ></button>
   );
 }

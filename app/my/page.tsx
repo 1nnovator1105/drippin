@@ -1,15 +1,20 @@
 "use client";
 
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import KakaoButton from "../auth/callback/kakao-button";
+import AnimatedCoffeeIcon from "@/components/icon/AnimatedCoffeeIcon";
+import { useEffect, useState } from "react";
+import LoginNudge from "@/components/auth/LoginNudge";
 
 export default function MyPage() {
   const supabase = useSupabaseBrowser();
 
   const queryClient = useQueryClient();
   const router = useRouter();
+
+  const [newHandle, setNewHandle] = useState<string | null>(null);
 
   const mySessionQuery = useQuery({
     queryKey: ["drippin", "mySession"],
@@ -28,35 +33,120 @@ export default function MyPage() {
         .eq("id", mySessionQuery.data?.session?.user.id!)
         .throwOnError()
         .single();
+
+      if (data?.handle) {
+        setNewHandle(data.handle);
+      }
+
       return data;
     },
     enabled: !!mySessionQuery.data?.session?.user.id,
   });
 
+  const updateHandleMutation = useMutation({
+    mutationFn: async (handle: string) => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .update({ handle: newHandle })
+        .eq("id", mySessionQuery.data?.session?.user.id!)
+        .throwOnError();
+
+      if (error) {
+        console.error(error);
+        throw error;
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      alert("닉네임이 변경되었어요");
+
+      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+    },
+  });
+
+  const updateHandle = () => {
+    if (newHandle) {
+      updateHandleMutation.mutate(newHandle);
+    }
+  };
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     // all query invalidate
     queryClient.invalidateQueries();
-    router.push("/");
   };
 
-  if (mySessionQuery.isLoading) return <div>Loading...</div>;
+  const onChangeNewHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewHandle(e.target.value);
+  };
 
-  if (!mySessionQuery.data?.session)
-    return (
-      <div>
-        로그인이 필요합니다.
-        <KakaoButton />
-      </div>
-    );
+  useEffect(() => {
+    if (myProfileQuery.data?.handle) {
+      setNewHandle(myProfileQuery.data.handle);
+    }
+  }, [myProfileQuery.data?.handle]);
+
+  if (mySessionQuery.isLoading) return <div></div>;
+
+  if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
-    <div>
-      <h1>MyPage</h1>
-      <div>email: {myProfileQuery.data?.email}</div>
-      <div>handle: {myProfileQuery.data?.handle}</div>
-      <div>
-        <button onClick={handleSignOut}>Sign Out</button>
+    <div className="px-4 py-2">
+      <label className="form-control w-full">
+        <div className="label flex flex-col items-start justify-start">
+          <p className="label-text">이름</p>
+        </div>
+        <input
+          type="text"
+          placeholder="이름"
+          className="input input-bordered w-full focus:outline-none max-w-xs"
+          value={myProfileQuery.data?.user_name || ""}
+          disabled
+          readOnly
+        />
+      </label>
+
+      <label className="form-control w-full mt-4">
+        <div className="label flex flex-col items-start justify-start">
+          <p className="label-text">이메일</p>
+        </div>
+        <input
+          type="text"
+          placeholder="이메일"
+          className="input input-bordered w-full focus:outline-none max-w-xs"
+          value={myProfileQuery.data?.email || ""}
+          readOnly
+          disabled
+        />
+      </label>
+
+      <label className="form-control w-full mt-4">
+        <div className="label flex flex-row items-start justify-between max-w-xs items-center">
+          <p className="label-text">닉네임</p>
+          <button
+            className="btn btn-sm btn-outline bg-black text-white"
+            onClick={updateHandle}
+          >
+            저장하기
+          </button>
+        </div>
+        <input
+          type="text"
+          placeholder="닉네임"
+          className="input input-bordered w-full focus:outline-none max-w-xs"
+          value={newHandle || ""}
+          onChange={onChangeNewHandle}
+        />
+      </label>
+
+      <div className="fixed bottom-[88px] flex justify-center items-center w-full self-center">
+        <button
+          className="btn btn-sm btn-outline border-[#999999] p-2 text-[#999999]"
+          onClick={handleSignOut}
+        >
+          로그아웃
+        </button>
       </div>
     </div>
   );
