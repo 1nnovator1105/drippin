@@ -17,19 +17,32 @@ export default function HomeWrapper() {
   const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const feedQuery = useQuery({
-    queryKey: ["drippin", "feed"],
+  const recipeFeedQuery = useQuery({
+    queryKey: ["drippin", "feed", "recipe"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipes")
-        .select(`*, profiles(handle, email)`)
+        .select(`*, profiles(handle, email), likes:recipes_likes(*)`)
         .order("created_at", { ascending: false });
+
+      return data;
+    },
+  });
+
+  const logFeedQuery = useQuery({
+    queryKey: ["drippin", "feed", "log"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("logs")
+        .select(`*, profiles(handle, email), likes:logs_likes(*)`)
+        .order("created_at", { ascending: false });
+
       return data;
     },
   });
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-[88px]">
       <div className="flex flex-row justify-between px-3 py-2 items-center max-h-[52px] sticky top-0 bg-white z-[99]">
         <div>
           <div
@@ -73,15 +86,15 @@ export default function HomeWrapper() {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <SearchIcon />
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full" ref={scrollRef}>
         {selectedTab === "레시피" && (
           <div id="slide1" className="relative w-full flex-col flex">
-            {feedQuery.data?.map((recipe) => (
+            {recipeFeedQuery.data?.map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
           </div>
@@ -89,10 +102,9 @@ export default function HomeWrapper() {
 
         {selectedTab === "일지" && (
           <div id="slide2" className="relative w-full gap-3 flex-col flex">
-            <LogCard />
-            <LogCard />
-            <LogCard />
-            <LogCard />
+            {logFeedQuery.data?.map((log) => (
+              <LogCard key={log.id} log={log} />
+            ))}
           </div>
         )}
       </div>

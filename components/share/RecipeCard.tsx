@@ -9,7 +9,7 @@ import { Database } from "@/types/database.types";
 import { secToKoreanTime, secToTime } from "@/utils/utils";
 import Link from "next/link";
 import DefaultThumbnail from "./DefaultThumbnail";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSupabaseBrowser from "@/utils/supabase/client";
 
 interface RecipeCardProps {
@@ -20,12 +20,45 @@ interface RecipeCardProps {
 export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
   const supabase = useSupabaseBrowser();
   const [isActive, setIsActive] = useState(false);
+  const queryClient = useQueryClient();
 
   const mySessionQuery = useQuery({
     queryKey: ["session"],
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
       return data;
+    },
+  });
+
+  const likeMutate = useMutation({
+    mutationFn: async () => {
+      if (!mySessionQuery.data?.session) throw Error("세션이 필요합니다.");
+
+      const { data, error } = await supabase.from("recipes_likes").insert({
+        recipe_id: recipe.id,
+        from_user_id: mySessionQuery.data.session.user.id,
+      });
+
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+    },
+  });
+
+  const unlikeMutate = useMutation({
+    mutationFn: async () => {
+      if (!mySessionQuery.data?.session) throw Error("세션이 필요합니다.");
+
+      const { data, error } = await supabase
+        .from("recipes_likes")
+        .delete()
+        .eq("recipe_id", recipe.id)
+        .eq("from_user_id", mySessionQuery.data?.session?.user.id);
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["drippin"] });
     },
   });
 
@@ -43,6 +76,21 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
 
   const myRecipe =
     mySessionQuery.data?.session?.user.id === recipe.profiles?.id;
+
+  const isLiked = recipe?.likes?.some(
+    (like) => like.from_user_id === mySessionQuery.data?.session?.user.id,
+  );
+
+  const conditionLikeAction = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (isLiked) {
+      unlikeMutate.mutate();
+    } else {
+      likeMutate.mutate();
+    }
+  };
 
   return (
     <Link
@@ -75,8 +123,14 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
           <div className="flex flex-col px-3 py-3 gap-3">
             {!summary && (
               <div className="flex items-center gap-[6px]">
-                <LikeIcon fill="#1E1E1E" stroke="#1E1E1E" strokeWidth="2.5" />
-                <span>99명의 드리핀이 좋아해요</span>
+                <div onClick={conditionLikeAction}>
+                  <LikeIcon
+                    fill={isLiked ? "#1E1E1E" : "#FFF"}
+                    stroke={"#1E1E1E"}
+                    strokeWidth="2.5"
+                  />
+                </div>
+                <span>{recipe?.likes?.length}명의 드리핀이 좋아해요</span>
               </div>
             )}
 
@@ -96,15 +150,17 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
                 )}
               </div>
 
-              <div className="flex items-center gap-1">
-                <LikeIcon
-                  fill="#1E1E1E"
-                  stroke="#1E1E1E"
-                  strokeWidth="2.5"
-                  className="size-4"
-                />
-                <span className="text-sm">99</span>
-              </div>
+              {summary && (
+                <div className="flex items-center gap-1">
+                  <LikeIcon
+                    fill="#1E1E1E"
+                    stroke="#1E1E1E"
+                    strokeWidth="2.5"
+                    className="size-4"
+                  />
+                  <span className="text-sm">{recipe?.likes?.length}</span>
+                </div>
+              )}
             </div>
 
             <div className="line-clamp-3 text-gray-900">

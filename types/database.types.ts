@@ -9,6 +9,92 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      logs: {
+        Row: {
+          coffee_name: string | null;
+          coffee_place: string | null;
+          content: string | null;
+          created_at: string;
+          id: number;
+          image_url: string | null;
+          recipe_id: number | null;
+          tags: string | null;
+          updated_at: string | null;
+          user_id: string | null;
+          profiles: Tables<"profiles">;
+          logs_likes: Tables<"logs_likes">;
+          likes: Tables<"logs_likes">[];
+        };
+        Insert: {
+          coffee_name?: string | null;
+          coffee_place?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          image_url?: string | null;
+          recipe_id?: number | null;
+          tags?: string | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          coffee_name?: string | null;
+          coffee_place?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          image_url?: string | null;
+          recipe_id?: number | null;
+          tags?: string | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "logs_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "recipes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "logs_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      logs_likes: {
+        Row: {
+          created_at: string;
+          from_user_id: string;
+          id: number;
+          log_id: number;
+        };
+        Insert: {
+          created_at?: string;
+          from_user_id: string;
+          id?: number;
+          log_id: number;
+        };
+        Update: {
+          created_at?: string;
+          from_user_id?: string;
+          id?: number;
+          log_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "logs_likes_log_id_fkey";
+            columns: ["log_id"];
+            isOneToOne: false;
+            referencedRelation: "logs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       notes: {
         Row: {
           id: number;
@@ -83,7 +169,9 @@ export type Database = {
           user_id: string;
           water_amount: number;
           water_temperature: number;
-          profiles?: Database["public"]["Tables"]["profiles"]["Row"];
+          profiles: Tables<"profiles">;
+          recipes_likes: Tables<"recipes_likes">;
+          likes: Tables<"recipes_likes">[];
         };
         Insert: {
           coffee_amount: number;
@@ -133,6 +221,35 @@ export type Database = {
             columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      recipes_likes: {
+        Row: {
+          created_at: string;
+          from_user_id: string;
+          id: number;
+          recipe_id: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          from_user_id: string;
+          id?: number;
+          recipe_id?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          from_user_id?: string;
+          id?: number;
+          recipe_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "recipes_likes_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "recipes";
             referencedColumns: ["id"];
           },
         ];

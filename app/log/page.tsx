@@ -1,17 +1,13 @@
 "use client";
 
+import LoginNudge from "@/components/auth/LoginNudge";
+import LogCard from "@/components/home/LogCard";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import KakaoButton from "../auth/callback/kakao-button";
-import RecipeCard from "@/components/share/RecipeCard";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import LoginNudge from "@/components/auth/LoginNudge";
 
-export default function RecipePage() {
+export default function LogPage() {
   const supabase = useSupabaseBrowser();
-  const router = useRouter();
 
   const mySessionQuery = useQuery({
     queryKey: ["session"],
@@ -21,12 +17,12 @@ export default function RecipePage() {
     },
   });
 
-  const myRecipeQuery = useQuery({
-    queryKey: ["drippin", "recipes", "my"],
+  const myLogQuery = useQuery({
+    queryKey: ["drippin", "logs", "my"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("recipes")
-        .select(`*, profiles(handle, email), likes:recipes_likes(*)`)
+        .from("logs")
+        .select(`*, profiles(handle, email), likes:logs_likes(*)`)
         .eq("user_id", mySessionQuery.data?.session?.user.id!)
         .order("created_at", { ascending: false });
 
@@ -43,16 +39,16 @@ export default function RecipePage() {
   return (
     <div className="pb-[88px]">
       <div className="flex flex-col">
-        {myRecipeQuery.data?.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} summary />
+        {myLogQuery.data?.map((log) => (
+          <LogCard key={log.id} log={log} summary />
         ))}
       </div>
 
       <Link
-        href="/recipe/add"
+        href="/log/add"
         className="fixed bottom-[88px] flex py-[15px] px-[20px] bg-black rounded-3xl text-white self-center translate-x-[50%]"
       >
-        새로운 레시피 작성하기
+        새로운 일지 작성하기
       </Link>
     </div>
   );

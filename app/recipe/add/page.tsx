@@ -14,6 +14,7 @@ import useSupabaseBrowser from "@/utils/supabase/client";
 import {
   useIsMutating,
   useMutation,
+  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -54,12 +55,18 @@ export default function RecipeAddPage() {
 
   const isMutating = useIsMutating();
 
+  const mySessionQuery = useQuery({
+    queryKey: ["drippin", "mySession"],
+    queryFn: async () => {
+      const { data, error } = await supabase.auth.getSession();
+      return data;
+    },
+  });
+
   const recipeMutation = useMutation({
     mutationFn: async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
-
       const { data, error } = await supabase.from("recipes").insert({
-        user_id: sessionData?.session?.user?.id || "",
+        user_id: mySessionQuery.data?.session?.user?.id || "",
         recipe_name: recipeName || "",
         use_dripper: dripper?.value || "",
         use_filter: filter?.value || "",
@@ -80,7 +87,7 @@ export default function RecipeAddPage() {
       return data;
     },
     onSuccess: () => {
-      window.alert("레시피가 성공적으로 추가되었습니다.");
+      alert("레시피가 게시되었어요!");
       router.push("/recipe");
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
     },
@@ -100,29 +107,6 @@ export default function RecipeAddPage() {
 
     try {
       if (file) {
-        // const reader = new FileReader();
-        // reader.onloadend = async () => {
-        //   setSelectedImage(reader.result as string);
-        //   setImageFile(file);
-        //   const bucket = "images/recipes"; // 버킷 이름으로 변경
-        //   const fileName = file.name;
-
-        //   const { data, error } = await supabase.storage
-        //     .from(bucket)
-        //     .upload(fileName, file);
-
-        //   if (error) {
-        //     window.alert("이미지 업로드에 실패하였습니다.");
-        //     return;
-        //   }
-
-        //   const publicUrl = supabase.storage
-        //     .from(bucket)
-        //     .getPublicUrl(fileName);
-
-        //   setImageUrl(publicUrl.data.publicUrl);
-        // };
-        // reader.readAsDataURL(file);
         const compressedFile = await imageCompression(file, options);
         setImageFile(compressedFile);
         const promise = imageCompression.getDataUrlFromFile(compressedFile);
@@ -138,7 +122,7 @@ export default function RecipeAddPage() {
           .upload(fileName, compressedFile);
 
         if (error) {
-          window.alert("이미지 업로드에 실패하였습니다.");
+          alert("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
           return;
         }
 
@@ -147,7 +131,7 @@ export default function RecipeAddPage() {
         setImageUrl(publicUrl.data.publicUrl);
       }
     } catch (error) {
-      window.alert("이미지 업로드에 실패하였습니다.");
+      alert("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
     }
   };
 
@@ -336,6 +320,13 @@ export default function RecipeAddPage() {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [recipeDescription]);
+
+  useEffect(() => {
+    // 세션이 없으면 이전 페이지로 이동
+    if (!mySessionQuery.data?.session?.user) {
+      router.back();
+    }
+  }, [mySessionQuery.data?.session?.user]);
 
   return (
     <div
@@ -669,7 +660,7 @@ export default function RecipeAddPage() {
                         if (pourCount < 5) {
                           setPourCount(pourCount + 1);
                         } else {
-                          alert("최대 5번까지만 가능합니다.");
+                          alert("물붓기는 최대 5번까지 가능해요.");
                         }
                       }}
                     >
