@@ -38,6 +38,12 @@ export default function RecipePage() {
     enabled: !!mySessionQuery.data?.session?.user.id,
   });
 
+  const preventClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    router.push("/recipe/add");
+  };
+
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
@@ -51,6 +57,7 @@ export default function RecipePage() {
       <Link
         href="/recipe/add"
         className="fixed bottom-[88px] flex py-[15px] px-[20px] bg-black rounded-3xl text-white self-center translate-x-[50%]"
+        onClick={preventClick}
       >
         새로운 레시피 작성하기
       </Link>
