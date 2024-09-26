@@ -101,7 +101,7 @@ export default function HomeWrapper() {
         )}
 
         {selectedTab === "일지" && (
-          <div id="slide2" className="relative w-full gap-3 flex-col flex">
+          <div id="slide2" className="relative w-full flex-col flex">
             {logFeedQuery.data?.map((log) => (
               <LogCard key={log.id} log={log} />
             ))}

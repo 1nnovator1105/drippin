@@ -3186,6 +3186,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-countdown-circle-timer@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "react-countdown-circle-timer@npm:3.2.1"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10c0/4e2e7c6a03ab4cc244efd4f603b64da43fb86662823b58ea23ed5a247dd6b1586bfeb4cf1ca0181eec51ea640c37504688aedd7f888ae69f757cf4c7edb77c0a
+  languageName: node
+  linkType: hard
+
 "react-daisyui@npm:^5.0.4":
   version: 5.0.4
   resolution: "react-daisyui@npm:5.0.4"
@@ -3493,12 +3502,14 @@ __metadata:
     postcss: "npm:8.4.33"
     prettier: "npm:^3.3.3"
     react: "npm:18.2.0"
+    react-countdown-circle-timer: "npm:^3.2.1"
     react-daisyui: "npm:^5.0.4"
     react-dom: "npm:18.2.0"
     react-hook-form: "npm:^7.53.0"
     react-select: "npm:^5.8.0"
     recharts: "npm:^2.12.7"
     supabase: "npm:^1.191.3"
+    swiper: "npm:^11.1.14"
     tailwind-merge: "npm:^2.5.2"
     tailwindcss: "npm:3.4.1"
     tailwindcss-animate: "npm:^1.0.7"
@@ -3737,6 +3748,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10c0/6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.14":
+  version: 11.1.14
+  resolution: "swiper@npm:11.1.14"
+  checksum: 10c0/a1075cbd2254aedd22b411ea03cbd7a91ba1cc79d7c2dc41f215e987811e449a2915a26b39fdfc1d7c08250fa2cfbe51d28476f834e75033c73ea357a4ac9f8d
   languageName: node
   linkType: hard
 

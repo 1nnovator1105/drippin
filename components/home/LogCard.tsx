@@ -5,6 +5,8 @@ import { Tables } from "@/types/database.types";
 import DefaultThumbnail from "../share/DefaultThumbnail";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
+import { cn } from "@/utils/cn";
 
 interface Props {
   log: Tables<"logs">;
@@ -72,11 +74,16 @@ export default function LogCard({ log, summary }: Props) {
   };
 
   return (
-    <div className="cursor-pointer w-full">
+    <Link href={`/log/${log.id}`} className="cursor-pointer w-full">
       <div>
         <div className="flex flex-col">
           {!summary && (
-            <div className="relative w-full aspect-[1/1]">
+            <div
+              className={cn(
+                "relative w-full",
+                log?.image_url ? "aspect-[1/1]" : "h-[170px]",
+              )}
+            >
               {log?.image_url ? (
                 <Image
                   src={log.image_url}
@@ -134,6 +141,6 @@ export default function LogCard({ log, summary }: Props) {
         </div>
       </div>
       <div className="w-full h-[2px] bg-gray-100"></div>
-    </div>
+    </Link>
   );
 }
