@@ -15,7 +15,7 @@ export const metadata = {
   openGraph: {
     images: [
       {
-        url: "../public/assets/images/thumbnail.jpeg", // 썸네일 이미지 URL
+        url: "https://rpahjyrtfkrbplntumfr.supabase.co/storage/v1/object/public/images/info/drippin-og-image.jpeg", // 썸네일 이미지 URL
         width: 1200, // 이미지 너비
         height: 630, // 이미지 높이
       },
