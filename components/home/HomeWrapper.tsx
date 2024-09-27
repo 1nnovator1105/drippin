@@ -42,6 +42,7 @@ export default function HomeWrapper() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     params.set("tab", selectedTab);
+    setSelectedTab(params.get("tab") || "레시피");
     window.history.replaceState(
       {},
       "",
@@ -51,25 +52,22 @@ export default function HomeWrapper() {
 
   return (
     <div className="flex flex-col pb-[88px]">
-      <div className="flex flex-row justify-between px-3 py-2 items-center max-h-[52px] sticky top-0 bg-white z-[99]">
-        <div>
-          <div
-            role="tablist"
-            className="tabs gap-[15px] tabs-bordered tabs-lg xs:tabs-sm"
-          >
+      <div className="flex flex-row justify-between pt-2 items-center sticky top-0 bg-white z-[99]">
+        <div className="w-full">
+          <div role="tablist" className="tabs tabs-bordered tabs-lg xs:tabs-sm">
             <input
               type="radio"
               name="my_tabs"
               role="tab"
               className={cn(
-                "tab max-h-[32px]",
+                "tab text-xl border-b-transparent",
                 selectedTab === "레시피" ? "text-gray-900" : "text-gray-400",
               )}
               aria-label="레시피"
               style={{
-                borderColor: selectedTab !== "레시피" ? "transparent" : "#000",
+                borderColor: selectedTab !== "레시피" ? "border-gray-400" : "",
               }}
-              checked={selectedTab === "레시피"}
+              defaultChecked={selectedTab === "레시피"}
               onChange={() => {
                 setSelectedTab("레시피");
               }}
@@ -79,14 +77,14 @@ export default function HomeWrapper() {
               name="my_tabs"
               role="tab"
               className={cn(
-                "tab max-h-[32px]",
+                "tab text-xl",
                 selectedTab === "일지" ? "text-gray-900" : "text-gray-400",
               )}
               aria-label="일지"
               style={{
-                borderColor: selectedTab !== "일지" ? "transparent" : "#000",
+                borderColor: selectedTab !== "일지" ? "border-gray-400" : "",
               }}
-              checked={selectedTab === "일지"}
+              defaultChecked={selectedTab === "일지"}
               onChange={() => {
                 setSelectedTab("일지");
               }}

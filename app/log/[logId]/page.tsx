@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
+import Spinner from "@/components/share/Spiner";
 
 export default function LogDetailPage() {
   const { logId } = useParams();
@@ -122,7 +123,7 @@ export default function LogDetailPage() {
     deleteMutate.mutate();
   };
 
-  if (logQuery.isLoading) return <div>Loading...</div>;
+  if (logQuery.isLoading) return <Spinner />;
 
   return (
     <div className="flex flex-col">

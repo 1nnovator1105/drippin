@@ -4,6 +4,7 @@ import KakaoButton from "@/app/auth/callback/kakao-button";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import Spinner from "../share/Spiner";
 
 export default function ProfileHeader({ handle }: { handle: string }) {
   const supabase = useSupabaseBrowser();
@@ -42,7 +43,7 @@ export default function ProfileHeader({ handle }: { handle: string }) {
     router.push("/");
   };
 
-  if (mySessionQuery.isLoading) return <div>Loading...</div>;
+  if (mySessionQuery.isLoading) return <Spinner />;
 
   if (mySessionQuery.isError && mySessionQuery.error)
     return <div>Error: {mySessionQuery.error.message || "Unknown error"}</div>;
