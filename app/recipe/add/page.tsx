@@ -674,8 +674,8 @@ export default function RecipeAddPage() {
                         <path
                           d="M12 18H24M7.5 4.5H28.5C30.1569 4.5 31.5 5.84315 31.5 7.5V28.5C31.5 30.1569 30.1569 31.5 28.5 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V7.5C4.5 5.84315 5.84315 4.5 7.5 4.5Z"
                           stroke="#1E1E1E"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </div>
@@ -707,8 +707,8 @@ export default function RecipeAddPage() {
                         <path
                           d="M18 12V24M12 18H24M7.5 4.5H28.5C30.1569 4.5 31.5 5.84315 31.5 7.5V28.5C31.5 30.1569 30.1569 31.5 28.5 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V7.5C4.5 5.84315 5.84315 4.5 7.5 4.5Z"
                           stroke="#1E1E1E"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     </div>
