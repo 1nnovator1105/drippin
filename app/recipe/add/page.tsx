@@ -258,11 +258,6 @@ export default function RecipeAddPage() {
       return false;
     }
 
-    if (!grindStep) {
-      alert("원두 분쇄도를 입력해주세요.");
-      return false;
-    }
-
     if (!isIceRecipe && !isHotRecipe) {
       alert("아이스와 핫 중 하나는 선택해주세요.");
       return false;
