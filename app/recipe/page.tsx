@@ -47,7 +47,7 @@ export default function RecipePage() {
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
-    <div className="pb-[88px]">
+    <div className="pb-[88px] flex justify-center items-center">
       <div className="flex flex-col">
         {myRecipeQuery.data?.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} summary />
@@ -56,7 +56,7 @@ export default function RecipePage() {
 
       <Link
         href="/recipe/add"
-        className="fixed bottom-[88px] flex py-[15px] px-[20px] bg-black rounded-3xl text-white self-center translate-x-[50%]"
+        className="fixed bottom-[88px] flex py-[15px] px-[20px] bg-black rounded-3xl text-white self-center"
         onClick={preventClick}
       >
         새로운 레시피 작성하기
