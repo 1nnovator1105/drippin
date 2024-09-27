@@ -12,15 +12,6 @@ export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Drippin - 드립커피 커뮤니티",
   description: "드립커피 커뮤니티 Drippin에서 이야기를 나눠보세요.",
-  openGraph: {
-    images: [
-      {
-        url: "https://rpahjyrtfkrbplntumfr.supabase.co/storage/v1/object/public/images/info/drippin-og-image.jpeg", // 썸네일 이미지 URL
-        width: 1200, // 이미지 너비
-        height: 630, // 이미지 높이
-      },
-    ],
-  },
 };
 
 export default function RootLayout({
