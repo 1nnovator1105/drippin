@@ -169,7 +169,7 @@ export default function LogAddPage() {
                 </div>
                 <textarea
                   ref={textareaRef}
-                  className="textarea textarea-bordered max-h-[300px] resize-none focus:outline-none focus:ring-0 focus:ring-offset-0"
+                  className="textarea textarea-bordered min-h-[300px] max-h-[300px] resize-none focus:outline-none focus:ring-0 focus:ring-offset-0"
                   placeholder="일지 내용"
                   value={logDescription}
                   onChange={handleDescriptionChange}
@@ -223,9 +223,9 @@ export default function LogAddPage() {
                 </div>
               </label>
 
-              <div className="flex justify-between items-center mt-[30px]">
+              <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn w-full btn-primary"
+                  className="btn w-full bg-[#2C2C2C] text-[#F5F5F5]"
                   onClick={() => setCurrentPage(2)}
                 >
                   다음
@@ -284,16 +284,16 @@ export default function LogAddPage() {
                 />
               </label>
 
-              <div className="flex justify-between items-center mt-[30px] gap-3">
+              <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-primary float-left flex-1"
+                  className="btn bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(1)}
                 >
                   이전
                 </button>
 
                 <button
-                  className="btn btn-primary float-right flex-1"
+                  className="btn bg-[#2C2C2C] text-[#F5F5F5] flex-1"
                   onClick={handleSubmit}
                 >
                   게시하기

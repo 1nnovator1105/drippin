@@ -269,7 +269,7 @@ export default function RecipePage() {
         </div>
 
         <div className="flex flex-col px-3 py-3 gap-3">
-          <div className="flex items-center gap-[6px]  text-sm">
+          <div className="flex items-center gap-[6px] text-sm">
             <div onClick={conditionLikeAction}>
               <LikeIcon
                 fill={isLiked ? "#1E1E1E" : "#FFF"}
@@ -299,11 +299,19 @@ export default function RecipePage() {
             </div>
           </div>
 
-          <div className="line-clamp-3 text-gray-900">
-            <span className="text-gray-500">
+          <div className="text-[#1E1E1E] text-base">
+            <span className="text-[#757575]">
               @{recipeQuery.data?.profiles?.handle}
             </span>{" "}
-            {recipeQuery.data?.recipe_description}
+            <div
+              dangerouslySetInnerHTML={{
+                __html:
+                  recipeQuery.data?.recipe_description?.replace(
+                    /\n/g,
+                    "<br/>",
+                  ) || "",
+              }}
+            />
           </div>
         </div>
       </div>
