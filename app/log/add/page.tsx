@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import imageCompression from "browser-image-compression";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
 
 export default function LogAddPage() {
   const supabase = useSupabaseBrowser();
@@ -60,6 +61,15 @@ export default function LogAddPage() {
       router.push("/log");
     },
   });
+
+  const resetImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setImageFile(null);
+    setImageUrl(null);
+    setSelectedImage(null);
+  };
 
   const handleSubmit = () => {
     if (coffeeName === "" || coffeePlace === "" || coffeeTags === "") {
@@ -191,14 +201,17 @@ export default function LogAddPage() {
                   />
                   {selectedImage ? (
                     <button
-                      className="w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
-                      onClick={handleFileUpload}
+                      className="relative w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
+                      onClick={resetImage}
                     >
                       <img
                         src={selectedImage}
                         alt="선택된 이미지"
                         className="w-full h-full object-cover"
                       />
+                      <div className="absolute top-5 right-4">
+                        <CircleCloseIcon />
+                      </div>
                     </button>
                   ) : (
                     <button

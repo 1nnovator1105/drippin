@@ -16,6 +16,7 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import CountdownTimer from "@/components/recipe/CountdownTimer";
 import { cn } from "@/utils/cn";
+import BackIcon from "@/components/icon/BackIcon";
 
 // recipe/[recipeId]
 export default function RecipeTimerPage() {
@@ -64,18 +65,7 @@ export default function RecipeTimerPage() {
     <>
       <div className="sticky top-0 flex flex-row gap-2 justify-between px-3 items-center text-xl font-bold z-[50] bg-white h-[52px] border-b-[1px] border-[#D9D9D9]">
         <div className="cursor-pointer" onClick={() => router.back()}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="15"
-            height="26"
-            viewBox="0 0 15 26"
-            fill="none"
-          >
-            <path
-              d="M12.75 25.5C12.5861 25.502 12.4235 25.4697 12.2728 25.4051C12.1221 25.3405 11.9866 25.2451 11.875 25.125L0.625 13.875C0.125 13.375 0.125 12.6 0.625 12.1L11.875 0.875C12.375 0.375 13.15 0.375 13.65 0.875C14.15 1.375 14.15 2.15 13.65 2.65L3.275 13L13.65 23.375C14.15 23.875 14.15 24.65 13.65 25.15C13.4 25.4 13.075 25.525 12.775 25.525L12.75 25.5Z"
-              fill="#1E1E1E"
-            />
-          </svg>
+          <BackIcon />
         </div>
       </div>
 

@@ -2,8 +2,6 @@ import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
-import { Suspense } from "react";
-import ClientSideScrollRestorer from "./ClientSideScrollRestorer";
 import Wrapper from "@/components/share/Wrapper";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -34,9 +32,6 @@ export default function RootLayout({
             <Wrapper>{children}</Wrapper>
           </ThemeProvider>
         </ReactQueryClientProvider>
-        <Suspense>
-          <ClientSideScrollRestorer />
-        </Suspense>
       </body>
     </html>
   );
