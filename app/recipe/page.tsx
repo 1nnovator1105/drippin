@@ -31,9 +31,6 @@ export default function RecipePage() {
         .eq("user_id", mySessionQuery.data?.session?.user.id!)
         .order("created_at", { ascending: false });
 
-      console.log("data");
-      console.log(data);
-
       return data;
     },
     enabled: !!mySessionQuery.data?.session?.user.id,

@@ -66,7 +66,10 @@ export default function CountdownTimer({
       <div className="flex flex-row flex-wrap gap-[10px] justify-center items-center px-[60px] mt-[15px]">
         {value.brewOption?.map((option) => {
           return (
-            <div className="border-[1px] border-[#1E1E1E] rounded-2xl px-2 py-1">
+            <div
+              key={`${index}-${tryCount}-${option.label}`}
+              className="border-[1px] border-[#1E1E1E] rounded-2xl px-2 py-1"
+            >
               {option.label}
             </div>
           );

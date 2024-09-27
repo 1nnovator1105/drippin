@@ -80,20 +80,27 @@ export default function RecipeTimerPage() {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
-          {brewingInfo.map((value: any, index: number) => (
-            <SwiperSlide key={index}>
-              <CountdownTimer
-                value={value}
-                index={index}
-                tryCount={tryCount}
-                onComplete={() => {
-                  setActiveIndex((prev) => prev + 1);
-                }}
-                isPlaying={activeIndex === index && isPlaying}
-                isLast={index === brewingInfo.length - 1}
-              />
-            </SwiperSlide>
-          ))}
+          {brewingInfo
+            .filter((value: any, index: number) => {
+              if (index === brewingInfo.length - 1) {
+                return true;
+              }
+              return value.time;
+            })
+            .map((value: any, index: number) => (
+              <SwiperSlide key={index}>
+                <CountdownTimer
+                  value={value}
+                  index={index}
+                  tryCount={tryCount}
+                  onComplete={() => {
+                    setActiveIndex((prev) => prev + 1);
+                  }}
+                  isPlaying={activeIndex === index && isPlaying}
+                  isLast={index === brewingInfo.length - 1}
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
 
         <div className="flex flex-row gap-3 justify-center items-center px-4">
