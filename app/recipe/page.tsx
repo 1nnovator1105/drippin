@@ -48,7 +48,7 @@ export default function RecipePage() {
 
   return (
     <div className="pb-[88px] flex justify-center items-center">
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         {myRecipeQuery.data?.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} summary />
         ))}

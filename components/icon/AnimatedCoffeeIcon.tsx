@@ -20,7 +20,7 @@ export default function AnimatedCoffeeIcon({
     >
       <path
         fill="currentColor"
-        fill-opacity="0"
+        fillOpacity="0"
         d="M17 14v4c0 1.66 -1.34 3 -3 3h-6c-1.66 0 -3 -1.34 -3 -3v-4Z"
       >
         <animate
@@ -34,30 +34,30 @@ export default function AnimatedCoffeeIcon({
       <g
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
       >
         <path
-          stroke-dasharray="48"
-          stroke-dashoffset="48"
+          strokeDasharray="48"
+          strokeDashoffset="48"
           d="M17 9v9c0 1.66 -1.34 3 -3 3h-6c-1.66 0 -3 -1.34 -3 -3v-9Z"
         >
           <animate
             fill="freeze"
-            attributeName="stroke-dashoffset"
+            attributeName="strokeDashoffset"
             dur="0.6s"
             values="48;0"
           />
         </path>
         <path
-          stroke-dasharray="14"
-          stroke-dashoffset="14"
+          strokeDasharray="14"
+          strokeDashoffset="14"
           d="M17 9h3c0.55 0 1 0.45 1 1v3c0 0.55 -0.45 1 -1 1h-3"
         >
           <animate
             fill="freeze"
-            attributeName="stroke-dashoffset"
+            attributeName="strokeDashoffset"
             begin="0.6s"
             dur="0.2s"
             values="14;0"
