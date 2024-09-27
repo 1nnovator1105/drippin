@@ -1,4 +1,5 @@
 import { cn } from "@/utils/cn";
+import { isMobile } from "react-device-detect";
 
 interface AnimatedCoffeeIconProps {
   className?: string;
@@ -9,6 +10,48 @@ export default function AnimatedCoffeeIcon({
   className,
   ...props
 }: AnimatedCoffeeIconProps) {
+  if (isMobile) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+        className={cn(className)}
+        {...props}
+      >
+        <path
+          fill="currentColor"
+          fillOpacity="0.3"
+          d="M17 14v4c0 1.66 -1.34 3 -3 3h-6c-1.66 0 -3 -1.34 -3 -3v-4Z"
+        />
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+        >
+          <path d="M17 9v9c0 1.66 -1.34 3 -3 3h-6c-1.66 0 -3 -1.34 -3 -3v-9Z" />
+          <path d="M17 9h3c0.55 0 1 0.45 1 1v3c0 0.55 -0.45 1 -1 1h-3" />
+          <mask id="lineMdCoffeeHalfEmptyTwotoneLoop0">
+            <path
+              stroke="#fff"
+              d="M8 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M16 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4"
+            />
+          </mask>
+          <rect
+            width="24"
+            height="5"
+            y="2"
+            fill="currentColor"
+            mask="url(#lineMdCoffeeHalfEmptyTwotoneLoop0)"
+          />
+        </g>
+      </svg>
+    );
+  }
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

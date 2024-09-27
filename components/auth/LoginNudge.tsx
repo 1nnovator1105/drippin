@@ -3,7 +3,7 @@ import AnimatedCoffeeIcon from "../icon/AnimatedCoffeeIcon";
 
 export default function LoginNudge() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-8">
+    <div className="flex flex-col items-center justify-center h-full gap-8">
       <AnimatedCoffeeIcon className="size-10" />
       <div className="flex flex-col items-center justify-center text-center font-bold text-2xl">
         <div>서비스를 이용하려면</div>
