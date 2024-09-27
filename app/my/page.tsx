@@ -8,6 +8,7 @@ import AnimatedCoffeeIcon from "@/components/icon/AnimatedCoffeeIcon";
 import { useEffect, useState } from "react";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spiner";
+import Header from "@/components/share/Header";
 
 export default function MyPage() {
   const supabase = useSupabaseBrowser();
@@ -94,6 +95,7 @@ export default function MyPage() {
 
   return (
     <>
+      <Header title="내정보" />
       <div className="px-4 py-2">
         <label className="form-control w-full">
           <div className="label flex flex-col items-start justify-start">
