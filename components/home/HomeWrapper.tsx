@@ -1,21 +1,19 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import SearchIcon from "../icon/SearchIcon";
+import { useEffect, useRef, useState } from "react";
 import RecipeCard from "../share/RecipeCard";
 import LogCard from "./LogCard";
 import { cn } from "@/utils/cn";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { usePathname, useSearchParams } from "next/navigation";
-import { ArrowDownIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export default function HomeWrapper() {
   const supabase = useSupabaseBrowser();
-  const [selectedTab, setSelectedTab] = useState<string>("레시피");
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
-  const pathname = usePathname();
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const [selectedTab, setSelectedTab] = useState<string>(
+    searchParams.get("tab") || "레시피",
+  );
 
   const recipeFeedQuery = useQuery({
     queryKey: ["drippin", "feed", "recipe"],
@@ -40,6 +38,16 @@ export default function HomeWrapper() {
       return data;
     },
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("tab", selectedTab);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${params}`,
+    );
+  }, [selectedTab]);
 
   return (
     <div className="flex flex-col pb-[88px]">
@@ -91,7 +99,7 @@ export default function HomeWrapper() {
         </div> */}
       </div>
 
-      <div className="w-full" ref={scrollRef}>
+      <div className="w-full">
         {selectedTab === "레시피" && (
           <div id="slide1" className="relative w-full flex-col flex">
             {recipeFeedQuery.data?.map((recipe) => (

@@ -11,6 +11,7 @@ import Link from "next/link";
 import DefaultThumbnail from "./DefaultThumbnail";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSupabaseBrowser from "@/utils/supabase/client";
+import { usePathname, useRouter } from "next/navigation";
 
 interface RecipeCardProps {
   recipe: Database["public"]["Tables"]["recipes"]["Row"];
@@ -19,7 +20,8 @@ interface RecipeCardProps {
 
 export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
   const supabase = useSupabaseBrowser();
-  const [isActive, setIsActive] = useState(false);
+  const nowPageUrl = usePathname();
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mySessionQuery = useQuery({
@@ -86,7 +88,10 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
     e.preventDefault();
 
     if (!mySessionQuery.data?.session) {
-      alert("로그인이 필요합니다.");
+      const isConfirm = confirm("로그인하시겠어요?");
+      if (isConfirm) {
+        router.push("/my");
+      }
       return;
     }
 
@@ -97,13 +102,13 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
     }
   };
 
+  const qs = nowPageUrl === "/" ? `?from=home` : "";
+
   return (
     <Link
-      href={`/recipe/${recipe.id}`}
+      href={`/recipe/${recipe.id}${qs}`}
       scroll={false}
       className="cursor-pointer w-full select-none"
-      onMouseEnter={() => setIsActive(true)}
-      onMouseLeave={() => setIsActive(false)}
     >
       <div>
         <div className={"flex flex-col"}>

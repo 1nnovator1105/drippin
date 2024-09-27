@@ -7,6 +7,7 @@ import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { cn } from "@/utils/cn";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   log: Tables<"logs">;
@@ -15,8 +16,9 @@ interface Props {
 
 export default function LogCard({ log, summary }: Props) {
   const supabase = useSupabaseBrowser();
-
+  const router = useRouter();
   const queryClient = useQueryClient();
+  const nowPageUrl = usePathname();
 
   const mySessionQuery = useQuery({
     queryKey: ["session"],
@@ -67,7 +69,10 @@ export default function LogCard({ log, summary }: Props) {
     e.preventDefault();
 
     if (!mySessionQuery.data?.session) {
-      alert("로그인이 필요합니다.");
+      const isConfirm = confirm("로그인하시겠어요?");
+      if (isConfirm) {
+        router.push("/my");
+      }
       return;
     }
 
@@ -78,8 +83,14 @@ export default function LogCard({ log, summary }: Props) {
     }
   };
 
+  const qs = nowPageUrl === "/" ? `?from=home` : "";
+
   return (
-    <Link href={`/log/${log.id}`} className="cursor-pointer w-full">
+    <Link
+      href={`/log/${log.id}${qs}`}
+      className="cursor-pointer w-full"
+      scroll={false}
+    >
       <div>
         <div className="flex flex-col">
           {!summary && (

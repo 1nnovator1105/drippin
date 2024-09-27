@@ -9,7 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 
 export default function LogDetailPage() {
@@ -17,6 +17,7 @@ export default function LogDetailPage() {
   const supabase = useSupabaseBrowser();
   const queryClient = useQueryClient();
   const router = useRouter();
+  const qs = useSearchParams();
 
   const logQuery = useQuery({
     queryKey: ["drippin", "log", logId],
@@ -95,7 +96,10 @@ export default function LogDetailPage() {
     e.preventDefault();
 
     if (!mySessionQuery.data?.session) {
-      alert("로그인이 필요합니다.");
+      const isConfirm = confirm("로그인하시겠어요?");
+      if (isConfirm) {
+        router.push("/my");
+      }
       return;
     }
 
@@ -108,7 +112,10 @@ export default function LogDetailPage() {
 
   const deleteRecipe = () => {
     if (!mySessionQuery.data?.session) {
-      alert("로그인이 필요합니다.");
+      const isConfirm = confirm("로그인하시겠어요?");
+      if (isConfirm) {
+        router.push("/my");
+      }
       return;
     }
 
@@ -148,23 +155,23 @@ export default function LogDetailPage() {
                 <path
                   d="M10 4.0625C10.5178 4.0625 10.9375 3.64277 10.9375 3.125C10.9375 2.60723 10.5178 2.1875 10 2.1875C9.48223 2.1875 9.0625 2.60723 9.0625 3.125C9.0625 3.64277 9.48223 4.0625 10 4.0625Z"
                   stroke="#1E1E1E"
-                  stroke-width="1.875"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.875"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M10 10.9375C10.5178 10.9375 10.9375 10.5178 10.9375 10C10.9375 9.48223 10.5178 9.0625 10 9.0625C9.48223 9.0625 9.0625 9.48223 9.0625 10C9.0625 10.5178 9.48223 10.9375 10 10.9375Z"
                   stroke="#1E1E1E"
-                  stroke-width="1.875"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.875"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M10 17.8125C10.5178 17.8125 10.9375 17.3928 10.9375 16.875C10.9375 16.3572 10.5178 15.9375 10 15.9375C9.48223 15.9375 9.0625 16.3572 9.0625 16.875C9.0625 17.3928 9.48223 17.8125 10 17.8125Z"
                   stroke="#1E1E1E"
-                  stroke-width="1.875"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.875"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </summary>
@@ -178,21 +185,21 @@ export default function LogDetailPage() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="relative w-full aspect-[1/1]">
-          {logQuery.data?.image_url ? (
+        {logQuery.data?.image_url ? (
+          <div className="relative w-full aspect-[1/1]">
             <Image
               src={logQuery.data?.image_url}
               alt="log"
               className="w-full h-full object-cover"
               fill
             />
-          ) : (
-            <DefaultThumbnail
-              title={`${logQuery.data?.coffee_place}에서 마신 ${logQuery.data?.coffee_name}`}
-              handle={logQuery.data?.profiles?.handle || ""}
-            />
-          )}
-        </div>
+          </div>
+        ) : (
+          <DefaultThumbnail
+            title={`${logQuery.data?.coffee_place}에서 마신 ${logQuery.data?.coffee_name}`}
+            handle={logQuery.data?.profiles?.handle || ""}
+          />
+        )}
 
         <div className="flex flex-col px-3 py-3 gap-3">
           <div className="flex items-center gap-[6px]">

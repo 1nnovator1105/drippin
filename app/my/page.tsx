@@ -92,55 +92,56 @@ export default function MyPage() {
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
-    <div className="px-4 py-2">
-      <label className="form-control w-full">
-        <div className="label flex flex-col items-start justify-start">
-          <p className="label-text">이름</p>
-        </div>
-        <input
-          type="text"
-          placeholder="이름"
-          className="input input-bordered w-full focus:outline-none"
-          value={myProfileQuery.data?.user_name || ""}
-          disabled
-          readOnly
-        />
-      </label>
+    <>
+      <div className="px-4 py-2">
+        <label className="form-control w-full">
+          <div className="label flex flex-col items-start justify-start">
+            <p className="label-text">이름</p>
+          </div>
+          <input
+            type="text"
+            placeholder="이름"
+            className="input input-bordered w-full focus:outline-none"
+            value={myProfileQuery.data?.user_name || ""}
+            disabled
+            readOnly
+          />
+        </label>
 
-      <label className="form-control w-full mt-4">
-        <div className="label flex flex-col items-start justify-start">
-          <p className="label-text">이메일</p>
-        </div>
-        <input
-          type="text"
-          placeholder="이메일"
-          className="input input-bordered w-full focus:outline-none"
-          value={myProfileQuery.data?.email || ""}
-          readOnly
-          disabled
-        />
-      </label>
+        <label className="form-control w-full mt-4">
+          <div className="label flex flex-col items-start justify-start">
+            <p className="label-text">이메일</p>
+          </div>
+          <input
+            type="text"
+            placeholder="이메일"
+            className="input input-bordered w-full focus:outline-none"
+            value={myProfileQuery.data?.email || ""}
+            readOnly
+            disabled
+          />
+        </label>
 
-      <label className="form-control w-full mt-4">
-        <div className="label flex flex-row items-start justify-between items-center">
-          <p className="label-text">닉네임</p>
-          <button
-            className="btn btn-sm btn-outline bg-black text-white"
-            onClick={updateHandle}
-          >
-            변경하기
-          </button>
-        </div>
-        <input
-          type="text"
-          placeholder="닉네임"
-          className="input input-bordered w-full focus:outline-none"
-          value={newHandle || ""}
-          onChange={onChangeNewHandle}
-        />
-      </label>
-
-      <div className="fixed bottom-[88px] flex justify-center items-center w-full self-center">
+        <label className="form-control w-full mt-4">
+          <div className="label flex flex-row items-start justify-between items-center">
+            <p className="label-text">닉네임</p>
+            <button
+              className="btn btn-sm btn-outline bg-black text-white"
+              onClick={updateHandle}
+            >
+              변경하기
+            </button>
+          </div>
+          <input
+            type="text"
+            placeholder="닉네임"
+            className="input input-bordered w-full focus:outline-none"
+            value={newHandle || ""}
+            onChange={onChangeNewHandle}
+          />
+        </label>
+      </div>
+      <div className="fixed bottom-[88px] flex justify-center items-center w-full max-w-xl self-center">
         <button
           className="btn btn-sm btn-outline border-[#999999] p-2 text-[#999999]"
           onClick={handleSignOut}
@@ -148,6 +149,6 @@ export default function MyPage() {
           로그아웃
         </button>
       </div>
-    </div>
+    </>
   );
 }

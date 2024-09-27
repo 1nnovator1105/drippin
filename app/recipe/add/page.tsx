@@ -476,8 +476,7 @@ export default function RecipeAddPage() {
                 </div>
               </label>
 
-              <div className="sticky bottom-0">
-                {/* 오른쪽 버튼 */}
+              <div className="fixed bottom-[88px] right-4">
                 <button
                   className="btn btn-md btn-primary float-right"
                   onClick={() => setCurrentPage(2)}
@@ -587,14 +586,15 @@ export default function RecipeAddPage() {
                 </div>
               </div>
 
-              <div className="sticky bottom-0">
+              <div className="fixed bottom-[88px] left-4">
                 <button
                   className="btn btn-md btn-primary float-left"
                   onClick={() => setCurrentPage(1)}
                 >
                   이전
                 </button>
-
+              </div>
+              <div className="fixed bottom-[88px] right-4">
                 <button
                   className="btn btn-md btn-primary float-right"
                   onClick={() => setCurrentPage(3)}
@@ -689,6 +689,23 @@ export default function RecipeAddPage() {
                   })}
                 </ul>
               </div>
+
+              <div className="fixed bottom-[88px] left-4">
+                <button
+                  className="btn btn-md btn-primary float-left"
+                  onClick={() => setCurrentPage(2)}
+                >
+                  이전
+                </button>
+              </div>
+              <div className="fixed bottom-[88px] right-4">
+                <button
+                  className="btn btn-md btn-primary float-right"
+                  onClick={() => setCurrentPage(4)}
+                >
+                  다음
+                </button>
+              </div>
             </div>
           )}
 
@@ -756,14 +773,15 @@ export default function RecipeAddPage() {
                 </div>
               </label>
 
-              <div className="flex justify-between items-center mt-[30px]">
+              <div className="fixed bottom-[88px] left-4">
                 <button
-                  className="btn btn-md btn-primary"
+                  className="btn btn-md btn-primary float-left"
                   onClick={() => setCurrentPage(3)}
                 >
                   이전
                 </button>
-
+              </div>
+              <div className="fixed bottom-[88px] right-4">
                 <button
                   className="btn btn-md btn-primary"
                   onClick={handleSubmit}
