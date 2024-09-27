@@ -37,7 +37,7 @@ export default function LogPage() {
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
-    <div className="pb-[88px]">
+    <div className="pb-[88px] flex justify-center items-center">
       <div className="flex flex-col">
         {myLogQuery.data?.map((log) => (
           <LogCard key={log.id} log={log} summary />
@@ -46,7 +46,7 @@ export default function LogPage() {
 
       <Link
         href="/log/add"
-        className="fixed bottom-[88px] flex py-[15px] px-[20px] bg-black rounded-3xl text-white self-center translate-x-[50%]"
+        className="fixed bottom-[88px] flex py-[15px] px-[20px] bg-black rounded-3xl text-white self-center"
       >
         새로운 일지 작성하기
       </Link>

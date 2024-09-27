@@ -203,7 +203,7 @@ export default function InfoTimeline({
                   <label className="form-control w-full">
                     <div className="label">
                       <span className="label-text">
-                        다음 푸어까지 몇 초 동안 기다릴까요?
+                        다음 푸어까지 몇 초 동안 소요되나요?
                       </span>
                     </div>
                     <input

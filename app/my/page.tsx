@@ -100,7 +100,7 @@ export default function MyPage() {
         <input
           type="text"
           placeholder="이름"
-          className="input input-bordered w-full focus:outline-none max-w-xs"
+          className="input input-bordered w-full focus:outline-none"
           value={myProfileQuery.data?.user_name || ""}
           disabled
           readOnly
@@ -114,7 +114,7 @@ export default function MyPage() {
         <input
           type="text"
           placeholder="이메일"
-          className="input input-bordered w-full focus:outline-none max-w-xs"
+          className="input input-bordered w-full focus:outline-none"
           value={myProfileQuery.data?.email || ""}
           readOnly
           disabled
@@ -122,19 +122,19 @@ export default function MyPage() {
       </label>
 
       <label className="form-control w-full mt-4">
-        <div className="label flex flex-row items-start justify-between max-w-xs items-center">
+        <div className="label flex flex-row items-start justify-between items-center">
           <p className="label-text">닉네임</p>
           <button
             className="btn btn-sm btn-outline bg-black text-white"
             onClick={updateHandle}
           >
-            저장하기
+            변경하기
           </button>
         </div>
         <input
           type="text"
           placeholder="닉네임"
-          className="input input-bordered w-full focus:outline-none max-w-xs"
+          className="input input-bordered w-full focus:outline-none"
           value={newHandle || ""}
           onChange={onChangeNewHandle}
         />

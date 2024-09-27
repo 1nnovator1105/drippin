@@ -97,4 +97,19 @@
   .timeline-vertical > li > hr {
     @apply w-[0.5px] bg-primary !important;
   }
+
+  details > summary {
+    list-style: none;
+  }
+
+  details > summary::marker, /* Latest Chrome, Edge, Firefox */ 
+  details > summary::-webkit-details-marker /* Safari */ {
+    display: none;
+  }
+
+  .swiper .swiper-pagination {
+    position: absolute;
+    bottom: 0px !important;
+    top: 0px !important;
+  }
 }
