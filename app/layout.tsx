@@ -10,6 +10,7 @@ import BottomTabNav from "@/components/nav/BottomTabNav";
 import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
 import { Suspense } from "react";
 import ClientSideScrollRestorer from "./ClientSideScrollRestorer";
+import { pretendard } from "@/styles/fonts";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -36,7 +37,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col h-screen max-w-xl mx-auto">
+            <div
+              className={`flex flex-col h-screen max-w-xl mx-auto ${pretendard.variable} font-pretendard`}
+            >
+              <style jsx global>
+                {`:root { --font-pretendard: ${pretendard.style.fontFamily};}}`}
+              </style>
               <div className="flex-1 pb-[72px] border-x-[1px]">{children}</div>
               <BottomTabNav />
             </div>
