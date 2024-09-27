@@ -98,7 +98,12 @@ export default function RecipePage() {
     },
   });
 
-  const deteRecipe = () => {
+  const deteteRecipe = () => {
+    if (!mySessionQuery.data?.session) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
     deleteMutate.mutate();
   };
 
@@ -124,7 +129,10 @@ export default function RecipePage() {
     e.stopPropagation();
     e.preventDefault();
 
-    console.log("isLiked", isLiked);
+    if (!mySessionQuery.data?.session) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
 
     if (isLiked) {
       unlikeMutate.mutate();
@@ -153,69 +161,74 @@ export default function RecipePage() {
           </svg>
         </div>
 
-        <details className="dropdown dropdown-end cursor-pointer">
-          <summary className="border-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                d="M10 4.0625C10.5178 4.0625 10.9375 3.64277 10.9375 3.125C10.9375 2.60723 10.5178 2.1875 10 2.1875C9.48223 2.1875 9.0625 2.60723 9.0625 3.125C9.0625 3.64277 9.48223 4.0625 10 4.0625Z"
-                stroke="#1E1E1E"
-                stroke-width="1.875"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M10 10.9375C10.5178 10.9375 10.9375 10.5178 10.9375 10C10.9375 9.48223 10.5178 9.0625 10 9.0625C9.48223 9.0625 9.0625 9.48223 9.0625 10C9.0625 10.5178 9.48223 10.9375 10 10.9375Z"
-                stroke="#1E1E1E"
-                stroke-width="1.875"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M10 17.8125C10.5178 17.8125 10.9375 17.3928 10.9375 16.875C10.9375 16.3572 10.5178 15.9375 10 15.9375C9.48223 15.9375 9.0625 16.3572 9.0625 16.875C9.0625 17.3928 9.48223 17.8125 10 17.8125Z"
-                stroke="#1E1E1E"
-                stroke-width="1.875"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </summary>
-          <ul className="menu dropdown-content bg-base-100 rounded-box min-w-[83px] z-[1] p-3 shadow top-[30px] rounded-lg">
-            <li className="text-center" onClick={deteRecipe}>
-              삭제하기
-            </li>
-          </ul>
-        </details>
+        {mySessionQuery.data?.session?.user.id ===
+          recipeQuery.data?.user_id && (
+          <details className="dropdown dropdown-end cursor-pointer">
+            <summary className="border-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M10 4.0625C10.5178 4.0625 10.9375 3.64277 10.9375 3.125C10.9375 2.60723 10.5178 2.1875 10 2.1875C9.48223 2.1875 9.0625 2.60723 9.0625 3.125C9.0625 3.64277 9.48223 4.0625 10 4.0625Z"
+                  stroke="#1E1E1E"
+                  stroke-width="1.875"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10 10.9375C10.5178 10.9375 10.9375 10.5178 10.9375 10C10.9375 9.48223 10.5178 9.0625 10 9.0625C9.48223 9.0625 9.0625 9.48223 9.0625 10C9.0625 10.5178 9.48223 10.9375 10 10.9375Z"
+                  stroke="#1E1E1E"
+                  stroke-width="1.875"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10 17.8125C10.5178 17.8125 10.9375 17.3928 10.9375 16.875C10.9375 16.3572 10.5178 15.9375 10 15.9375C9.48223 15.9375 9.0625 16.3572 9.0625 16.875C9.0625 17.3928 9.48223 17.8125 10 17.8125Z"
+                  stroke="#1E1E1E"
+                  stroke-width="1.875"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </summary>
+            <ul className="menu dropdown-content bg-base-100 rounded-box min-w-[83px] z-[1] p-3 shadow top-[30px] rounded-lg">
+              <li className="text-center" onClick={deteteRecipe}>
+                삭제하기
+              </li>
+            </ul>
+          </details>
+        )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <div
-          className={cn(
-            "relative w-full",
-            recipeQuery.data?.image_url ? "aspect-[1/1]" : "h-[170px]",
-          )}
-        >
-          {recipeQuery.data?.image_url ? (
-            <Image
-              src={recipeQuery.data?.image_url}
-              alt="recipe image"
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <DefaultThumbnail
-              title={recipeQuery.data?.recipe_name || ""}
-              handle={recipeQuery.data?.profiles?.handle || ""}
-            />
-          )}
+        <div>
+          <div
+            className={cn(
+              "relative w-full",
+              recipeQuery.data?.image_url ? "aspect-[1/1]" : "h-[170px]",
+            )}
+          >
+            {recipeQuery.data?.image_url ? (
+              <Image
+                src={recipeQuery.data?.image_url}
+                alt="recipe image"
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <DefaultThumbnail
+                title={recipeQuery.data?.recipe_name || ""}
+                handle={recipeQuery.data?.profiles?.handle || ""}
+              />
+            )}
+          </div>
           <Link
-            href={`/recipe/${recipeId}/timer`}
-            className="absolute flex flex-row justify-center items-center bottom-0 left-0 w-full h-[50px] bg-[#2C2C2C] gap-2 cursor-pointer"
+            href={`/recipe/${recipeId}/onboarding`}
+            className="flex flex-row justify-center items-center bottom-0 left-0 w-full h-[50px] bg-[#2C2C2C] gap-2 cursor-pointer"
           >
             <div>
               <svg

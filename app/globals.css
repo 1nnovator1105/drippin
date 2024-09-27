@@ -108,8 +108,8 @@
   }
 
   .swiper .swiper-pagination {
-    position: absolute;
     bottom: 0px !important;
     top: 0px !important;
+    height: fit-content !important;
   }
 }

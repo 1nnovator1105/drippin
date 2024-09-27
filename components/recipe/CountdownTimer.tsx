@@ -34,18 +34,23 @@ export default function CountdownTimer({
 
   return (
     <div className="flex justify-center items-center py-10 flex-col">
-      {!isLast && (
-        <div className="flex flex-col justify-center items-center text-2xl mb-[30px]">
-          <div>{remainingTime}초 동안</div>
-          <div>{value.water}g의 물을 붓고 기다려주세요</div>
-        </div>
-      )}
+      <div className="flex flex-col justify-center items-center text-2xl mb-[30px]">
+        {!isLast ? (
+          <>
+            <div>{remainingTime}초 동안</div>
+            <div>{value.water}g의 물을 붓고 기다려주세요</div>
+          </>
+        ) : (
+          <div>추출이 완료되었어요!</div>
+        )}
+      </div>
+
       <CountdownCircleTimer
         key={`${index}-${tryCount}`}
         isPlaying={isPlaying}
         duration={value.time ?? 0}
         initialRemainingTime={value.time ?? 0}
-        colors={["#00a323", "#F7B801", "#A30000", "#A30000"]}
+        colors={["#EBA15B", "#C0844B", "#9E6C3E", "#7C5530"]}
         colorsTime={[
           value?.time ?? 0,
           (value?.time ?? 0) / 2,

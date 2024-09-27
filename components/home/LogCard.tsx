@@ -66,6 +66,11 @@ export default function LogCard({ log, summary }: Props) {
     e.stopPropagation();
     e.preventDefault();
 
+    if (!mySessionQuery.data?.session) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
     if (isLiked) {
       unlikeMutate.mutate();
     } else {
