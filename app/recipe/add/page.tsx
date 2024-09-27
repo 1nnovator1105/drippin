@@ -323,7 +323,7 @@ export default function RecipeAddPage() {
 
   useEffect(() => {
     // 세션이 없으면 이전 페이지로 이동
-    if (!mySessionQuery.data?.session?.user) {
+    if (mySessionQuery.isSuccess && !mySessionQuery.data?.session?.user) {
       router.back();
     }
   }, [mySessionQuery.data?.session?.user]);
@@ -395,7 +395,7 @@ export default function RecipeAddPage() {
         </div>
       </div>
       <div className="flex flex-1 p-3">
-        <div className="carousel w-full" onScroll={handleScroll}>
+        <div className="carousel w-full pb-[88px]" onScroll={handleScroll}>
           {/* 1번 페이지 */}
           {currentPage === 1 && (
             <div className="carousel-item flex flex-col w-full gap-4">
@@ -476,9 +476,9 @@ export default function RecipeAddPage() {
                 </div>
               </label>
 
-              <div className="fixed bottom-[88px] right-4">
+              <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary float-right"
+                  className="btn btn-md btn-primary flex-1"
                   onClick={() => setCurrentPage(2)}
                 >
                   다음
@@ -586,17 +586,16 @@ export default function RecipeAddPage() {
                 </div>
               </div>
 
-              <div className="fixed bottom-[88px] left-4">
+              <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary float-left"
+                  className="btn btn-md btn-primary flex-1"
                   onClick={() => setCurrentPage(1)}
                 >
                   이전
                 </button>
-              </div>
-              <div className="fixed bottom-[88px] right-4">
+
                 <button
-                  className="btn btn-md btn-primary float-right"
+                  className="btn btn-md btn-primary flex-1"
                   onClick={() => setCurrentPage(3)}
                 >
                   다음
@@ -690,17 +689,16 @@ export default function RecipeAddPage() {
                 </ul>
               </div>
 
-              <div className="fixed bottom-[88px] left-4">
+              <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary float-left"
+                  className="btn btn-md btn-primary flex-1"
                   onClick={() => setCurrentPage(2)}
                 >
                   이전
                 </button>
-              </div>
-              <div className="fixed bottom-[88px] right-4">
+
                 <button
-                  className="btn btn-md btn-primary float-right"
+                  className="btn btn-md btn-primary flex-1"
                   onClick={() => setCurrentPage(4)}
                 >
                   다음
@@ -773,17 +771,16 @@ export default function RecipeAddPage() {
                 </div>
               </label>
 
-              <div className="fixed bottom-[88px] left-4">
+              <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary float-left"
+                  className="btn btn-md btn-primary flex-1"
                   onClick={() => setCurrentPage(3)}
                 >
                   이전
                 </button>
-              </div>
-              <div className="fixed bottom-[88px] right-4">
+
                 <button
-                  className="btn btn-md btn-primary"
+                  className="btn btn-md btn-primary flex-1"
                   onClick={handleSubmit}
                 >
                   게시하기

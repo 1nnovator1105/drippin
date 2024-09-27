@@ -144,7 +144,7 @@ export default function LogAddPage() {
 
   useEffect(() => {
     // 세션이 없으면 이전 페이지로 이동
-    if (!mySessionQuery.data?.session?.user) {
+    if (mySessionQuery.isSuccess && !mySessionQuery.data?.session?.user) {
       router.back();
     }
   }, [mySessionQuery.data?.session?.user]);
