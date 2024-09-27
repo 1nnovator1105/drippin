@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spiner";
+import Header from "@/components/share/Header";
 
 export default function RecipePage() {
   const supabase = useSupabaseBrowser();
@@ -47,7 +48,9 @@ export default function RecipePage() {
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
-    <div className="pb-[88px] flex justify-center items-center">
+    <div className="pb-[88px] flex flex-col justify-center items-center">
+      <Header title="레시피" />
+
       <div className="flex flex-col w-full">
         {myRecipeQuery.data?.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} summary />

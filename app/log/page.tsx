@@ -2,6 +2,7 @@
 
 import LoginNudge from "@/components/auth/LoginNudge";
 import LogCard from "@/components/home/LogCard";
+import Header from "@/components/share/Header";
 import Spinner from "@/components/share/Spiner";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -44,7 +45,9 @@ export default function LogPage() {
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
-    <div className="pb-[88px] flex justify-center items-center">
+    <div className="pb-[88px] flex flex-col justify-center items-center">
+      <Header title="일지" />
+
       <div className="flex flex-col w-full">
         {myLogQuery.data?.map((log) => (
           <LogCard key={log.id} log={log} summary />
