@@ -233,16 +233,6 @@ export default function RecipeAddPage() {
       return false;
     }
 
-    if (!dripper) {
-      alert("드리퍼를 선택해주세요.");
-      return false;
-    }
-
-    if (!filter) {
-      alert("필터를 선택해주세요.");
-      return false;
-    }
-
     if (!coffeeAmount) {
       alert("커피의 양을 입력해주세요.");
       return false;
@@ -268,6 +258,15 @@ export default function RecipeAddPage() {
       return false;
     }
 
+    const copyBrewInfoWithoutLast = brewingInfo.slice(0, -1);
+    const noTimeBrewInfo = copyBrewInfoWithoutLast.filter(
+      (info) => info.time === null,
+    );
+
+    if (noTimeBrewInfo.length > 0) {
+      alert("모든 시간을 입력해주세요.");
+      return false;
+    }
     if (!recipeDescription) {
       alert("레시피 설명을 입력해주세요.");
       return false;
@@ -280,21 +279,6 @@ export default function RecipeAddPage() {
     if (!validateForSubmit()) {
       return;
     }
-
-    console.log("레시피 이름", recipeName);
-    console.log("드리퍼", dripper);
-    console.log("필터", filter);
-    console.log("물과 커피의 비율", coffeeAmount, waterAmount);
-    console.log("물의 온도", waterTemperature);
-    console.log("원두 분쇄도", grindStep);
-    console.log("원두 분쇄도 메모", grindStepMemo);
-    console.log("블루밍", isNoBloom);
-    console.log("물을 몇 번 부었나요?", pourCount);
-
-    console.log("추출 정보", brewingInfo);
-
-    console.log("레시피 설명", recipeDescription);
-    console.log("이미지", imageFile);
 
     recipeMutation.mutate();
   };
@@ -344,53 +328,53 @@ export default function RecipeAddPage() {
           >
             <div
               className={cn(
-                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5]",
+                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5] font-bold text-lg",
                 currentPage === 1 && "bg-black text-white",
               )}
               onClick={() => setCurrentPage(1)}
             >
               1
             </div>
-            <div className="mt-1">기본 정보</div>
+            <div className="mt-1 text-xs text-[#000]">기본 정보</div>
           </div>
 
           <div className="w-[72px] flex justify-center items-center flex-col">
             <div
               className={cn(
-                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5]",
+                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5]  font-bold text-lg",
                 currentPage === 2 && "bg-black text-white",
               )}
               onClick={() => setCurrentPage(2)}
             >
               2
             </div>
-            <div className="mt-1">물과 원두</div>
+            <div className="mt-1 text-xs text-[#000]">물과 원두</div>
           </div>
 
           <div className="w-[72px] flex justify-center items-center flex-col">
             <div
               className={cn(
-                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5]",
+                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5] font-bold text-lg",
                 currentPage === 3 && "bg-black text-white",
               )}
               onClick={() => setCurrentPage(3)}
             >
               3
             </div>
-            <div className="mt-1">추출</div>
+            <div className="mt-1 text-xs text-[#000]">추출</div>
           </div>
 
           <div className="w-[72px] flex justify-center items-center flex-col">
             <div
               className={cn(
-                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5]",
+                "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5] font-bold text-lg",
                 currentPage === 4 && "bg-black text-white",
               )}
               onClick={() => setCurrentPage(4)}
             >
               4
             </div>
-            <div className="mt-1">추가 정보</div>
+            <div className="mt-1 text-xs text-[#000]">추가 정보</div>
           </div>
         </div>
       </div>
@@ -402,7 +386,10 @@ export default function RecipeAddPage() {
               <div>
                 <label className="form-control w-full">
                   <div className="label flex flex-col items-start justify-start">
-                    <p className="label-text">레시피 이름을 알려주세요.</p>
+                    <p className="label-text text-base">
+                      레시피 이름을 알려주세요.
+                      <span className="text-red-500 px-1">*</span>
+                    </p>
                     <p className="label-text text-xs text-gray-500">
                       여기서 레시피란 드립커피의 추출 방법을 말해요.
                     </p>
@@ -420,7 +407,9 @@ export default function RecipeAddPage() {
               <div>
                 <label className={"form-control w-full"}>
                   <div className="label flex justify-between items-center">
-                    <p className="label-text">어떤 드리퍼를 사용했나요?</p>
+                    <p className="label-text text-base">
+                      어떤 드리퍼를 사용했나요?
+                    </p>
                   </div>
                   <CreatableSelector
                     value={dripper}
@@ -434,7 +423,9 @@ export default function RecipeAddPage() {
               <div>
                 <label className={"form-control w-full"}>
                   <div className="label flex justify-between items-center">
-                    <p className="label-text">어떤 필터를 사용했나요?</p>
+                    <p className="label-text text-base">
+                      어떤 필터를 사용했나요?
+                    </p>
                   </div>
                   <CreatableSelector
                     value={filter}
@@ -447,7 +438,10 @@ export default function RecipeAddPage() {
 
               <label className="max-w-xs">
                 <div className="label flex justify-between items-center">
-                  <p className="label-text">어떤 온도에 잘 어울리나요?</p>
+                  <p className="label-text text-base">
+                    어떤 온도에 잘 어울리나요?
+                    <span className="text-red-500 px-1">*</span>
+                  </p>
                 </div>
 
                 <div className="flex flex-col gap-1">
@@ -459,7 +453,7 @@ export default function RecipeAddPage() {
                         checked={isIceRecipe}
                         onChange={() => setIsIceRecipe(!isIceRecipe)}
                       />
-                      <span className="label-text">아이스 🧊</span>
+                      <span className="label-text text-base">아이스 🧊</span>
                     </label>
                   </div>
                   <div className="form-control">
@@ -470,7 +464,7 @@ export default function RecipeAddPage() {
                         checked={isHotRecipe}
                         onChange={() => setIsHotRecipe(!isHotRecipe)}
                       />
-                      <span className="label-text">핫 🔥</span>
+                      <span className="label-text text-base">핫 🔥</span>
                     </label>
                   </div>
                 </div>
@@ -492,7 +486,10 @@ export default function RecipeAddPage() {
             <div className="carousel-item flex flex-col w-full">
               <div>
                 <div className="label">
-                  <p className="label-text">커피와 물의 비율을 알려주세요.</p>
+                  <p className="label-text text-base">
+                    커피와 물의 비율을 알려주세요.
+                    <span className="text-red-500 px-1">*</span>
+                  </p>
                 </div>
                 <div className="flex w-full">
                   <div>
@@ -505,42 +502,42 @@ export default function RecipeAddPage() {
                         onChange={onChangeCoffeeAmount}
                       />
                     </div>
-                    <div className="label-text text-center mt-1">
+                    <div className="label-text text-center mt-1 text-xs">
                       커피의 양(g)
                     </div>
                   </div>
 
-                  <div className="justify-center items-center flex h-20 min-w-[40px] px-[11px]">
+                  <div className="justify-center items-center flex h-20 min-w-[40px] px-[11px] text-lg font-bold">
                     {showRatio &&
                       `1:${(Number(waterAmount) / Number(coffeeAmount)).toFixed(1).replace(/\.0$/, "")}`}
                   </div>
 
                   <div>
-                    <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center">
+                    <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center text-base">
                       <Input
                         type="number"
                         placeholder="0"
-                        className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-base"
                         value={waterAmount ?? ""}
                         onChange={onChangeWaterAmount}
                       />
                     </div>
-                    <div className="label-text text-center mt-1">
+                    <div className="label-text text-center mt-1 text-xs">
                       물의 양(g)
                     </div>
                   </div>
 
                   <div>
-                    <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center">
+                    <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center text-base">
                       <Input
                         type="number"
                         placeholder="0"
-                        className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-base"
                         value={waterTemperature ?? ""}
                         onChange={onChangeWaterTemperature}
                       />
                     </div>
-                    <div className="label-text text-center mt-1">
+                    <div className="label-text text-center mt-1 text-xs">
                       물의 온도(℃)
                     </div>
                   </div>
@@ -549,7 +546,10 @@ export default function RecipeAddPage() {
 
               <div className="mt-[30px]">
                 <div className="label">
-                  <p className="label-text">원두 분쇄도를 알려주세요.</p>
+                  <p className="label-text text-base">
+                    원두 분쇄도를 알려주세요.
+                    <span className="text-red-500 px-1">*</span>
+                  </p>
                 </div>
                 <div>
                   <input
@@ -562,22 +562,24 @@ export default function RecipeAddPage() {
                     onChange={onChangeGrindStep}
                   />
                   <div className="flex w-full justify-between px-2 text-xs">
-                    <span>아주 곱게</span>
-                    <span>곱게</span>
-                    <span>보통</span>
-                    <span>굵게</span>
-                    <span>아주 굵게</span>
+                    <span className="text-xs">아주 곱게</span>
+                    <span className="text-xs">곱게</span>
+                    <span className="text-xs">보통</span>
+                    <span className="text-xs">굵게</span>
+                    <span className="text-xs">아주 굵게</span>
                   </div>
 
                   <div className="mt-[30px]">
                     <label className="form-control w-full">
                       <div className="label flex flex-col items-start justify-start">
-                        <p className="label-text">메모를 남겨주세요.</p>
+                        <p className="label-text text-base">
+                          메모를 남겨주세요.
+                        </p>
                       </div>
                       <input
                         type="text"
                         placeholder="예) ek43 기준"
-                        className="input input-bordered w-full focus:outline-none"
+                        className="input input-bordered w-full focus:outline-none text-base"
                         value={grindStepMemo}
                         onChange={onChangeGrindStepMemo}
                       />
@@ -610,8 +612,9 @@ export default function RecipeAddPage() {
               <div className="flex flex-col w-full gap-2">
                 <div className="form-control">
                   <label className="label cursor-pointer gap-8">
-                    <span className="label-text">
-                      블루밍(뜸들이기)을 진행했나요?*
+                    <span className="label-text text-base">
+                      블루밍(뜸들이기)을 진행했나요?
+                      <span className="text-red-500 px-1">*</span>
                     </span>
                   </label>
                 </div>
@@ -634,7 +637,10 @@ export default function RecipeAddPage() {
                 </div>
 
                 <div className="flex flex-row gap-2 items-center max-h-[20px] justify-center mt-[30px]">
-                  <span className="label-text">물을 몇 번 부었나요?</span>
+                  <span className="label-text text-base">
+                    물을 몇 번 부었나요?
+                    <span className="text-red-500 px-1">*</span>
+                  </span>
                   <label className="flex items-center gap-2 label-text">
                     <kbd
                       className="kbd kbd-sm cursor-pointer"
@@ -712,8 +718,9 @@ export default function RecipeAddPage() {
             <div className="carousel-item flex flex-col w-full">
               <label className="form-control">
                 <div className="label">
-                  <span className="label-text">
+                  <span className="label-text text-base">
                     {`레시피에 대해 설명해주세요. (${recipeDescription.length}/500)`}
+                    <span className="text-red-500 px-1">*</span>
                   </span>
                 </div>
                 <textarea
@@ -728,7 +735,9 @@ export default function RecipeAddPage() {
 
               <label className="form-control mt-[30px]">
                 <div className="label">
-                  <span className="label-text">사진을 첨부해주세요.</span>
+                  <span className="label-text text-base">
+                    사진을 첨부해주세요.
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <input

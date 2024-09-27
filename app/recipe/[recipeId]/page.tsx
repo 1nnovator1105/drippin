@@ -269,7 +269,7 @@ export default function RecipePage() {
         </div>
 
         <div className="flex flex-col px-3 py-3 gap-3">
-          <div className="flex items-center gap-[6px]">
+          <div className="flex items-center gap-[6px]  text-sm">
             <div onClick={conditionLikeAction}>
               <LikeIcon
                 fill={isLiked ? "#1E1E1E" : "#FFF"}

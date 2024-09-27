@@ -7,7 +7,12 @@ interface TagChipProps {
 
 export default function TagChip({ label, className }: TagChipProps) {
   return (
-    <div className={cn("p-1 rounded-sm text-black bg-[#CCC]", className)}>
+    <div
+      className={cn(
+        "py-[2px] px-2 rounded-sm font-regular text-sm text-[#1E1E1E] bg-[#CCC]",
+        className,
+      )}
+    >
       {label}
     </div>
   );

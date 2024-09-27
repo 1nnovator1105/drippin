@@ -30,7 +30,7 @@ export default function BottomTabNav() {
         <BottomTabHomeIcon />
         <span
           className={cn(
-            "btm-nav-label",
+            "btm-nav-label text-sm font-bold",
             pathname === "/" ? "text-gray-900" : "text-gray-400",
           )}
         >
@@ -44,7 +44,7 @@ export default function BottomTabNav() {
         <BottomTabRecipeIcon />
         <span
           className={cn(
-            "btm-nav-label",
+            "btm-nav-label text-sm font-bold",
             pathname.includes("/recipe") ? "text-gray-900" : "text-gray-400",
           )}
         >
@@ -58,7 +58,7 @@ export default function BottomTabNav() {
         <BottomTabLogIcon />
         <span
           className={cn(
-            "btm-nav-label",
+            "btm-nav-label text-sm font-bold",
             pathname.includes("/log") ? "text-gray-900" : "text-gray-400",
           )}
         >
@@ -72,7 +72,7 @@ export default function BottomTabNav() {
         <BottomTabMyPageIcon />
         <span
           className={cn(
-            "btm-nav-label",
+            "btm-nav-label text-sm font-bold",
             pathname.includes("/my") ? "text-gray-900" : "text-gray-400",
           )}
         >
