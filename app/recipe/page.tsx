@@ -8,6 +8,7 @@ import RecipeCard from "@/components/share/RecipeCard";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import LoginNudge from "@/components/auth/LoginNudge";
+import Spinner from "@/components/share/Spiner";
 
 export default function RecipePage() {
   const supabase = useSupabaseBrowser();
@@ -44,6 +45,8 @@ export default function RecipePage() {
     router.push("/recipe/add");
   };
 
+  if (mySessionQuery.isLoading || myRecipeQuery.isLoading) return <Spinner />;
+
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
@@ -54,13 +57,18 @@ export default function RecipePage() {
         ))}
       </div>
 
-      <Link
-        href="/recipe/add"
-        className="fixed bottom-[88px] flex py-[15px] px-[20px] bg-black rounded-3xl text-white self-center"
-        onClick={preventClick}
-      >
-        새로운 레시피 작성하기
-      </Link>
+      {mySessionQuery.data?.session?.user.id && !myRecipeQuery.isLoading && (
+        <Link
+          href="/recipe/add"
+          className="fixed bottom-[88px] flex py-[10px] px-[20px] bg-black rounded-3xl text-white self-center"
+          onClick={preventClick}
+          style={{
+            boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          새로운 레시피 작성하기
+        </Link>
+      )}
     </div>
   );
 }

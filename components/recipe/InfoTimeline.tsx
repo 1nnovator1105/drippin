@@ -185,7 +185,7 @@ export default function InfoTimeline({
 
           <div className="flex flex-col gap-2">
             {hasNext ? (
-              <>
+              <div className="flex flex-col gap-5">
                 <div>
                   <label className="form-control w-full">
                     <div className="label">
@@ -221,7 +221,7 @@ export default function InfoTimeline({
                 <div>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text">
+                      <span className="label-text text-base">
                         추출 옵션을 선택해주세요.
                       </span>
                     </div>
@@ -236,40 +236,46 @@ export default function InfoTimeline({
                       }}
                     />
                   </label>
+                </div>
 
-                  <label>
-                    <span className="label-text">
-                      {`메모를 남겨주세요. (${memo.length}/100)`}
-                    </span>
+                <div>
+                  <label className="form-control w-full">
+                    <label>
+                      <span className="label-text text-base">
+                        {`메모를 남겨주세요. (${memo.length}/100)`}
+                      </span>
 
-                    <input
-                      type="text"
-                      placeholder="메모"
-                      className="input input-ghost w-full max-w-xs border-none focus:outline-none px-1 focus:text-gray-400"
-                      value={memo}
-                      maxLength={100}
-                      onChange={onChangeMemo}
-                    />
+                      <input
+                        type="text"
+                        placeholder="메모"
+                        className="input input-bordered w-full max-h-10 mt-2"
+                        value={memo}
+                        maxLength={100}
+                        onChange={onChangeMemo}
+                      />
+                    </label>
                   </label>
                 </div>
-              </>
+
+                <div className="flex flex-row gap-2">
+                  <form method="dialog" className="flex-1">
+                    <button className="btn bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] w-full">
+                      취소
+                    </button>
+                  </form>
+                  <form method="dialog" className="flex-1">
+                    <button
+                      className="btn bg-[#2C2C2C] text-[#F5F5F5] w-full"
+                      onClick={handleApply}
+                    >
+                      적용하기
+                    </button>
+                  </form>
+                </div>
+              </div>
             ) : (
               <div>추출완료 전용</div>
             )}
-
-            <div className="flex flex-row gap-2">
-              <form method="dialog" className="flex-1">
-                <button className="btn btn-warning w-full">취소</button>
-              </form>
-              <form method="dialog" className="flex-1">
-                <button
-                  className="btn btn-primary w-full"
-                  onClick={handleApply}
-                >
-                  적용하기
-                </button>
-              </form>
-            </div>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">

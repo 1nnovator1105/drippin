@@ -144,7 +144,7 @@ export default function MyPage() {
       </div>
       <div className="fixed bottom-[88px] flex justify-center items-center w-full max-w-xl self-center">
         <button
-          className="btn btn-sm btn-outline text-base border-[#999999] p-2 text-[#999999]"
+          className="btn btn-sm btn-outline border-[#999999] p-2 text-[#999999]"
           onClick={handleSignOut}
         >
           로그아웃

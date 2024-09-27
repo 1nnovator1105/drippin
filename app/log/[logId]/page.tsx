@@ -216,22 +216,22 @@ export default function LogDetailPage() {
             </span>
           </div>
 
-          <div className="flex font-bold">
-            {logQuery.data?.coffee_place}에서 마신 {logQuery.data?.coffee_name}
-          </div>
-
-          <div className="line-clamp-3 text-gray-900">
-            <span className="text-gray-500">
+          <div className="text-[#1E1E1E] text-base">
+            <span className="text-[#757575]">
               @{logQuery.data?.profiles?.handle}
             </span>{" "}
-            {logQuery.data?.content}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: logQuery.data?.content?.replace(/\n/g, "<br/>") || "",
+              }}
+            />
           </div>
 
-          <div className="mt-3">
+          <div className="mt-1 text-sm">
             {logQuery.data?.tags?.split(" ").join(" ")}
           </div>
 
-          <div className="mt-3">
+          <div className="mt-1 text-sm text-[#757575]">
             {format(
               new Date(logQuery.data?.created_at || ""),
               "yyyy년 MM월 dd일",

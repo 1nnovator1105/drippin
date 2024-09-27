@@ -472,7 +472,7 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary flex-1"
+                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
                   onClick={() => setCurrentPage(2)}
                 >
                   다음
@@ -590,14 +590,14 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(1)}
                 >
                   이전
                 </button>
 
                 <button
-                  className="btn btn-md btn-primary flex-1"
+                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
                   onClick={() => setCurrentPage(3)}
                 >
                   다음
@@ -620,17 +620,27 @@ export default function RecipeAddPage() {
                 </div>
                 <div className="join w-full">
                   <input
-                    className="join-item btn min-h-8 h-[32px] flex-1"
+                    className="join-item btn min-h-8 h-8 flex-1"
                     type="radio"
                     name="options"
+                    style={{
+                      background: isNoBloom ? "white" : "white",
+                      borderColor: isNoBloom ? "#B3B3B3" : "black",
+                      color: isNoBloom ? "#B3B3B3" : "black",
+                    }}
                     aria-label="네"
                     defaultChecked
                     onChange={() => setIsNoBloom(false)}
                   />
                   <input
-                    className="join-item btn min-h-8 h-[32px] flex-1"
+                    className="join-item btn min-h-8 h-8 flex-1"
                     type="radio"
                     name="options"
+                    style={{
+                      background: isNoBloom ? "white" : "white",
+                      borderColor: isNoBloom ? "black" : "#B3B3B3",
+                      color: isNoBloom ? "black" : "#B3B3B3",
+                    }}
                     aria-label="아니오"
                     onChange={() => setIsNoBloom(true)}
                   />
@@ -642,25 +652,38 @@ export default function RecipeAddPage() {
                     <span className="text-red-500 px-1">*</span>
                   </span>
                   <label className="flex items-center gap-2 label-text">
-                    <kbd
-                      className="kbd kbd-sm cursor-pointer"
+                    <div
                       onClick={() => {
                         if (pourCount > 1) {
                           setPourCount(pourCount - 1);
                         }
                       }}
                     >
-                      -
-                    </kbd>
-                    <input
-                      type="number"
-                      className="max-w-[40px] border-none focus:outline-none px-1 text-gray-900 text-center"
-                      value={pourCount}
-                      readOnly
-                      onChange={onChangePourCount}
-                    />
-                    <kbd
-                      className="kbd kbd-sm cursor-pointer"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="36"
+                        height="36"
+                        viewBox="0 0 36 36"
+                        fill="none"
+                      >
+                        <path
+                          d="M12 18H24M7.5 4.5H28.5C30.1569 4.5 31.5 5.84315 31.5 7.5V28.5C31.5 30.1569 30.1569 31.5 28.5 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V7.5C4.5 5.84315 5.84315 4.5 7.5 4.5Z"
+                          stroke="#1E1E1E"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="border-b-[1px] border-[#1E1E1E]">
+                      <input
+                        type="number"
+                        className="max-w-[40px] focus:outline-none text-gray-900 text-center py-2"
+                        value={pourCount}
+                        readOnly
+                        onChange={onChangePourCount}
+                      />
+                    </div>
+                    <div
                       onClick={() => {
                         if (pourCount < 5) {
                           setPourCount(pourCount + 1);
@@ -669,8 +692,21 @@ export default function RecipeAddPage() {
                         }
                       }}
                     >
-                      +
-                    </kbd>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="36"
+                        height="36"
+                        viewBox="0 0 36 36"
+                        fill="none"
+                      >
+                        <path
+                          d="M18 12V24M12 18H24M7.5 4.5H28.5C30.1569 4.5 31.5 5.84315 31.5 7.5V28.5C31.5 30.1569 30.1569 31.5 28.5 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V7.5C4.5 5.84315 5.84315 4.5 7.5 4.5Z"
+                          stroke="#1E1E1E"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
                   </label>
                 </div>
               </div>
@@ -697,14 +733,14 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(2)}
                 >
                   이전
                 </button>
 
                 <button
-                  className="btn btn-md btn-primary flex-1"
+                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
                   onClick={() => setCurrentPage(4)}
                 >
                   다음
@@ -782,14 +818,14 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md btn-primary flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(3)}
                 >
                   이전
                 </button>
 
                 <button
-                  className="btn btn-md btn-primary flex-1"
+                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
                   onClick={handleSubmit}
                 >
                   게시하기
