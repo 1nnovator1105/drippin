@@ -146,7 +146,7 @@ export default function InfoTimeline({
           </svg>
         </div>
         {hasNext ? (
-          <div className={cn("label-text timeline-start")}>{label}</div>
+          <div className={cn("label-text timeline-start text-xs")}>{label}</div>
         ) : (
           <div
             className={cn(
@@ -163,7 +163,7 @@ export default function InfoTimeline({
         {hasNext && (
           <div
             className={cn(
-              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg",
+              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg text-xs",
               (water === 0 || time === 0) && hasPrev
                 ? "text-gray-200"
                 : "text-gray-900",
@@ -189,7 +189,10 @@ export default function InfoTimeline({
                 <div>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text">물을 몇 그램 부었나요?</span>
+                      <span className="label-text text-base">
+                        물을 몇 그램 부었나요?
+                        <span className="text-red-500 px-1">*</span>
+                      </span>
                     </div>
                     <input
                       type="text"
@@ -202,8 +205,9 @@ export default function InfoTimeline({
                 <div>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text">
+                      <span className="label-text text-base">
                         다음 푸어까지 몇 초 동안 소요되나요?
+                        <span className="text-red-500 px-1">*</span>
                       </span>
                     </div>
                     <input

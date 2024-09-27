@@ -97,7 +97,7 @@ export default function MyPage() {
       <div className="px-4 py-2">
         <label className="form-control w-full">
           <div className="label flex flex-col items-start justify-start">
-            <p className="label-text">이름</p>
+            <p className="label-text text-base">이름</p>
           </div>
           <input
             type="text"
@@ -111,7 +111,7 @@ export default function MyPage() {
 
         <label className="form-control w-full mt-4">
           <div className="label flex flex-col items-start justify-start">
-            <p className="label-text">이메일</p>
+            <p className="label-text text-base">이메일</p>
           </div>
           <input
             type="text"
@@ -125,7 +125,7 @@ export default function MyPage() {
 
         <label className="form-control w-full mt-4">
           <div className="label flex flex-row items-start justify-between items-center">
-            <p className="label-text">닉네임</p>
+            <p className="label-text text-base">닉네임</p>
             <button
               className="btn btn-sm btn-outline bg-black text-white"
               onClick={updateHandle}
@@ -144,7 +144,7 @@ export default function MyPage() {
       </div>
       <div className="fixed bottom-[88px] flex justify-center items-center w-full max-w-xl self-center">
         <button
-          className="btn btn-sm btn-outline border-[#999999] p-2 text-[#999999]"
+          className="btn btn-sm btn-outline text-base border-[#999999] p-2 text-[#999999]"
           onClick={handleSignOut}
         >
           로그아웃

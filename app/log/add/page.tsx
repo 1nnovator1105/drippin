@@ -162,7 +162,10 @@ export default function LogAddPage() {
             <div className="carousel-item flex flex-col w-full">
               <label className="form-control">
                 <div className="label">
-                  <span className="label-text">{`일지를 작성해주세요`}</span>
+                  <span className="label-text text-base">
+                    일지를 작성해주세요
+                    <span className="text-red-500 px-1">*</span>
+                  </span>
                 </div>
                 <textarea
                   ref={textareaRef}
@@ -175,7 +178,9 @@ export default function LogAddPage() {
 
               <label className="form-control mt-[30px]">
                 <div className="label">
-                  <span className="label-text">사진을 첨부해주세요.</span>
+                  <span className="label-text text-base">
+                    사진을 첨부해주세요.
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <input
@@ -233,7 +238,10 @@ export default function LogAddPage() {
             <div className="carousel-item flex flex-col w-full">
               <label className="form-control w-full">
                 <div className="label flex flex-col items-start justify-start">
-                  <p className="label-text">어떤 커피를 마셨나요?</p>
+                  <p className="label-text text-base">
+                    어떤 커피를 마셨나요?
+                    <span className="text-red-500 px-1">*</span>
+                  </p>
                 </div>
                 <input
                   type="text"
@@ -246,7 +254,10 @@ export default function LogAddPage() {
 
               <label className="form-control w-full mt-4">
                 <div className="label flex flex-col items-start justify-start">
-                  <p className="label-text">어디서 마셨나요?</p>
+                  <p className="label-text text-base">
+                    어디서 마셨나요?
+                    <span className="text-red-500 px-1">*</span>
+                  </p>
                 </div>
                 <input
                   type="text"
@@ -259,7 +270,10 @@ export default function LogAddPage() {
 
               <label className="form-control w-full mt-4">
                 <div className="label flex flex-row items-start justify-between items-center">
-                  <p className="label-text">태그를 입력해주세요.</p>
+                  <p className="label-text text-base">
+                    태그를 입력해주세요.
+                    <span className="text-red-500 px-1">*</span>
+                  </p>
                 </div>
                 <input
                   type="text"

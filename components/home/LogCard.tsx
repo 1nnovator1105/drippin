@@ -118,7 +118,7 @@ export default function LogCard({ log, summary }: Props) {
 
           <div className="flex flex-col px-3 py-3 gap-3">
             {!summary && (
-              <div className="flex items-center gap-[6px]">
+              <div className="flex text-[#1E1E1E] font-regular items-center gap-[6px] text-sm">
                 <div onClick={conditionLikeAction}>
                   <LikeIcon
                     fill={isLiked ? "#1E1E1E" : "#FFF"}
@@ -132,7 +132,7 @@ export default function LogCard({ log, summary }: Props) {
 
             {summary && (
               <div className="flex items-center justify-between">
-                <div className="flex font-bold">
+                <div className="flex text-[#1E1E1E] font-bold">
                   {log.coffee_place}에서 마신 {log.coffee_name}
                 </div>
                 <div className="flex items-center gap-1">
@@ -147,12 +147,14 @@ export default function LogCard({ log, summary }: Props) {
               </div>
             )}
 
-            <div className="line-clamp-3 text-gray-900">
-              <span className="text-gray-500">@{log.profiles?.handle}</span>{" "}
+            <div className="line-clamp-3 text-base text-[#1E1E1E] font-regular">
+              <span className="text-[#757575]">@{log.profiles?.handle}</span>{" "}
               {log.content}
             </div>
 
-            <div>{log.tags?.split(" ").join(" ")}</div>
+            <div className="text-[#1E1E1E] text-base font-regular">
+              {log.tags?.split(" ").join(" ")}
+            </div>
           </div>
         </div>
       </div>

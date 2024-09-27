@@ -132,7 +132,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
 
           <div className="flex flex-col px-3 py-3 gap-3">
             {!summary && (
-              <div className="flex items-center gap-[6px]">
+              <div className="flex text-[#1E1E1E] font-regular items-center gap-[6px] text-sm">
                 <div onClick={conditionLikeAction}>
                   <LikeIcon
                     fill={isLiked ? "#1E1E1E" : "#FFF"}
@@ -144,7 +144,9 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
               </div>
             )}
 
-            <div className="flex font-bold">{recipe.recipe_name}</div>
+            <div className="flex font-bold text-base text-[#1E1E1E]">
+              {recipe.recipe_name}
+            </div>
 
             <div className="flex items-center justify-between">
               <div className="flex flex-row gap-2">
@@ -161,7 +163,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
               </div>
 
               {summary && (
-                <div className="flex items-center gap-1">
+                <div className="flex text-[#1E1E1E] items-center gap-1 text-sm">
                   <LikeIcon
                     fill="#1E1E1E"
                     stroke="#1E1E1E"
@@ -173,8 +175,8 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
               )}
             </div>
 
-            <div className="line-clamp-3 text-gray-900">
-              <span className="text-gray-500">@{recipe.profiles?.handle}</span>{" "}
+            <div className="line-clamp-3 text-[#1E1E1E] text-base">
+              <span className="text-[#757575]">@{recipe.profiles?.handle}</span>{" "}
               {recipe.recipe_description}
             </div>
           </div>
