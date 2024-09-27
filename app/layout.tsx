@@ -4,8 +4,8 @@ import "./globals.css";
 import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
 import Wrapper from "@/components/share/Wrapper";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+const defaultUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : "http://localhost:3000";
 
 export const metadata = {
