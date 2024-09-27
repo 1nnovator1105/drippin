@@ -7,6 +7,7 @@ import KakaoButton from "../auth/callback/kakao-button";
 import AnimatedCoffeeIcon from "@/components/icon/AnimatedCoffeeIcon";
 import { useEffect, useState } from "react";
 import LoginNudge from "@/components/auth/LoginNudge";
+import Spinner from "@/components/share/Spiner";
 
 export default function MyPage() {
   const supabase = useSupabaseBrowser();
@@ -87,7 +88,7 @@ export default function MyPage() {
     }
   }, [myProfileQuery.data?.handle]);
 
-  if (mySessionQuery.isLoading) return <div></div>;
+  if (mySessionQuery.isLoading) return <Spinner />;
 
   if (!mySessionQuery.data?.session) return <LoginNudge />;
 

@@ -21,6 +21,7 @@ import { Database } from "@/types/database.types";
 import LikeIcon from "@/components/icon/LikeIcon";
 import TagChip from "@/components/share/TagChip";
 import { secToKoreanTime } from "@/utils/utils";
+import Spinner from "@/components/share/Spiner";
 
 // recipe/[recipeId]
 export default function RecipePage() {
@@ -147,7 +148,7 @@ export default function RecipePage() {
     }
   };
 
-  if (recipeQuery.isLoading) return <div>Loading...</div>;
+  if (recipeQuery.isLoading) return <Spinner />;
 
   return (
     <div className="pb-[88px]">
