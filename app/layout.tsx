@@ -1,16 +1,12 @@
-import { EnvVarWarning } from "@/components/env-var-warning";
-import HeaderAuth from "@/components/header-auth";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import TopNav from "@/components/nav/TopNav";
 import BottomTabNav from "@/components/nav/BottomTabNav";
 import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
 import { Suspense } from "react";
 import ClientSideScrollRestorer from "./ClientSideScrollRestorer";
 import { pretendard } from "@/styles/fonts";
+import Wrapper from "@/components/share/Wrapper";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -37,17 +33,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div
-              className={`flex flex-col h-screen max-w-xl mx-auto ${pretendard.variable} font-pretendard`}
-            >
-              <style jsx global>
-                {`:root { --font-pretendard: ${pretendard.style.fontFamily};}}`}
-              </style>
-              <div className="flex-1 pb-[72px] border-x-[1px]">{children}</div>
-              <BottomTabNav />
-            </div>
-
-            <div id="modal-root"></div>
+            <Wrapper>{children}</Wrapper>
           </ThemeProvider>
         </ReactQueryClientProvider>
         <Suspense>
