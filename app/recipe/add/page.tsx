@@ -18,6 +18,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
 
 export default function RecipeAddPage() {
   const supabase = useSupabaseBrowser();
@@ -95,6 +96,15 @@ export default function RecipeAddPage() {
 
   const handleFileUpload = () => {
     fileInputRef.current?.click();
+  };
+
+  const resetImage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setImageFile(null);
+    setImageUrl(null);
+    setSelectedImage(null);
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -761,7 +771,7 @@ export default function RecipeAddPage() {
                 </div>
                 <textarea
                   ref={textareaRef}
-                  className="textarea textarea-bordered max-h-[200px] resize-none focus:outline-none focus:ring-0 focus:ring-offset-0"
+                  className="textarea textarea-bordered min-h-[220px] max-h-[220px] resize-none focus:outline-none focus:ring-0 focus:ring-offset-0"
                   placeholder="레시피 설명"
                   value={recipeDescription}
                   onChange={handleDescriptionChange}
@@ -784,14 +794,17 @@ export default function RecipeAddPage() {
                   />
                   {selectedImage ? (
                     <button
-                      className="w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
-                      onClick={handleFileUpload}
+                      className="relative w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
+                      onClick={resetImage}
                     >
                       <img
                         src={selectedImage}
                         alt="선택된 이미지"
                         className="w-full h-full object-cover"
                       />
+                      <div className="absolute top-5 right-4">
+                        <CircleCloseIcon />
+                      </div>
                     </button>
                   ) : (
                     <button

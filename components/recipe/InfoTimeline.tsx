@@ -180,7 +180,7 @@ export default function InfoTimeline({
         id={`modal-${label}-${order}`}
         className="modal max-w-none max-h-none "
       >
-        <div className="modal-box h-full">
+        <div className="modal-box">
           <h3 className="font-bold text-lg">{label}</h3>
 
           <div className="flex flex-col gap-2">
