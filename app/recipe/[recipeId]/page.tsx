@@ -21,7 +21,7 @@ import { Database } from "@/types/database.types";
 import LikeIcon from "@/components/icon/LikeIcon";
 import TagChip from "@/components/share/TagChip";
 import { secToKoreanTime } from "@/utils/utils";
-import Spinner from "@/components/share/Spiner";
+import Spinner from "@/components/share/Spinner";
 import BackIcon from "@/components/icon/BackIcon";
 import MoreIcon from "@/components/icon/MoreIcon";
 import DetailTopBar from "@/components/share/DetailTopBar";

@@ -7,7 +7,7 @@ import KakaoButton from "../auth/callback/kakao-button";
 import AnimatedCoffeeIcon from "@/components/icon/AnimatedCoffeeIcon";
 import { useEffect, useState } from "react";
 import LoginNudge from "@/components/auth/LoginNudge";
-import Spinner from "@/components/share/Spiner";
+import Spinner from "@/components/share/Spinner";
 import Header from "@/components/share/Header";
 
 export default function MyPage() {

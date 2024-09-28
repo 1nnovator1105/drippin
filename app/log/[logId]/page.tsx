@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
-import Spinner from "@/components/share/Spiner";
+import Spinner from "@/components/share/Spinner";
 import BackIcon from "@/components/icon/BackIcon";
 import MoreIcon from "@/components/icon/MoreIcon";
 import DetailTopBar from "@/components/share/DetailTopBar";

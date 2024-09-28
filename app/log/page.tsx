@@ -3,7 +3,7 @@
 import LoginNudge from "@/components/auth/LoginNudge";
 import LogCard from "@/components/home/LogCard";
 import Header from "@/components/share/Header";
-import Spinner from "@/components/share/Spiner";
+import Spinner from "@/components/share/Spinner";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";

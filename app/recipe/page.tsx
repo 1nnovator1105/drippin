@@ -8,7 +8,7 @@ import RecipeCard from "@/components/share/RecipeCard";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import LoginNudge from "@/components/auth/LoginNudge";
-import Spinner from "@/components/share/Spiner";
+import Spinner from "@/components/share/Spinner";
 import Header from "@/components/share/Header";
 
 export default function RecipePage() {
