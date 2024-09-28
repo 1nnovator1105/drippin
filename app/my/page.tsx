@@ -65,6 +65,10 @@ export default function MyPage() {
 
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
     },
+    onError: (error) => {
+      console.error(error);
+      alert("닉네임 변경에 실패했어요. 다시 시도해주세요.");
+    },
   });
 
   const updateHandle = () => {

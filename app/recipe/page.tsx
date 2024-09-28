@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spinner";
 import Header from "@/components/share/Header";
+import { logEvent } from "@/utils/analytics";
+import events from "@/utils/events";
 
 export default function RecipePage() {
   const supabase = useSupabaseBrowser();
@@ -40,6 +42,7 @@ export default function RecipePage() {
   const preventClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.stopPropagation();
     e.preventDefault();
+    logEvent(events.clickAddRecipe);
     router.push("/recipe/add");
   };
 

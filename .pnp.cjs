@@ -27,6 +27,7 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@amplitude/analytics-browser", "npm:2.11.7"],\
           ["@radix-ui/react-checkbox", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.1.1"],\
           ["@radix-ui/react-dialog", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.1.1"],\
           ["@radix-ui/react-dropdown-menu", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:2.1.1"],\
@@ -84,6 +85,102 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/@alloc-quick-lru-npm-5.2.0-eb83517088-10c0.zip/node_modules/@alloc/quick-lru/",\
         "packageDependencies": [\
           ["@alloc/quick-lru", "npm:5.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/analytics-browser", [\
+      ["npm:2.11.7", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-analytics-browser-npm-2.11.7-1a36bb4260-10c0.zip/node_modules/@amplitude/analytics-browser/",\
+        "packageDependencies": [\
+          ["@amplitude/analytics-browser", "npm:2.11.7"],\
+          ["@amplitude/analytics-client-common", "npm:2.3.3"],\
+          ["@amplitude/analytics-core", "npm:2.5.2"],\
+          ["@amplitude/analytics-remote-config", "npm:0.4.0"],\
+          ["@amplitude/analytics-types", "npm:2.8.2"],\
+          ["@amplitude/plugin-autocapture-browser", "npm:1.0.3"],\
+          ["@amplitude/plugin-page-view-tracking-browser", "npm:2.3.3"],\
+          ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/analytics-client-common", [\
+      ["npm:2.3.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-analytics-client-common-npm-2.3.3-e13ebd2a7d-10c0.zip/node_modules/@amplitude/analytics-client-common/",\
+        "packageDependencies": [\
+          ["@amplitude/analytics-client-common", "npm:2.3.3"],\
+          ["@amplitude/analytics-connector", "npm:1.5.0"],\
+          ["@amplitude/analytics-core", "npm:2.5.2"],\
+          ["@amplitude/analytics-types", "npm:2.8.2"],\
+          ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/analytics-connector", [\
+      ["npm:1.5.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-analytics-connector-npm-1.5.0-5120848519-10c0.zip/node_modules/@amplitude/analytics-connector/",\
+        "packageDependencies": [\
+          ["@amplitude/analytics-connector", "npm:1.5.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/analytics-core", [\
+      ["npm:2.5.2", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-analytics-core-npm-2.5.2-c7188a7d74-10c0.zip/node_modules/@amplitude/analytics-core/",\
+        "packageDependencies": [\
+          ["@amplitude/analytics-core", "npm:2.5.2"],\
+          ["@amplitude/analytics-types", "npm:2.8.2"],\
+          ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/analytics-remote-config", [\
+      ["npm:0.4.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-analytics-remote-config-npm-0.4.0-524f5995e8-10c0.zip/node_modules/@amplitude/analytics-remote-config/",\
+        "packageDependencies": [\
+          ["@amplitude/analytics-remote-config", "npm:0.4.0"],\
+          ["@amplitude/analytics-client-common", "npm:2.3.3"],\
+          ["@amplitude/analytics-core", "npm:2.5.2"],\
+          ["@amplitude/analytics-types", "npm:2.8.2"],\
+          ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/analytics-types", [\
+      ["npm:2.8.2", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-analytics-types-npm-2.8.2-4fd997264d-10c0.zip/node_modules/@amplitude/analytics-types/",\
+        "packageDependencies": [\
+          ["@amplitude/analytics-types", "npm:2.8.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/plugin-autocapture-browser", [\
+      ["npm:1.0.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-plugin-autocapture-browser-npm-1.0.3-edb25bef55-10c0.zip/node_modules/@amplitude/plugin-autocapture-browser/",\
+        "packageDependencies": [\
+          ["@amplitude/plugin-autocapture-browser", "npm:1.0.3"],\
+          ["@amplitude/analytics-client-common", "npm:2.3.3"],\
+          ["@amplitude/analytics-types", "npm:2.8.2"],\
+          ["rxjs", "npm:7.8.1"],\
+          ["tslib", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@amplitude/plugin-page-view-tracking-browser", [\
+      ["npm:2.3.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/@amplitude-plugin-page-view-tracking-browser-npm-2.3.3-683f6dc329-10c0.zip/node_modules/@amplitude/plugin-page-view-tracking-browser/",\
+        "packageDependencies": [\
+          ["@amplitude/plugin-page-view-tracking-browser", "npm:2.3.3"],\
+          ["@amplitude/analytics-client-common", "npm:2.3.3"],\
+          ["@amplitude/analytics-types", "npm:2.8.2"],\
+          ["tslib", "npm:2.7.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5498,6 +5595,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["root-workspace-0b6124", "workspace:."],\
+          ["@amplitude/analytics-browser", "npm:2.11.7"],\
           ["@radix-ui/react-checkbox", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.1.1"],\
           ["@radix-ui/react-dialog", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.1.1"],\
           ["@radix-ui/react-dropdown-menu", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:2.1.1"],\
@@ -5565,6 +5663,16 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["run-parallel", "npm:1.2.0"],\
           ["queue-microtask", "npm:1.2.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["rxjs", [\
+      ["npm:7.8.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/rxjs-npm-7.8.1-41c443a75b-10c0.zip/node_modules/rxjs/",\
+        "packageDependencies": [\
+          ["rxjs", "npm:7.8.1"],\
+          ["tslib", "npm:2.7.0"]\
         ],\
         "linkType": "HARD"\
       }]\
