@@ -153,7 +153,16 @@ export default function LogCard({ log, summary }: Props) {
             </div>
 
             <div className="text-[#1E1E1E] text-base font-regular">
-              {log.tags?.split(" ").join(" ")}
+              {log.tags
+                ?.split(" ")
+                ?.map((value) => {
+                  if (value.startsWith("#")) {
+                    return value;
+                  }
+
+                  return `#${value}`;
+                })
+                ?.join(" ")}
             </div>
           </div>
         </div>

@@ -189,7 +189,16 @@ export default function LogDetailPage() {
           </div>
 
           <div className="mt-1 text-sm">
-            {logQuery.data?.tags?.split(" ").join(" ")}
+            {logQuery.data?.tags
+              ?.split(" ")
+              ?.map((value) => {
+                if (value.startsWith("#")) {
+                  return value;
+                }
+
+                return `#${value}`;
+              })
+              ?.join(" ")}
           </div>
 
           <div className="mt-1 text-sm text-[#757575]">
