@@ -295,7 +295,7 @@ export default function LogAddPage() {
                 </div>
                 <input
                   type="text"
-                  placeholder="#태그"
+                  placeholder="#태그 #띄어쓰기로구분돼요"
                   className="input input-bordered w-full focus:outline-none"
                   value={coffeeTags}
                   onChange={handleCoffeeTags}
