@@ -17,6 +17,7 @@ export type Database = {
           created_at: string;
           id: number;
           image_url: string | null;
+          is_removed: boolean;
           recipe_id: number | null;
           tags: string | null;
           updated_at: string | null;
@@ -32,6 +33,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           image_url?: string | null;
+          is_removed?: boolean;
           recipe_id?: number | null;
           tags?: string | null;
           updated_at?: string | null;
@@ -44,6 +46,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           image_url?: string | null;
+          is_removed?: boolean;
           recipe_id?: number | null;
           tags?: string | null;
           updated_at?: string | null;
@@ -159,9 +162,11 @@ export type Database = {
           is_hot: boolean;
           is_ice: boolean;
           is_no_bloom: boolean;
+          is_removed: boolean;
           pour_count: number;
           raw_brewing_info: Json;
           recipe_description: string;
+          recipe_description_html: string | null;
           recipe_name: string;
           updated_at: string | null;
           use_dripper: string;
@@ -170,8 +175,8 @@ export type Database = {
           water_amount: number;
           water_temperature: number;
           profiles: Tables<"profiles">;
-          recipes_likes: Tables<"recipes_likes">;
-          likes: Tables<"recipes_likes">[];
+          logs_likes: Tables<"logs_likes">;
+          likes: Tables<"logs_likes">[];
         };
         Insert: {
           coffee_amount: number;
@@ -183,9 +188,11 @@ export type Database = {
           is_hot?: boolean;
           is_ice?: boolean;
           is_no_bloom: boolean;
+          is_removed?: boolean;
           pour_count: number;
           raw_brewing_info: Json;
           recipe_description: string;
+          recipe_description_html?: string | null;
           recipe_name: string;
           updated_at?: string | null;
           use_dripper: string;
@@ -204,9 +211,11 @@ export type Database = {
           is_hot?: boolean;
           is_ice?: boolean;
           is_no_bloom?: boolean;
+          is_removed?: boolean;
           pour_count?: number;
           raw_brewing_info?: Json;
           recipe_description?: string;
+          recipe_description_html?: string | null;
           recipe_name?: string;
           updated_at?: string | null;
           use_dripper?: string;

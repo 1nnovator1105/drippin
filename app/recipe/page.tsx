@@ -32,6 +32,7 @@ export default function RecipePage() {
         .from("recipes")
         .select(`*, profiles(handle, email), likes:recipes_likes(*)`)
         .eq("user_id", mySessionQuery.data?.session?.user.id!)
+        .eq("is_removed", false)
         .order("created_at", { ascending: false });
 
       return data;

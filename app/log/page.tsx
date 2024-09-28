@@ -29,6 +29,7 @@ export default function LogPage() {
         .from("logs")
         .select(`*, profiles(handle, email), likes:logs_likes(*)`)
         .eq("user_id", mySessionQuery.data?.session?.user.id!)
+        .eq("is_removed", false)
         .order("created_at", { ascending: false });
 
       return data;

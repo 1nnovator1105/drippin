@@ -21,6 +21,7 @@ export default function HomeWrapper() {
       const { data, error } = await supabase
         .from("recipes")
         .select(`*, profiles(handle, email), likes:recipes_likes(*)`)
+        .eq("is_removed", false)
         .order("created_at", { ascending: false });
 
       return data;
@@ -33,6 +34,7 @@ export default function HomeWrapper() {
       const { data, error } = await supabase
         .from("logs")
         .select(`*, profiles(handle, email), likes:logs_likes(*)`)
+        .eq("is_removed", false)
         .order("created_at", { ascending: false });
 
       return data;
