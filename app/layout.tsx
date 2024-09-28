@@ -3,6 +3,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
 import Wrapper from "@/components/share/Wrapper";
+import { Analytics } from "@vercel/analytics/react";
 
 const defaultUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
@@ -32,6 +33,7 @@ export default function RootLayout({
             <Wrapper>{children}</Wrapper>
           </ThemeProvider>
         </ReactQueryClientProvider>
+        <Analytics />
       </body>
     </html>
   );
