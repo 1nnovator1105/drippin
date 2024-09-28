@@ -48,6 +48,7 @@ export default function RecipePage() {
         .from("recipes")
         .select("*, profiles(handle, email), likes:recipes_likes(*)")
         .eq("id", recipeId)
+        .eq("is_removed", false)
         .maybeSingle();
 
       return data;
@@ -58,15 +59,22 @@ export default function RecipePage() {
     mutationFn: async () => {
       const { data } = await supabase
         .from("recipes")
-        .delete()
+        .update({
+          is_removed: true,
+        })
         .eq("id", recipeId)
-        .maybeSingle();
+        .maybeSingle()
+        .throwOnError();
 
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
       router.back();
+    },
+    onError: (error) => {
+      console.error(error);
+      alert("레시피 삭제에 실패했습니다.");
     },
   });
 
@@ -200,7 +208,7 @@ export default function RecipePage() {
                 fill="none"
                 className="size-6"
               >
-                <g clip-path="url(#clip0_259_1149)">
+                <g clipPath="url(#clip0_259_1149)">
                   <path
                     d="M7.91669 12.9867V7.01339C7.91681 6.93865 7.93703 6.86532 7.97524 6.80109C8.01344 6.73685 8.06822 6.68408 8.13383 6.64829C8.19944 6.6125 8.27347 6.59502 8.34816 6.59768C8.42285 6.60033 8.49545 6.62303 8.55835 6.66339L13.205 9.64922C13.2639 9.68692 13.3123 9.73881 13.3458 9.80011C13.3793 9.86142 13.3969 9.93017 13.3969 10.0001C13.3969 10.0699 13.3793 10.1387 13.3458 10.2C13.3123 10.2613 13.2639 10.3132 13.205 10.3509L8.55835 13.3376C8.49545 13.3779 8.42285 13.4006 8.34816 13.4033C8.27347 13.4059 8.19944 13.3884 8.13383 13.3526C8.06822 13.3169 8.01344 13.2641 7.97524 13.1999C7.93703 13.1356 7.91681 13.0623 7.91669 12.9876V12.9867Z"
                     fill="white"

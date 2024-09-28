@@ -30,6 +30,7 @@ export default function LogDetailPage() {
         .from("logs")
         .select(`*, profiles(handle, email), likes:logs_likes(*)`)
         .eq("id", logId)
+        .eq("is_removed", false)
         .maybeSingle();
       return data;
     },
@@ -39,15 +40,20 @@ export default function LogDetailPage() {
     mutationFn: async () => {
       const { data } = await supabase
         .from("logs")
-        .delete()
+        .update({ is_removed: true })
         .eq("id", logId)
-        .maybeSingle();
+        .maybeSingle()
+        .throwOnError();
 
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
       router.back();
+    },
+    onError: (error) => {
+      console.error(error);
+      alert("로그 삭제에 실패했습니다.");
     },
   });
 
