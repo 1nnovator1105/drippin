@@ -19,6 +19,8 @@ import {
 } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
+import { logEvent } from "@/utils/analytics";
+import events from "@/utils/events";
 
 export default function RecipeAddPage() {
   const supabase = useSupabaseBrowser();
@@ -88,6 +90,8 @@ export default function RecipeAddPage() {
       return data;
     },
     onSuccess: () => {
+      logEvent(events.submitAddRecipe);
+
       alert("레시피가 게시되었어요!");
       router.push("/recipe");
       queryClient.invalidateQueries({ queryKey: ["drippin"] });

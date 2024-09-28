@@ -12,6 +12,8 @@ import imageCompression from "browser-image-compression";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
+import { logEvent } from "@/utils/analytics";
+import events from "@/utils/events";
 
 export default function LogAddPage() {
   const supabase = useSupabaseBrowser();
@@ -57,6 +59,9 @@ export default function LogAddPage() {
       return data;
     },
     onSuccess: () => {
+      logEvent(events.submitAddLog);
+
+      alert("일지가 게시되었어요!");
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
       router.push("/log");
     },

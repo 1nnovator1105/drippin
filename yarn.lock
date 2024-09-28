@@ -12,6 +12,92 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@amplitude/analytics-browser@npm:^2.11.7":
+  version: 2.11.7
+  resolution: "@amplitude/analytics-browser@npm:2.11.7"
+  dependencies:
+    "@amplitude/analytics-client-common": "npm:^2.3.3"
+    "@amplitude/analytics-core": "npm:^2.5.2"
+    "@amplitude/analytics-remote-config": "npm:^0.4.0"
+    "@amplitude/analytics-types": "npm:^2.8.2"
+    "@amplitude/plugin-autocapture-browser": "npm:^1.0.2"
+    "@amplitude/plugin-page-view-tracking-browser": "npm:^2.3.3"
+    tslib: "npm:^2.4.1"
+  checksum: 10c0/ab42a8bfef69b7ae944eb9d01378f4a2118742b0d5cae81e2a15cb28444b292a54cbb82588b7255649dd2f15a05bd9cfcd03d3d4fb2891ea6eee7e3f3ad80831
+  languageName: node
+  linkType: hard
+
+"@amplitude/analytics-client-common@npm:>=1 <3, @amplitude/analytics-client-common@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "@amplitude/analytics-client-common@npm:2.3.3"
+  dependencies:
+    "@amplitude/analytics-connector": "npm:^1.4.8"
+    "@amplitude/analytics-core": "npm:^2.5.2"
+    "@amplitude/analytics-types": "npm:^2.8.2"
+    tslib: "npm:^2.4.1"
+  checksum: 10c0/596728190898dd6c77c260d6823afcb6350e378f1f75ebd6b3991da13521a236f34c498d6d740a6b61ce064495ea7da3e453c418239eb3e5a284413519d35b8d
+  languageName: node
+  linkType: hard
+
+"@amplitude/analytics-connector@npm:^1.4.8":
+  version: 1.5.0
+  resolution: "@amplitude/analytics-connector@npm:1.5.0"
+  checksum: 10c0/3514ed3c21f502d94bb059e062bb9d5fcb464eef669e04ae730ffcc0f3cd50e34b617686842cbbb5e010b76c1f07df30cfdb6da3d9e6c5507bcadc1318446273
+  languageName: node
+  linkType: hard
+
+"@amplitude/analytics-core@npm:>=1 <3, @amplitude/analytics-core@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "@amplitude/analytics-core@npm:2.5.2"
+  dependencies:
+    "@amplitude/analytics-types": "npm:^2.8.2"
+    tslib: "npm:^2.4.1"
+  checksum: 10c0/098051f63f53c993f0a910d6e8ed95e2b0b7e2d7a66b4e4e5cebdf11b1d622aadc1c8e9517000de79935a4ceeb48b825430a77ba64f38e1d42b99ceae72464b6
+  languageName: node
+  linkType: hard
+
+"@amplitude/analytics-remote-config@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@amplitude/analytics-remote-config@npm:0.4.0"
+  dependencies:
+    "@amplitude/analytics-client-common": "npm:>=1 <3"
+    "@amplitude/analytics-core": "npm:>=1 <3"
+    "@amplitude/analytics-types": "npm:>=1 <3"
+    tslib: "npm:^2.4.1"
+  checksum: 10c0/bed425425e3e1b3acb0673d5df149b9f18adb120a451faad8d961d605c5cfcf733a0f6e5eee77e79198b81eed84f995796be64af34fe0df48b7920cda4b274d0
+  languageName: node
+  linkType: hard
+
+"@amplitude/analytics-types@npm:>=1 <3, @amplitude/analytics-types@npm:^2.8.2":
+  version: 2.8.2
+  resolution: "@amplitude/analytics-types@npm:2.8.2"
+  checksum: 10c0/789f578fd041b1c32a2ca93c61073391947070b6e6f74ed3fb957e1916ee0567b468a9cb6b782c3d0c7fbf07001bccb28a109f5ffdd74ad7df46439615f85137
+  languageName: node
+  linkType: hard
+
+"@amplitude/plugin-autocapture-browser@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@amplitude/plugin-autocapture-browser@npm:1.0.3"
+  dependencies:
+    "@amplitude/analytics-client-common": "npm:>=1 <3"
+    "@amplitude/analytics-types": "npm:^2.8.2"
+    rxjs: "npm:^7.8.1"
+    tslib: "npm:^2.4.1"
+  checksum: 10c0/4bd1385fb476768eacdce700127e2501c35834875f29ac4b3cd3bba17fa405c3b4c832b729d067acf1fb1b2b3d3b9d1245bc9662be4015984c00688145160c4d
+  languageName: node
+  linkType: hard
+
+"@amplitude/plugin-page-view-tracking-browser@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "@amplitude/plugin-page-view-tracking-browser@npm:2.3.3"
+  dependencies:
+    "@amplitude/analytics-client-common": "npm:^2.3.3"
+    "@amplitude/analytics-types": "npm:^2.8.2"
+    tslib: "npm:^2.4.1"
+  checksum: 10c0/b9e64e0cd53f5cdbbf117637443fab5e5c314d4ce207502e8262b6ee682d8aca171e85a6ca669cdcbc495db2a186e73ac9c63534483818468c30411779f51967
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.24.7":
   version: 7.24.7
   resolution: "@babel/code-frame@npm:7.24.7"
@@ -4080,6 +4166,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@amplitude/analytics-browser": "npm:^2.11.7"
     "@radix-ui/react-checkbox": "npm:^1.1.1"
     "@radix-ui/react-dialog": "npm:^1.1.1"
     "@radix-ui/react-dropdown-menu": "npm:^2.1.1"
@@ -4144,6 +4231,15 @@ __metadata:
   dependencies:
     queue-microtask: "npm:^1.2.2"
   checksum: 10c0/200b5ab25b5b8b7113f9901bfe3afc347e19bb7475b267d55ad0eb86a62a46d77510cb0f232507c9e5d497ebda569a08a9867d0d14f57a82ad5564d991588b39
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^7.8.1":
+  version: 7.8.1
+  resolution: "rxjs@npm:7.8.1"
+  dependencies:
+    tslib: "npm:^2.1.0"
+  checksum: 10c0/3c49c1ecd66170b175c9cacf5cef67f8914dcbc7cd0162855538d365c83fea631167cacb644b3ce533b2ea0e9a4d0b12175186985f89d75abe73dbd8f7f06f68
   languageName: node
   linkType: hard
 
@@ -4519,7 +4615,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.4.0":
+"tslib@npm:^2.0.0, tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.4.1":
   version: 2.7.0
   resolution: "tslib@npm:2.7.0"
   checksum: 10c0/469e1d5bf1af585742128827000711efa61010b699cb040ab1800bcd3ccdd37f63ec30642c9e07c4439c1db6e46345582614275daca3e0f4abae29b0083f04a6
