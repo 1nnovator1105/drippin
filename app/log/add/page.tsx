@@ -46,15 +46,18 @@ export default function LogAddPage() {
 
   const createLogMutation = useMutation({
     mutationFn: async () => {
-      const { data, error } = await supabase.from("logs").insert({
-        user_id: mySessionQuery.data?.session?.user?.id!,
-        content: logDescription,
-        image_url: imageUrl,
-        coffee_name: coffeeName,
-        coffee_place: coffeePlace,
-        tags: coffeeTags,
-        recipe_id: null,
-      });
+      const { data, error } = await supabase
+        .from("logs")
+        .insert({
+          user_id: mySessionQuery.data?.session?.user?.id!,
+          content: logDescription,
+          image_url: imageUrl,
+          coffee_name: coffeeName,
+          coffee_place: coffeePlace,
+          tags: coffeeTags,
+          recipe_id: null,
+        })
+        .throwOnError();
 
       return data;
     },
@@ -64,6 +67,11 @@ export default function LogAddPage() {
       alert("일지가 게시되었어요!");
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
       router.push("/log");
+    },
+    onError: (error) => {
+      alert(
+        "일지가 게시되지 않았어요. 잠시 후 시도해주세요. 반복될 경우, 관리자에게 문의해주세요.",
+      );
     },
   });
 

@@ -68,24 +68,27 @@ export default function RecipeAddPage() {
 
   const recipeMutation = useMutation({
     mutationFn: async () => {
-      const { data, error } = await supabase.from("recipes").insert({
-        user_id: mySessionQuery.data?.session?.user?.id || "",
-        recipe_name: recipeName || "",
-        use_dripper: dripper?.value || "",
-        use_filter: filter?.value || "",
-        is_ice: isIceRecipe,
-        is_hot: isHotRecipe,
-        coffee_amount: Number(coffeeAmount) || -1,
-        water_amount: Number(waterAmount) || -1,
-        water_temperature: Number(waterTemperature) || -1,
-        grind_step: grindStep || -1,
-        grind_step_memo: grindStepMemo || "",
-        is_no_bloom: isNoBloom,
-        pour_count: pourCount || -1,
-        raw_brewing_info: JSON.parse(JSON.stringify(brewingInfo)),
-        recipe_description: recipeDescription || "",
-        image_url: imageUrl || "",
-      });
+      const { data, error } = await supabase
+        .from("recipes")
+        .insert({
+          user_id: mySessionQuery.data?.session?.user?.id || "",
+          recipe_name: recipeName || "",
+          use_dripper: dripper?.value || "",
+          use_filter: filter?.value || "",
+          is_ice: isIceRecipe,
+          is_hot: isHotRecipe,
+          coffee_amount: Number(coffeeAmount) || -1,
+          water_amount: Number(waterAmount) || -1,
+          water_temperature: Number(waterTemperature) || -1,
+          grind_step: grindStep || -1,
+          grind_step_memo: grindStepMemo || "",
+          is_no_bloom: isNoBloom,
+          pour_count: pourCount || -1,
+          raw_brewing_info: JSON.parse(JSON.stringify(brewingInfo)),
+          recipe_description: recipeDescription || "",
+          image_url: imageUrl || "",
+        })
+        .throwOnError();
 
       return data;
     },
@@ -95,6 +98,11 @@ export default function RecipeAddPage() {
       alert("레시피가 게시되었어요!");
       router.push("/recipe");
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
+    },
+    onError: (error) => {
+      alert(
+        "레시피가 게시되지 않았어요. 잠시 후 시도해주세요. 반복될 경우, 관리자에게 문의해주세요.",
+      );
     },
   });
 
