@@ -8,6 +8,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import TopNav from "@/components/nav/TopNav";
 import BottomTabNav from "@/components/nav/BottomTabNav";
 import { ReactQueryClientProvider } from "@/components/providers/ReactQueryClientProvider";
+import Head from "next/head";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -26,6 +27,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+      </Head>
       <body className="bg-background text-foreground">
         <ReactQueryClientProvider>
           <ThemeProvider
