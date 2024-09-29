@@ -18,7 +18,7 @@ export default function RecipePage() {
   const router = useRouter();
 
   const mySessionQuery = useQuery({
-    queryKey: ["session"],
+    queryKey: ["drippin", "session"],
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
       return data;
@@ -63,7 +63,9 @@ export default function RecipePage() {
 
       {!myRecipeQuery.data?.length && (
         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center">
-          아직 작성된 레시피가 없어요<br/>레시피를 만들어서 공유해보세요!
+          아직 작성된 레시피가 없어요
+          <br />
+          레시피를 만들어서 공유해보세요!
         </div>
       )}
 

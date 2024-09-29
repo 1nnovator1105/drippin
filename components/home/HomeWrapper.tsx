@@ -7,6 +7,7 @@ import { cn } from "@/utils/cn";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import { SheetSide } from "../share/SheetSide";
 
 export default function HomeWrapper() {
   const supabase = useSupabaseBrowser();
@@ -14,6 +15,14 @@ export default function HomeWrapper() {
   const [selectedTab, setSelectedTab] = useState<string>(
     searchParams.get("tab") || "레시피",
   );
+
+  const mySessionQuery = useQuery({
+    queryKey: ["drippin", "session"],
+    queryFn: async () => {
+      const { data, error } = await supabase.auth.getSession();
+      return data;
+    },
+  });
 
   const recipeFeedQuery = useQuery({
     queryKey: ["drippin", "feed", "recipe"],
@@ -54,7 +63,7 @@ export default function HomeWrapper() {
 
   return (
     <div className="flex flex-col pb-[88px]">
-      <div className="flex flex-row justify-between pt-2 items-center sticky top-0 bg-white z-[99]">
+      <div className="flex flex-row justify-between pt-2 items-center sticky top-0 bg-white z-[40]">
         <div className="w-full">
           <div role="tablist" className="tabs tabs-bordered tabs-lg xs:tabs-sm">
             <input
@@ -116,6 +125,8 @@ export default function HomeWrapper() {
           </div>
         )}
       </div>
+
+      {mySessionQuery.data?.session?.user.id && <SheetSide side="bottom" />}
     </div>
   );
 }
