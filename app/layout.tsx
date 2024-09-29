@@ -34,8 +34,9 @@ export default function RootLayout({
         <ReactQueryClientProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            defaultTheme="light"
+            forcedTheme="light"
+            enableSystem={false}
             disableTransitionOnChange
           >
             <Wrapper>{children}</Wrapper>
