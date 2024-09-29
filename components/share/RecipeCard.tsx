@@ -25,7 +25,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
   const queryClient = useQueryClient();
 
   const mySessionQuery = useQuery({
-    queryKey: ["session"],
+    queryKey: ["drippin", "session"],
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
       return data;

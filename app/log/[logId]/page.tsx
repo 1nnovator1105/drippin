@@ -58,7 +58,7 @@ export default function LogDetailPage() {
   });
 
   const mySessionQuery = useQuery({
-    queryKey: ["session"],
+    queryKey: ["drippin", "session"],
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
       return data;

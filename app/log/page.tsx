@@ -15,7 +15,7 @@ export default function LogPage() {
   const supabase = useSupabaseBrowser();
   const router = useRouter();
   const mySessionQuery = useQuery({
-    queryKey: ["session"],
+    queryKey: ["drippin", "session"],
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
       return data;
@@ -60,7 +60,9 @@ export default function LogPage() {
 
       {!myLogQuery.data?.length && (
         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center">
-          아직 작성된 일지가 없어요<br/>오늘은 어떤 커피를 드셨나요?
+          아직 작성된 일지가 없어요
+          <br />
+          오늘은 어떤 커피를 드셨나요?
         </div>
       )}
 

@@ -53,6 +53,7 @@ const RAW_RUNTIME_STATE =
           ["browser-image-compression", "npm:2.0.2"],\
           ["class-variance-authority", "npm:0.7.0"],\
           ["clsx", "npm:2.1.1"],\
+          ["cookies-next", "npm:4.2.1"],\
           ["daisyui", "npm:4.12.10"],\
           ["date-fns", "npm:4.1.0"],\
           ["geist", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.3.1"],\
@@ -2397,6 +2398,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/cookie", [\
+      ["npm:0.6.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-cookie-npm-0.6.0-1f4c3f48f0-10c0.zip/node_modules/@types/cookie/",\
+        "packageDependencies": [\
+          ["@types/cookie", "npm:0.6.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/d3-array", [\
       ["npm:3.2.1", {\
         "packageLocation": "../../../.yarn/berry/cache/@types-d3-array-npm-3.2.1-40c200ccb1-10c0.zip/node_modules/@types/d3-array/",\
@@ -3096,6 +3106,17 @@ const RAW_RUNTIME_STATE =
       ["npm:0.6.0", {\
         "packageLocation": "../../../.yarn/berry/cache/cookie-npm-0.6.0-362d6a2e45-10c0.zip/node_modules/cookie/",\
         "packageDependencies": [\
+          ["cookie", "npm:0.6.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["cookies-next", [\
+      ["npm:4.2.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/cookies-next-npm-4.2.1-3099a195e5-10c0.zip/node_modules/cookies-next/",\
+        "packageDependencies": [\
+          ["cookies-next", "npm:4.2.1"],\
+          ["@types/cookie", "npm:0.6.0"],\
           ["cookie", "npm:0.6.0"]\
         ],\
         "linkType": "HARD"\
@@ -5649,6 +5670,7 @@ const RAW_RUNTIME_STATE =
           ["browser-image-compression", "npm:2.0.2"],\
           ["class-variance-authority", "npm:0.7.0"],\
           ["clsx", "npm:2.1.1"],\
+          ["cookies-next", "npm:4.2.1"],\
           ["daisyui", "npm:4.12.10"],\
           ["date-fns", "npm:4.1.0"],\
           ["geist", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.3.1"],\
