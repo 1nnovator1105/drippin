@@ -61,6 +61,12 @@ export default function RecipePage() {
         ))}
       </div>
 
+      {!myRecipeQuery.data.length && (
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center">
+          아직 작성된 레시피가 없어요<br/>레시피를 만들어서 공유해보세요!
+        </div>
+      )}
+
       {mySessionQuery.data?.session?.user.id && !myRecipeQuery.isLoading && (
         <Link
           href="/recipe/add"
