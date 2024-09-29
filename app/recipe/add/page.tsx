@@ -308,6 +308,9 @@ export default function RecipeAddPage() {
         left: (currentPage - 1) * container.clientWidth,
         behavior: "instant",
       });
+      if (window) {
+        window.scrollTo(0, 0);
+      }
     }
   }, [currentPage]);
 
