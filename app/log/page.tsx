@@ -58,6 +58,12 @@ export default function LogPage() {
         ))}
       </div>
 
+      {!myLogQuery.data.length && (
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center">
+          아직 작성된 일지가 없어요<br/>오늘은 어떤 커피를 드셨나요?
+        </div>
+      )}
+
       {mySessionQuery.data?.session?.user.id && !myLogQuery.isLoading && (
         <Link
           href="/log/add"
