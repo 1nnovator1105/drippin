@@ -40,7 +40,12 @@ export function SheetSide({ side }: { side: SheetSide }) {
   return (
     <div className="grid grid-cols-2 gap-2">
       <Sheet key={side} open={isOpen}>
-        <SheetContent side={side}>
+        <SheetContent
+          side={side}
+          onPointerDownOutside={() => {
+            setIsOpen(false);
+          }}
+        >
           <SheetHeader>
             <SheetTitle>만족도 조사하고 커피 받아가세요 ☕</SheetTitle>
             <SheetDescription>

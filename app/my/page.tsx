@@ -150,12 +150,6 @@ export default function MyPage() {
         </label>
       </div>
 
-      <Link className="flex flex-row justify-center items-center p-4" href={""}>
-        <span>설문조사 참여하고 </span>
-        <span className="text-blue-500 underline px-2">블루보틀 기프티콘</span>
-        <span> 받으러가기</span>
-      </Link>
-
       <div className="fixed bottom-[88px] flex justify-center items-center w-full max-w-xl self-center">
         <button
           className="btn btn-sm btn-outline border-[#999999] p-2 text-[#999999]"
