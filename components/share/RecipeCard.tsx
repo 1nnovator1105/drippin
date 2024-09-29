@@ -1,24 +1,28 @@
+"use client";
+
 import Image from "next/image";
 import LikeIcon from "../icon/LikeIcon";
-import TagChip from "../share/TagChip";
-import { Tables } from "@/types/database.types";
-import DefaultThumbnail from "../share/DefaultThumbnail";
-import useSupabaseBrowser from "@/utils/supabase/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Link from "next/link";
+import TagChip from "./TagChip";
+import { useState } from "react";
 import { cn } from "@/utils/cn";
+import { Database } from "@/types/database.types";
+import { secToKoreanTime, secToTime } from "@/utils/utils";
+import Link from "next/link";
+import DefaultThumbnail from "./DefaultThumbnail";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useSupabaseBrowser from "@/utils/supabase/client";
 import { usePathname, useRouter } from "next/navigation";
 
-interface Props {
-  log: Tables<"logs">;
+interface RecipeCardProps {
+  recipe: Database["public"]["Tables"]["recipes"]["Row"];
   summary?: boolean;
 }
 
-export default function LogCard({ log, summary }: Props) {
+export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
   const supabase = useSupabaseBrowser();
+  const nowPageUrl = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const nowPageUrl = usePathname();
 
   const mySessionQuery = useQuery({
     queryKey: ["session"],
@@ -32,8 +36,8 @@ export default function LogCard({ log, summary }: Props) {
     mutationFn: async () => {
       if (!mySessionQuery.data?.session) throw Error("세션이 필요합니다.");
 
-      const { data, error } = await supabase.from("logs_likes").insert({
-        log_id: log.id,
+      const { data, error } = await supabase.from("recipes_likes").insert({
+        recipe_id: recipe.id,
         from_user_id: mySessionQuery.data.session.user.id,
       });
 
@@ -49,9 +53,9 @@ export default function LogCard({ log, summary }: Props) {
       if (!mySessionQuery.data?.session) throw Error("세션이 필요합니다.");
 
       const { data, error } = await supabase
-        .from("logs_likes")
+        .from("recipes_likes")
         .delete()
-        .eq("log_id", log.id)
+        .eq("recipe_id", recipe.id)
         .eq("from_user_id", mySessionQuery.data?.session?.user.id);
       return data;
     },
@@ -60,7 +64,22 @@ export default function LogCard({ log, summary }: Props) {
     },
   });
 
-  const isLiked = log?.likes?.some(
+  const getTotalTime = () => {
+    const jsonRawData = JSON.parse(JSON.stringify(recipe.raw_brewing_info));
+    const totalTime = jsonRawData.reduce(
+      (acc: number, cur: { time: number }) => {
+        return acc + cur.time;
+      },
+      0,
+    );
+
+    return totalTime;
+  };
+
+  const myRecipe =
+    mySessionQuery.data?.session?.user.id === recipe.profiles?.id;
+
+  const isLiked = recipe?.likes?.some(
     (like) => like.from_user_id === mySessionQuery.data?.session?.user.id,
   );
 
@@ -87,30 +106,25 @@ export default function LogCard({ log, summary }: Props) {
 
   return (
     <Link
-      href={`/log/${log.id}${qs}`}
-      className="cursor-pointer w-full"
+      href={`/recipe/${recipe.id}${qs}`}
       scroll={false}
+      className="cursor-pointer w-full select-none"
     >
       <div>
-        <div className="flex flex-col">
+        <div className={"flex flex-col"}>
           {!summary && (
-            <div
-              className={cn(
-                "relative w-full",
-                log?.image_url ? "aspect-[1/1]" : "h-[170px]",
-              )}
-            >
-              {log?.image_url ? (
+            <div className="relative w-full h-[170px]">
+              {recipe?.image_url ? (
                 <Image
-                  src={log.image_url}
+                  src={recipe?.image_url}
                   alt="recipe"
                   className="w-full h-full object-cover"
                   fill
                 />
               ) : (
                 <DefaultThumbnail
-                  title={`${log.coffee_name} @${log.coffee_place}`}
-                  handle={log.profiles?.handle || ""}
+                  title={recipe.recipe_name}
+                  handle={recipe.profiles?.handle || ""}
                 />
               )}
             </div>
@@ -126,43 +140,44 @@ export default function LogCard({ log, summary }: Props) {
                     strokeWidth="2.5"
                   />
                 </div>
-                <span>{log.likes?.length}명의 드리핀이 좋아해요</span>
+                <span>{recipe?.likes?.length}명의 드리핀이 좋아해요</span>
               </div>
             )}
 
-            {summary && (
-              <div className="flex items-center justify-between">
-                <div className="flex text-[#1E1E1E] font-bold">
-                  {log.coffee_place}에서 마신 {log.coffee_name}
-                </div>
-                <div className="flex items-center gap-1">
+            <div className="flex font-bold text-base text-[#1E1E1E]">
+              {recipe.recipe_name}
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex flex-row gap-2">
+                <TagChip
+                  label={`${secToKoreanTime(getTotalTime())}`}
+                  className="text-black bg-[#CCC]"
+                />
+                {recipe.is_ice && (
+                  <TagChip label="ICE" className="text-white bg-[#699BF7]" />
+                )}
+                {recipe.is_hot && (
+                  <TagChip label="HOT" className="text-white bg-[#F24E1E]" />
+                )}
+              </div>
+
+              {summary && (
+                <div className="flex text-[#1E1E1E] items-center gap-1 text-sm">
                   <LikeIcon
                     fill="#1E1E1E"
                     stroke="#1E1E1E"
                     strokeWidth="2.5"
                     className="size-4"
                   />
-                  <span className="text-sm">{log?.likes?.length}</span>
+                  <span className="text-sm">{recipe?.likes?.length}</span>
                 </div>
-              </div>
-            )}
-
-            <div className="line-clamp-3 text-base text-[#1E1E1E] font-regular">
-              <span className="text-[#757575]">@{log.profiles?.handle}</span>{" "}
-              {log.content}
+              )}
             </div>
 
-            <div className="text-[#1E1E1E] text-base font-regular">
-              {log.tags
-                ?.split(" ")
-                ?.map((value) => {
-                  if (value.startsWith("#")) {
-                    return value;
-                  }
-
-                  return `#${value}`;
-                })
-                ?.join(" ")}
+            <div className="line-clamp-3 text-[#1E1E1E] text-base">
+              <span className="text-[#757575]">@{recipe.profiles?.handle}</span>{" "}
+              {recipe.recipe_description}
             </div>
           </div>
         </div>

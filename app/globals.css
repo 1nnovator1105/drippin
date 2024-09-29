@@ -66,6 +66,21 @@
   body {
     @apply bg-background text-foreground;
   }
+  :root {
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 
   /* Chrome, Safari, Edge, Opera */
   input::-webkit-outer-spin-button,
@@ -81,5 +96,26 @@
 
   .timeline-vertical > li > hr {
     @apply w-[0.5px] bg-primary !important;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+
+  details > summary::marker, /* Latest Chrome, Edge, Firefox */ 
+  details > summary::-webkit-details-marker /* Safari */ {
+    display: none;
+  }
+
+  .swiper .swiper-pagination {
+    bottom: 0px !important;
+    top: 0px !important;
+    height: fit-content !important;
+  }
+
+  .tab {
+    padding-inline-start: 0px !important;
+    padding-inline-end: 0px !important;
+    padding-block-end: 5px !important;
   }
 }

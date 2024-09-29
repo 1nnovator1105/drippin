@@ -4,155 +4,282 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
+      logs: {
+        Row: {
+          coffee_name: string | null;
+          coffee_place: string | null;
+          content: string | null;
+          created_at: string;
+          id: number;
+          image_url: string | null;
+          is_removed: boolean;
+          recipe_id: number | null;
+          tags: string | null;
+          updated_at: string | null;
+          user_id: string | null;
+          profiles: Tables<"profiles">;
+          logs_likes: Tables<"logs_likes">;
+          likes: Tables<"logs_likes">[];
+        };
+        Insert: {
+          coffee_name?: string | null;
+          coffee_place?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          image_url?: string | null;
+          is_removed?: boolean;
+          recipe_id?: number | null;
+          tags?: string | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          coffee_name?: string | null;
+          coffee_place?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          image_url?: string | null;
+          is_removed?: boolean;
+          recipe_id?: number | null;
+          tags?: string | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "logs_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "recipes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "logs_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      logs_likes: {
+        Row: {
+          created_at: string;
+          from_user_id: string;
+          id: number;
+          log_id: number;
+        };
+        Insert: {
+          created_at?: string;
+          from_user_id: string;
+          id?: number;
+          log_id: number;
+        };
+        Update: {
+          created_at?: string;
+          from_user_id?: string;
+          id?: number;
+          log_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "logs_likes_log_id_fkey";
+            columns: ["log_id"];
+            isOneToOne: false;
+            referencedRelation: "logs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       notes: {
         Row: {
-          id: number
-          title: string | null
-        }
+          id: number;
+          title: string | null;
+        };
         Insert: {
-          id?: number
-          title?: string | null
-        }
+          id?: number;
+          title?: string | null;
+        };
         Update: {
-          id?: number
-          title?: string | null
-        }
-        Relationships: []
-      }
+          id?: number;
+          title?: string | null;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
-          created_at: string | null
-          email: string | null
-          handle: string | null
-          id: string
-          profile_img_url: string | null
-          providers: string | null
-          user_name: string
-        }
+          created_at: string | null;
+          email: string | null;
+          handle: string | null;
+          id: string;
+          profile_img_url: string | null;
+          providers: string | null;
+          user_name: string;
+        };
         Insert: {
-          created_at?: string | null
-          email?: string | null
-          handle?: string | null
-          id?: string
-          profile_img_url?: string | null
-          providers?: string | null
-          user_name: string
-        }
+          created_at?: string | null;
+          email?: string | null;
+          handle?: string | null;
+          id?: string;
+          profile_img_url?: string | null;
+          providers?: string | null;
+          user_name: string;
+        };
         Update: {
-          created_at?: string | null
-          email?: string | null
-          handle?: string | null
-          id?: string
-          profile_img_url?: string | null
-          providers?: string | null
-          user_name?: string
-        }
+          created_at?: string | null;
+          email?: string | null;
+          handle?: string | null;
+          id?: string;
+          profile_img_url?: string | null;
+          providers?: string | null;
+          user_name?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            foreignKeyName: "profiles_id_fkey";
+            columns: ["id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       recipes: {
         Row: {
-          coffee_amount: number
-          created_at: string
-          grind_step: number
-          grind_step_memo: string | null
-          id: number
-          image_url: string | null
-          is_hot: boolean
-          is_ice: boolean
-          is_no_bloom: boolean
-          pour_count: number
-          raw_brewing_info: Json
-          recipe_description: string
-          recipe_name: string
-          updated_at: string | null
-          use_dripper: string
-          use_filter: string
-          user_id: string
-          water_amount: number
-          water_temperature: number
-        }
+          coffee_amount: number;
+          created_at: string;
+          grind_step: number;
+          grind_step_memo: string | null;
+          id: number;
+          image_url: string | null;
+          is_hot: boolean;
+          is_ice: boolean;
+          is_no_bloom: boolean;
+          is_removed: boolean;
+          pour_count: number;
+          raw_brewing_info: Json;
+          recipe_description: string;
+          recipe_description_html: string | null;
+          recipe_name: string;
+          updated_at: string | null;
+          use_dripper: string;
+          use_filter: string;
+          user_id: string;
+          water_amount: number;
+          water_temperature: number;
+          profiles: Tables<"profiles">;
+          logs_likes: Tables<"logs_likes">;
+          likes: Tables<"logs_likes">[];
+        };
         Insert: {
-          coffee_amount: number
-          created_at?: string
-          grind_step: number
-          grind_step_memo?: string | null
-          id?: number
-          image_url?: string | null
-          is_hot?: boolean
-          is_ice?: boolean
-          is_no_bloom: boolean
-          pour_count: number
-          raw_brewing_info: Json
-          recipe_description: string
-          recipe_name: string
-          updated_at?: string | null
-          use_dripper: string
-          use_filter: string
-          user_id: string
-          water_amount: number
-          water_temperature: number
-        }
+          coffee_amount: number;
+          created_at?: string;
+          grind_step: number;
+          grind_step_memo?: string | null;
+          id?: number;
+          image_url?: string | null;
+          is_hot?: boolean;
+          is_ice?: boolean;
+          is_no_bloom: boolean;
+          is_removed?: boolean;
+          pour_count: number;
+          raw_brewing_info: Json;
+          recipe_description: string;
+          recipe_description_html?: string | null;
+          recipe_name: string;
+          updated_at?: string | null;
+          use_dripper: string;
+          use_filter: string;
+          user_id: string;
+          water_amount: number;
+          water_temperature: number;
+        };
         Update: {
-          coffee_amount?: number
-          created_at?: string
-          grind_step?: number
-          grind_step_memo?: string | null
-          id?: number
-          image_url?: string | null
-          is_hot?: boolean
-          is_ice?: boolean
-          is_no_bloom?: boolean
-          pour_count?: number
-          raw_brewing_info?: Json
-          recipe_description?: string
-          recipe_name?: string
-          updated_at?: string | null
-          use_dripper?: string
-          use_filter?: string
-          user_id?: string
-          water_amount?: number
-          water_temperature?: number
-        }
+          coffee_amount?: number;
+          created_at?: string;
+          grind_step?: number;
+          grind_step_memo?: string | null;
+          id?: number;
+          image_url?: string | null;
+          is_hot?: boolean;
+          is_ice?: boolean;
+          is_no_bloom?: boolean;
+          is_removed?: boolean;
+          pour_count?: number;
+          raw_brewing_info?: Json;
+          recipe_description?: string;
+          recipe_description_html?: string | null;
+          recipe_name?: string;
+          updated_at?: string | null;
+          use_dripper?: string;
+          use_filter?: string;
+          user_id?: string;
+          water_amount?: number;
+          water_temperature?: number;
+        };
         Relationships: [
           {
-            foreignKeyName: "recipes_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
+            foreignKeyName: "recipes_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
           },
-        ]
-      }
-    }
+        ];
+      };
+      recipes_likes: {
+        Row: {
+          created_at: string;
+          from_user_id: string;
+          id: number;
+          recipe_id: number | null;
+        };
+        Insert: {
+          created_at?: string;
+          from_user_id: string;
+          id?: number;
+          recipe_id?: number | null;
+        };
+        Update: {
+          created_at?: string;
+          from_user_id?: string;
+          id?: number;
+          recipe_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "recipes_likes_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "recipes";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, "public">];
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -165,7 +292,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -173,11 +300,11 @@ export type Tables<
         PublicSchema["Views"])
     ? (PublicSchema["Tables"] &
         PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -188,17 +315,17 @@ export type TablesInsert<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -209,17 +336,17 @@ export type TablesUpdate<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -232,4 +359,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never
+    : never;

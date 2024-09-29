@@ -1,6 +1,7 @@
 import { brewOptions } from "@/constants/brew";
 import { BrewOption, BrewingInfo } from "@/types/brew";
 import { cn } from "@/utils/cn";
+import { secToTime } from "@/utils/utils";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Select from "react-select";
@@ -13,6 +14,7 @@ interface InfoTimelineProps {
   phase: BrewingInfo;
   allInfo: BrewingInfo[];
   setInfoAction: Dispatch<SetStateAction<BrewingInfo[]>>;
+  setCurrentPageAction: Dispatch<SetStateAction<number>>;
 }
 
 export default function InfoTimeline({
@@ -23,6 +25,7 @@ export default function InfoTimeline({
   phase,
   allInfo,
   setInfoAction,
+  setCurrentPageAction,
 }: InfoTimelineProps) {
   const [totalWater, setTotalWater] = useState<number>(0);
   const [totalTime, setTotalTime] = useState<number>(0);
@@ -95,11 +98,8 @@ export default function InfoTimeline({
     setTotalTime(totalTime + time);
   };
 
-  // sec to mm:ss
-  const secToTime = (sec: number) => {
-    const minutes = Math.floor(sec / 60);
-    const seconds = sec % 60;
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  const moveToNextPage = () => {
+    setCurrentPageAction((prev) => prev + 1);
   };
 
   useEffect(() => {
@@ -120,9 +120,19 @@ export default function InfoTimeline({
     };
   }, [phase]);
 
+  const isFillPrevWaterAndTime = () => {
+    const filtered = allInfo.filter(
+      (value) => (!value.water || !value.time) && value.order < phase.order,
+    );
+    return filtered.length === 0;
+  };
+
   return (
     <React.Fragment>
-      <li onClick={hasNext ? openModal : undefined} className="cursor-pointer">
+      <li
+        onClick={hasNext ? openModal : moveToNextPage}
+        className="cursor-pointer"
+      >
         {hasPrev && <hr className={cn(true ? "bg-primary" : "")} />}
         <div className="timeline-middle px-[10px]">
           <svg
@@ -135,12 +145,25 @@ export default function InfoTimeline({
             <circle cx="5" cy="5" r="5" fill="#1E1E1E" />
           </svg>
         </div>
-        <div className={cn("label-text timeline-start")}>{label}</div>
+        {hasNext ? (
+          <div className={cn("label-text timeline-start text-xs")}>{label}</div>
+        ) : (
+          <div
+            className={cn(
+              "label-text timeline-start",
+              isFillPrevWaterAndTime()
+                ? "text-rose-500 font-bold"
+                : "text-gray-200",
+            )}
+          >
+            {label}
+          </div>
+        )}
 
         {hasNext && (
           <div
             className={cn(
-              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg",
+              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg text-xs",
               (water === 0 || time === 0) && hasPrev
                 ? "text-gray-200"
                 : "text-gray-900",
@@ -157,16 +180,19 @@ export default function InfoTimeline({
         id={`modal-${label}-${order}`}
         className="modal max-w-none max-h-none "
       >
-        <div className="modal-box h-full">
+        <div className="modal-box">
           <h3 className="font-bold text-lg">{label}</h3>
 
           <div className="flex flex-col gap-2">
             {hasNext ? (
-              <>
+              <div className="flex flex-col gap-5">
                 <div>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text">물을 몇 그램 부었나요?</span>
+                      <span className="label-text text-base">
+                        물을 몇 그램 부었나요?
+                        <span className="text-red-500 px-1">*</span>
+                      </span>
                     </div>
                     <input
                       type="text"
@@ -179,8 +205,9 @@ export default function InfoTimeline({
                 <div>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text">
-                        물을 붓고 다음 푸어까지 얼마나 기다릴까요?
+                      <span className="label-text text-base">
+                        다음 푸어까지 몇 초 동안 소요되나요?
+                        <span className="text-red-500 px-1">*</span>
                       </span>
                     </div>
                     <input
@@ -194,7 +221,7 @@ export default function InfoTimeline({
                 <div>
                   <label className="form-control w-full">
                     <div className="label">
-                      <span className="label-text">
+                      <span className="label-text text-base">
                         추출 옵션을 선택해주세요.
                       </span>
                     </div>
@@ -209,40 +236,46 @@ export default function InfoTimeline({
                       }}
                     />
                   </label>
+                </div>
 
-                  <label>
-                    <span className="label-text">
-                      {`메모를 남겨주세요. (${memo.length}/100)`}
-                    </span>
+                <div>
+                  <label className="form-control w-full">
+                    <label>
+                      <span className="label-text text-base">
+                        {`메모를 남겨주세요. (${memo.length}/100)`}
+                      </span>
 
-                    <input
-                      type="text"
-                      placeholder="메모"
-                      className="input input-ghost w-full max-w-xs border-none focus:outline-none px-1 focus:text-gray-400"
-                      value={memo}
-                      maxLength={100}
-                      onChange={onChangeMemo}
-                    />
+                      <input
+                        type="text"
+                        placeholder="메모"
+                        className="input input-bordered w-full max-h-10 mt-2"
+                        value={memo}
+                        maxLength={100}
+                        onChange={onChangeMemo}
+                      />
+                    </label>
                   </label>
                 </div>
-              </>
+
+                <div className="flex flex-row gap-2">
+                  <form method="dialog" className="flex-1">
+                    <button className="btn bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] w-full">
+                      취소
+                    </button>
+                  </form>
+                  <form method="dialog" className="flex-1">
+                    <button
+                      className="btn bg-[#2C2C2C] text-[#F5F5F5] w-full"
+                      onClick={handleApply}
+                    >
+                      적용하기
+                    </button>
+                  </form>
+                </div>
+              </div>
             ) : (
               <div>추출완료 전용</div>
             )}
-
-            <div className="flex flex-row gap-2">
-              <form method="dialog" className="flex-1">
-                <button className="btn btn-warning w-full">취소</button>
-              </form>
-              <form method="dialog" className="flex-1">
-                <button
-                  className="btn btn-primary w-full"
-                  onClick={handleApply}
-                >
-                  적용하기
-                </button>
-              </form>
-            </div>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">
