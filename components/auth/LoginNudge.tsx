@@ -10,8 +10,10 @@ export default function LoginNudge() {
         <div>서비스를 이용하려면</div>
         <div>로그인이 필요해요</div>
       </div>
-      <KakaoButton />
-      <GoogleButton />
+      <div>
+        <KakaoButton />
+        <GoogleButton />
+      </div>
     </div>
   );
 }
