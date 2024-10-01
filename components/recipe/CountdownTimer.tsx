@@ -1,5 +1,5 @@
 import { BrewingInfo } from "@/types/brew";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   CountdownCircleTimer,
   useCountdown,
@@ -21,12 +21,22 @@ export default function CountdownTimer({
   isPlaying,
   isLast,
 }: CountdownTimerProps) {
-  const { remainingTime } = useCountdown({
+  const [remainingTime, setRemainingTime] = useState(value.time ?? 0);
+
+  const { remainingTime: countdownTime } = useCountdown({
     isPlaying: isPlaying,
     duration: value.time ?? 0,
     initialRemainingTime: value.time ?? 0,
     colors: "#A30000",
   });
+
+  useEffect(() => {
+    setRemainingTime(countdownTime);
+  }, [countdownTime]);
+
+  useEffect(() => {
+    setRemainingTime(value.time ?? 0);
+  }, [tryCount]);
 
   const children = ({ remainingTime }: { remainingTime: number }) => {
     return <div className="text-base">{value.label}</div>;

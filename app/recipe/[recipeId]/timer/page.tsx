@@ -90,6 +90,7 @@ export default function RecipeTimerPage() {
             .map((value: any, index: number) => (
               <SwiperSlide key={index}>
                 <CountdownTimer
+                  key={`${index}-${tryCount}-upper`}
                   value={value}
                   index={index}
                   tryCount={tryCount}
