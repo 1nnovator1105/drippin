@@ -9,7 +9,9 @@ export default function KakaoButton() {
   const supabase = useSupabaseBrowser();
 
   const signInWithKakao = async () => {
-    logEvent(events.clickLogin);
+    logEvent(events.clickLogin, {
+      provider: "kakao",
+    });
     await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
