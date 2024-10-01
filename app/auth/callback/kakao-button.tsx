@@ -23,7 +23,7 @@ export default function KakaoButton() {
   return (
     <button
       onClick={signInWithKakao}
-      className="block btn bg-[#FEE500] bg-[url('/assets/images/kakao_login_medium_wide.png')] bg-contain bg-center bg-no-repeat text-black font-bold w-[283px] h-[42px] min-h-10 mb-3"
+      className="block btn bg-[#FEE500] hover:bg-[#FEE500] bg-[url('/assets/images/kakao_login_medium_wide.png')] bg-contain bg-center bg-no-repeat text-black font-bold w-[283px] h-[42px] min-h-10 mb-3"
     ></button>
   );
 }

@@ -26,7 +26,7 @@ export default function GoogleButton() {
   return (
     <button
       onClick={signInWithGoogle}
-      className="block btn bg-[#F2F2F2] bg-[url('/assets/images/web_neutral_sq_SI@2x.png')] bg-contain bg-center bg-no-repeat text-black font-bold w-[283px] h-[42px] min-h-10"
+      className="block btn bg-[#F2F2F2] hover:bg-[#F2F2F2] bg-[url('/assets/images/web_neutral_sq_SI@2x.png')] bg-contain bg-center bg-no-repeat text-black font-bold w-[283px] h-[42px] min-h-10"
     ></button>
   );
 }
