@@ -23,7 +23,6 @@ export default function MyPage() {
     queryKey: ["drippin", "mySession"],
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
-      console.log(data);
       return data;
     },
   });
@@ -89,6 +88,11 @@ export default function MyPage() {
     setNewHandle(e.target.value);
   };
 
+  const preventClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.open("https://walla.my/drippin-user", "_blank");
+  };
+
   useEffect(() => {
     if (myProfileQuery.data?.handle) {
       setNewHandle(myProfileQuery.data.handle);
@@ -149,6 +153,17 @@ export default function MyPage() {
             onChange={onChangeNewHandle}
           />
         </label>
+      </div>
+
+      <div className="my-8">
+        <Link
+          className="block"
+          href="https://walla.my/drippin-user"
+          target="_blank"
+          onClick={preventClick}
+        >
+          <button className="w-full py-4 bg-[#F0F0F0] text-center text-lg font-semibold">만족도 조사하고, 커피 받아가세요 ☕</button>
+        </Link>
       </div>
 
       <div className="fixed bottom-[88px] flex justify-center items-center w-full max-w-xl self-center">
