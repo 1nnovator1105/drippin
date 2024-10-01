@@ -126,7 +126,7 @@ export default function HomeWrapper() {
         )}
       </div>
 
-      {mySessionQuery.data?.session?.user.id && <SheetSide side="bottom" />}
+      <SheetSide side="bottom" />
     </div>
   );
 }

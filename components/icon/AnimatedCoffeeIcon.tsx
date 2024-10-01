@@ -22,7 +22,7 @@ export default function AnimatedCoffeeIcon({
       >
         <path
           fill="currentColor"
-          fillOpacity="0.3"
+          fill-opacity="0.3"
           d="M17 14v4c0 1.66 -1.34 3 -3 3h-6c-1.66 0 -3 -1.34 -3 -3v-4Z"
         />
         <g
@@ -88,7 +88,7 @@ export default function AnimatedCoffeeIcon({
         >
           <animate
             fill="freeze"
-            attributeName="strokeDashoffset"
+            attributeName="stroke-dashoffset"
             dur="0.6s"
             values="48;0"
           />
@@ -100,7 +100,7 @@ export default function AnimatedCoffeeIcon({
         >
           <animate
             fill="freeze"
-            attributeName="strokeDashoffset"
+            attributeName="stroke-dashoffset"
             begin="0.6s"
             dur="0.2s"
             values="14;0"

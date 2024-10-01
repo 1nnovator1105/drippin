@@ -1,5 +1,6 @@
 import KakaoButton from "@/app/auth/callback/kakao-button";
 import AnimatedCoffeeIcon from "../icon/AnimatedCoffeeIcon";
+import GoogleButton from "@/app/auth/callback/google-button";
 
 export default function LoginNudge() {
   return (
@@ -10,6 +11,7 @@ export default function LoginNudge() {
         <div>로그인이 필요해요</div>
       </div>
       <KakaoButton />
+      <GoogleButton />
     </div>
   );
 }

@@ -23,6 +23,7 @@ export default function MyPage() {
     queryKey: ["drippin", "mySession"],
     queryFn: async () => {
       const { data, error } = await supabase.auth.getSession();
+      console.log(data);
       return data;
     },
   });
