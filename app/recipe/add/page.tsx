@@ -585,27 +585,27 @@ export default function RecipeAddPage() {
                     <span className="text-left">
                       곱게
                       <br />
-                      <span className="text-[10px]">(~400μm)</span>
+                      <span className="text-[9px]">(~400μm)</span>
                     </span>
                     <span className="text-center">
                       약간 곱게
                       <br />
-                      <span className="text-[10px]">(~600μm)</span>
+                      <span className="text-[9px]">(~600μm)</span>
                     </span>
                     <span className="text-center">
                       보통
                       <br />
-                      <span className="text-[10px]">(~800μm)</span>
+                      <span className="text-[9px]">(~800μm)</span>
                     </span>
                     <span className="text-center">
                       약간 굵게
                       <br />
-                      <span className="text-[10px]">(~1000μm)</span>
+                      <span className="text-[9px]">(~1000μm)</span>
                     </span>
                     <span className="text-right">
                       굵게
                       <br />
-                      <span className="text-[10px]">(~1400μm)</span>
+                      <span className="text-[9px]">(~1400μm)</span>
                     </span>
                   </div>
 
