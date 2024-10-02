@@ -28,7 +28,7 @@ export default function RecipeOnboardingPage({}) {
 
   return (
     <>
-      <div className="pb-[88px]">
+      <div>
         <DetailTopBar showMoreOptions={false} />
 
         <div className="flex flex-col px-4">
@@ -177,7 +177,7 @@ export default function RecipeOnboardingPage({}) {
           </div>
         </div>
       </div>
-      <div className="fixed bottom-[88px] max-w-xl w-full px-4">
+      <div className="fixed bottom-4 max-w-xl w-full px-4">
         <Link
           className="flex justify-center items-center"
           href={`/recipe/${recipeId}/timer`}

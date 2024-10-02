@@ -69,7 +69,7 @@ export default function CountdownTimer({
 
   return (
     <div className="flex justify-center items-center py-10 flex-col">
-      <div className="flex flex-col justify-center items-center text-2xl mb-[30px]">
+      <div className="flex flex-col justify-center items-center text-2xl mb-[30px] mx-4 text-center">
         {!isLast ? (
           <>
             <div>{secToKoreanTime(remainingTime)} 동안</div>
@@ -78,7 +78,9 @@ export default function CountdownTimer({
               <span className="text-2xl text-gray-500">
                 (총 {getTotalWater(index)}g)
               </span>
-              의 물을 붓고 기다려주세요
+              의 물을 붓고
+              <br />
+              기다려주세요
             </div>
           </>
         ) : (
