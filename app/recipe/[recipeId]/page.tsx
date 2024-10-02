@@ -11,20 +11,19 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 // import required modules
-import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import DefaultThumbnail from "@/components/share/DefaultThumbnail";
 import Link from "next/link";
 import { cn } from "@/utils/cn";
-import RecipeCard from "@/components/share/RecipeCard";
-import { Database } from "@/types/database.types";
 import LikeIcon from "@/components/icon/LikeIcon";
 import TagChip from "@/components/share/TagChip";
 import { secToKoreanTime } from "@/utils/utils";
 import Spinner from "@/components/share/Spinner";
-import BackIcon from "@/components/icon/BackIcon";
-import MoreIcon from "@/components/icon/MoreIcon";
 import DetailTopBar from "@/components/share/DetailTopBar";
+
+import * as linkify from "linkifyjs";
+import linkifyHtml from "linkify-html";
+import { linkifyOptions } from "@/constants/linkify";
 
 // recipe/[recipeId]
 export default function RecipePage() {
@@ -267,11 +266,13 @@ export default function RecipePage() {
             </span>{" "}
             <div
               dangerouslySetInnerHTML={{
-                __html:
+                __html: linkifyHtml(
                   recipeQuery.data?.recipe_description?.replace(
                     /\n/g,
                     "<br/>",
                   ) || "",
+                  linkifyOptions,
+                ),
               }}
             />
           </div>

@@ -434,7 +434,7 @@ export default function RecipeAddPage() {
                   <CreatableSelector
                     value={dripper}
                     setValue={setDripper}
-                    placeholder="드리퍼 종류"
+                    placeholder="드리퍼 종류 (아래 목록에 없으면 입력 후 엔터를 눌러 추가해주세요.)"
                     defaultOptions={defaultDripperOptions}
                   />
                 </label>
@@ -450,7 +450,7 @@ export default function RecipeAddPage() {
                   <CreatableSelector
                     value={filter}
                     setValue={setFilter}
-                    placeholder="필터 종류"
+                    placeholder="필터 종류 (아래 목록에 없으면 입력 후 엔터를 눌러 추가해주세요.)"
                     defaultOptions={defaultFilterOptions}
                   />
                 </label>

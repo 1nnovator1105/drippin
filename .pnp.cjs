@@ -57,6 +57,8 @@ const RAW_RUNTIME_STATE =
           ["daisyui", "npm:4.12.10"],\
           ["date-fns", "npm:4.1.0"],\
           ["geist", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.3.1"],\
+          ["linkify-html", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.1.3"],\
+          ["linkifyjs", "npm:4.1.3"],\
           ["lucide-react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.445.0"],\
           ["next", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:14.2.11"],\
           ["next-scroll-restorer", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.9.7"],\
@@ -4087,12 +4089,43 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["linkify-html", [\
+      ["npm:4.1.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/linkify-html-npm-4.1.3-4850546061-10c0.zip/node_modules/linkify-html/",\
+        "packageDependencies": [\
+          ["linkify-html", "npm:4.1.3"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.1.3", {\
+        "packageLocation": "./.yarn/__virtual__/linkify-html-virtual-625582ec8f/4/.yarn/berry/cache/linkify-html-npm-4.1.3-4850546061-10c0.zip/node_modules/linkify-html/",\
+        "packageDependencies": [\
+          ["linkify-html", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.1.3"],\
+          ["@types/linkifyjs", null],\
+          ["linkifyjs", "npm:4.1.3"]\
+        ],\
+        "packagePeers": [\
+          "@types/linkifyjs",\
+          "linkifyjs"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["linkify-it", [\
       ["npm:5.0.0", {\
         "packageLocation": "../../../.yarn/berry/cache/linkify-it-npm-5.0.0-adb5f9c96f-10c0.zip/node_modules/linkify-it/",\
         "packageDependencies": [\
           ["linkify-it", "npm:5.0.0"],\
           ["uc.micro", "npm:2.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["linkifyjs", [\
+      ["npm:4.1.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/linkifyjs-npm-4.1.3-f9dd269a83-10c0.zip/node_modules/linkifyjs/",\
+        "packageDependencies": [\
+          ["linkifyjs", "npm:4.1.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5674,6 +5707,8 @@ const RAW_RUNTIME_STATE =
           ["daisyui", "npm:4.12.10"],\
           ["date-fns", "npm:4.1.0"],\
           ["geist", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.3.1"],\
+          ["linkify-html", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.1.3"],\
+          ["linkifyjs", "npm:4.1.3"],\
           ["lucide-react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.445.0"],\
           ["next", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:14.2.11"],\
           ["next-scroll-restorer", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.9.7"],\

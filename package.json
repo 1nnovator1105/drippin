@@ -33,6 +33,8 @@
     "cookies-next": "^4.2.1",
     "date-fns": "^4.1.0",
     "geist": "^1.2.1",
+    "linkify-html": "^4.1.3",
+    "linkifyjs": "^4.1.3",
     "lucide-react": "^0.445.0",
     "next": "latest",
     "next-scroll-restorer": "^0.9.7",

@@ -72,6 +72,7 @@ export default function RecipeTimerPage() {
       <div className="mt-[30px]">
         <Swiper
           ref={swiperRef}
+          autoHeight
           spaceBetween={30}
           centeredSlides={true}
           pagination={{
@@ -99,6 +100,7 @@ export default function RecipeTimerPage() {
                   }}
                   isPlaying={activeIndex === index && isPlaying}
                   isLast={index === brewingInfo.length - 1}
+                  brewingInfo={brewingInfo}
                 />
               </SwiperSlide>
             ))}

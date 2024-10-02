@@ -119,7 +119,7 @@ export default function RecipeOnboardingPage({}) {
 
             <div>
               <div className="label">
-                <p className="label-text">원두 분쇄도를 알려주세요.</p>
+                <p className="label-text">원두 분쇄도</p>
               </div>
               <div>
                 <input
@@ -142,7 +142,7 @@ export default function RecipeOnboardingPage({}) {
                 <div className="mt-[30px]">
                   <label className="form-control w-full">
                     <div className="label flex flex-col items-start justify-start">
-                      <p className="label-text">메모를 남겨주세요.</p>
+                      <p className="label-text">메모</p>
                     </div>
                     <input
                       type="text"
