@@ -582,11 +582,31 @@ export default function RecipeAddPage() {
                     onChange={onChangeGrindStep}
                   />
                   <div className="flex w-full justify-between px-2 text-xs">
-                    <span className="text-xs">아주 곱게</span>
-                    <span className="text-xs">곱게</span>
-                    <span className="text-xs">보통</span>
-                    <span className="text-xs">굵게</span>
-                    <span className="text-xs">아주 굵게</span>
+                    <span className="text-left">
+                      곱게
+                      <br />
+                      (~400μm)
+                    </span>
+                    <span className="text-center">
+                      약간 곱게
+                      <br />
+                      (~600μm)
+                    </span>
+                    <span className="text-center">
+                      보통
+                      <br />
+                      (~800μm)
+                    </span>
+                    <span className="text-center">
+                      약간 굵게
+                      <br />
+                      (~1000μm)
+                    </span>
+                    <span className="text-right">
+                      굵게
+                      <br />
+                      (~1400μm)
+                    </span>
                   </div>
 
                   <div className="mt-[30px]">
