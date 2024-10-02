@@ -4,8 +4,18 @@ import { pretendard } from "@/styles/fonts";
 import BottomTabNav from "../nav/BottomTabNav";
 import { useEffect } from "react";
 import { init } from "@/utils/analytics";
+import { usePathname } from "next/navigation";
 
-export default function Wrapper({ children }: { children: React.ReactNode }) {
+interface WrapperProps {
+  children: React.ReactNode;
+}
+
+export default function Wrapper({ children }: WrapperProps) {
+  const pathname = usePathname(); // 현재 경로 가져오기
+  const hideBottomTabNav =
+    pathname.startsWith("/recipe/") &&
+    (pathname.includes("/timer") || pathname.includes("/onboarding")); // 수정된 부분
+
   useEffect(() => {
     init();
   }, []);
@@ -18,7 +28,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
         {`:root { --font-pretendard: ${pretendard.style.fontFamily};}}`}
       </style>
       <div className="flex-1 pb-[72px] border-x-[1px]">{children}</div>
-      <BottomTabNav />
+      {!hideBottomTabNav && <BottomTabNav />}
     </div>
   );
 }
