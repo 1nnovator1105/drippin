@@ -5,6 +5,7 @@ import BottomTabNav from "../nav/BottomTabNav";
 import { useEffect } from "react";
 import { init } from "@/utils/analytics";
 import { usePathname } from "next/navigation";
+import { cn } from "@/utils/cn";
 
 interface WrapperProps {
   children: React.ReactNode;
@@ -27,7 +28,14 @@ export default function Wrapper({ children }: WrapperProps) {
       <style jsx global>
         {`:root { --font-pretendard: ${pretendard.style.fontFamily};}}`}
       </style>
-      <div className="flex-1 pb-[72px] border-x-[1px]">{children}</div>
+      <div
+        className={cn(
+          "flex-1 pb-[72px] border-x-[1px]",
+          hideBottomTabNav && "pb-0",
+        )}
+      >
+        {children}
+      </div>
       {!hideBottomTabNav && <BottomTabNav />}
     </div>
   );
