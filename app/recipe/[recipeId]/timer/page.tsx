@@ -72,7 +72,7 @@ export default function RecipeTimerPage() {
       <div className="mt-[30px]">
         <Swiper
           ref={swiperRef}
-          autoHeight
+          // autoHeight
           spaceBetween={30}
           centeredSlides={true}
           pagination={{
