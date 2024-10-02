@@ -60,7 +60,9 @@ export default function CountdownTimer({
         <div>{value.label}</div>
         {!isLast && (
           <div className="text-sm text-gray-500">
-            총 진행시간: {secToKoreanTime(getTotalTime(index))}
+            총 진행 시간: {secToKoreanTime(getTotalTime(index))}
+            <br />
+            전체 물의 양: {getTotalWater(index)}g
           </div>
         )}
       </div>
@@ -74,11 +76,7 @@ export default function CountdownTimer({
           <>
             <div>{secToKoreanTime(remainingTime)} 동안</div>
             <div>
-              {value.water}g
-              <span className="text-2xl text-gray-500">
-                (총 {getTotalWater(index)}g)
-              </span>
-              의 물을 붓고
+              {value.water}g의 물을 붓고
               <br />
               기다려주세요
             </div>
