@@ -107,19 +107,21 @@ export default function MyPage() {
     <>
       <Header title="내정보" />
       <div className="px-4 py-2">
-        <label className="form-control w-full">
-          <div className="label flex flex-col items-start justify-start">
-            <p className="label-text text-base">이름</p>
-          </div>
-          <input
-            type="text"
-            placeholder="이름"
-            className="input input-bordered w-full focus:outline-none"
-            value={myProfileQuery.data?.user_name || ""}
-            disabled
-            readOnly
-          />
-        </label>
+        {myProfileQuery.data?.user_name && (
+          <label className="form-control w-full">
+            <div className="label flex flex-col items-start justify-start">
+              <p className="label-text text-base">이름</p>
+            </div>
+            <input
+              type="text"
+              placeholder="이름"
+              className="input input-bordered w-full focus:outline-none"
+              value={myProfileQuery.data?.user_name || ""}
+              disabled
+              readOnly
+            />
+          </label>
+        )}
 
         <label className="form-control w-full mt-4">
           <div className="label flex flex-col items-start justify-start">
@@ -162,7 +164,9 @@ export default function MyPage() {
           target="_blank"
           onClick={preventClick}
         >
-          <button className="w-full py-4 bg-[#F0F0F0] text-center text-lg font-semibold">만족도 조사하고, 커피 받아가세요 ☕</button>
+          <button className="w-full py-4 bg-[#F0F0F0] text-center text-lg font-semibold">
+            만족도 조사하고, 커피 받아가세요 ☕
+          </button>
         </Link>
       </div>
 

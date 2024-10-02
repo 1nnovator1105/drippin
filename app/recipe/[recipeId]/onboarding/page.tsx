@@ -119,7 +119,7 @@ export default function RecipeOnboardingPage({}) {
 
             <div>
               <div className="label">
-                <p className="label-text">원두 분쇄도를 알려주세요.</p>
+                <p className="label-text">원두 분쇄도</p>
               </div>
               <div>
                 <input
@@ -132,17 +132,37 @@ export default function RecipeOnboardingPage({}) {
                   readOnly
                 />
                 <div className="flex w-full justify-between px-2 text-xs">
-                  <span>아주 곱게</span>
-                  <span>곱게</span>
-                  <span>보통</span>
-                  <span>굵게</span>
-                  <span>아주 굵게</span>
+                  <span className="text-left">
+                    곱게
+                    <br />
+                    (~400μm)
+                  </span>
+                  <span className="text-center">
+                    약간 곱게
+                    <br />
+                    (~600μm)
+                  </span>
+                  <span className="text-center">
+                    보통
+                    <br />
+                    (~800μm)
+                  </span>
+                  <span className="text-center">
+                    약간 굵게
+                    <br />
+                    (~1000μm)
+                  </span>
+                  <span className="text-right">
+                    굵게
+                    <br />
+                    (~1400μm)
+                  </span>
                 </div>
 
                 <div className="mt-[30px]">
                   <label className="form-control w-full">
                     <div className="label flex flex-col items-start justify-start">
-                      <p className="label-text">메모를 남겨주세요.</p>
+                      <p className="label-text">메모</p>
                     </div>
                     <input
                       type="text"
