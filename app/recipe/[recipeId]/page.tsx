@@ -69,7 +69,11 @@ export default function RecipePage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
-      router.back();
+      if (window.history.length > 1) {
+        router.back();
+      } else {
+        router.push("/");
+      }
     },
     onError: (error) => {
       console.error(error);
