@@ -3,8 +3,6 @@
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import KakaoButton from "../auth/callback/kakao-button";
-import AnimatedCoffeeIcon from "@/components/icon/AnimatedCoffeeIcon";
 import { useEffect, useState } from "react";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spinner";

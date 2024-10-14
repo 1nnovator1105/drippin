@@ -1,8 +1,8 @@
 import Image from "next/image";
 import LikeIcon from "../icon/LikeIcon";
-import TagChip from "../share/TagChip";
+import TagChip from "./TagChip";
 import { Tables } from "@/types/database.types";
-import DefaultThumbnail from "../share/DefaultThumbnail";
+import DefaultThumbnail from "./DefaultThumbnail";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";

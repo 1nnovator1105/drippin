@@ -7,7 +7,7 @@ import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import RecipeDetail from "./RecipeDetail";
 
 // recipe/[recipeId]
-export default async function RecipePage({
+export default async function RecipeDetailPage({
   params,
 }: {
   params: { recipeId: string };

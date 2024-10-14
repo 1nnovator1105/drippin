@@ -1,6 +1,10 @@
 export const queryKeys = {
   drippin: ["drippin"] as const,
 
+  feed: () => [...queryKeys.drippin, "feed"] as const,
+  recipeFeed: () => [...queryKeys.feed(), "recipe"] as const,
+  logFeed: () => [...queryKeys.feed(), "log"] as const,
+
   recipe: () => [...queryKeys.drippin, "recipe"] as const,
   log: () => [...queryKeys.drippin, "log"] as const,
   session: () => [...queryKeys.drippin, "session"] as const,

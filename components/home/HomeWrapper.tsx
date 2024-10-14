@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import RecipeCard from "../share/RecipeCard";
-import LogCard from "./LogCard";
+import LogCard from "../share/LogCard";
 import { cn } from "@/utils/cn";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { SheetSide } from "../share/SheetSide";
+import { queryKeys } from "@/queries/queryKeys";
 
 export default function HomeWrapper() {
   const supabase = useSupabaseBrowser();
@@ -25,7 +26,7 @@ export default function HomeWrapper() {
   });
 
   const recipeFeedQuery = useQuery({
-    queryKey: ["drippin", "feed", "recipe"],
+    queryKey: queryKeys.recipeFeed(),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipes")
@@ -38,7 +39,7 @@ export default function HomeWrapper() {
   });
 
   const logFeedQuery = useQuery({
-    queryKey: ["drippin", "feed", "log"],
+    queryKey: queryKeys.logFeed(),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("logs")

@@ -1,26 +1,26 @@
 import { TypedSupabaseClient } from "@/types/TypedSupabaseClient";
 
-export const fetchRecipeDetail = async (
+export const fetchLogDetail = async (
   supabaseClient: TypedSupabaseClient,
-  recipeId: string,
+  logId: string,
 ) => {
-  const { data } = await supabaseClient
-    .from("recipes")
-    .select("*, profiles(handle, email), likes:recipes_likes(*)")
-    .eq("id", recipeId)
+  const { data, error } = await supabaseClient
+    .from("logs")
+    .select(`*, profiles(handle, email), likes:logs_likes(*)`)
+    .eq("id", logId)
     .eq("is_removed", false)
     .maybeSingle();
 
   return data;
 };
 
-export const fetchMyRecipe = async (
+export const fetchMyLog = async (
   supabaseClient: TypedSupabaseClient,
   userId: string,
 ) => {
   const { data, error } = await supabaseClient
-    .from("recipes")
-    .select(`*, profiles(handle, email), likes:recipes_likes(*)`)
+    .from("logs")
+    .select(`*, profiles(handle, email), likes:logs_likes(*)`)
     .eq("user_id", userId)
     .eq("is_removed", false)
     .order("created_at", { ascending: false });
