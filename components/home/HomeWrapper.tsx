@@ -5,11 +5,12 @@ import RecipeCard from "../share/RecipeCard";
 import LogCard from "../share/LogCard";
 import { cn } from "@/utils/cn";
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { SheetSide } from "../share/SheetSide";
 import { queryKeys } from "@/queries/queryKeys";
 import FetchMore from "../share/FetchMore";
+import { fetchLogFeed, fetchRecipeFeed } from "@/queries/feed";
 
 export default function HomeWrapper() {
   const supabase = useSupabaseBrowser();
@@ -18,38 +19,28 @@ export default function HomeWrapper() {
     searchParams.get("tab") || "레시피",
   );
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "session"],
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
-
-  const recipeFeedQuery = useQuery({
+  const recipeFeedQuery = useInfiniteQuery({
     queryKey: queryKeys.recipeFeed(),
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("recipes")
-        .select(`*, profiles(handle, email), likes:recipes_likes(*)`)
-        .eq("is_removed", false)
-        .order("created_at", { ascending: false });
-
-      return data;
+    queryFn: ({ pageParam }) => fetchRecipeFeed(supabase, pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage: number | undefined = lastPage?.length
+        ? allPages?.length
+        : undefined;
+      return nextPage;
     },
+    initialPageParam: 0,
   });
 
-  const logFeedQuery = useQuery({
+  const logFeedQuery = useInfiniteQuery({
     queryKey: queryKeys.logFeed(),
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("logs")
-        .select(`*, profiles(handle, email), likes:logs_likes(*)`)
-        .eq("is_removed", false)
-        .order("created_at", { ascending: false });
-
-      return data;
+    queryFn: ({ pageParam }) => fetchLogFeed(supabase, pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage: number | undefined = lastPage?.length
+        ? allPages?.length
+        : undefined;
+      return nextPage;
     },
+    initialPageParam: 0,
   });
 
   useEffect(() => {
@@ -113,30 +104,28 @@ export default function HomeWrapper() {
       <div className="w-full">
         {selectedTab === "레시피" && (
           <div id="slide1" className="relative w-full flex-col flex">
-            {recipeFeedQuery.data?.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))}
+            {recipeFeedQuery.data?.pages.map((recipes) =>
+              recipes?.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              )),
+            )}
             <FetchMore
-              fetchNextPage={() => {
-                console.log("fetchNextPage");
-              }}
-              hasNextPage={true}
-              isError={false}
+              fetchNextPage={recipeFeedQuery.fetchNextPage}
+              hasNextPage={recipeFeedQuery.hasNextPage}
+              isError={recipeFeedQuery.isError}
             />
           </div>
         )}
 
         {selectedTab === "일지" && (
           <div id="slide2" className="relative w-full flex-col flex">
-            {logFeedQuery.data?.map((log) => (
-              <LogCard key={log.id} log={log} />
-            ))}
+            {logFeedQuery.data?.pages.map((logs) =>
+              logs?.map((log) => <LogCard key={log.id} log={log} />),
+            )}
             <FetchMore
-              fetchNextPage={() => {
-                console.log("fetchNextPage");
-              }}
-              hasNextPage={true}
-              isError={false}
+              fetchNextPage={logFeedQuery.fetchNextPage}
+              hasNextPage={logFeedQuery.hasNextPage}
+              isError={logFeedQuery.isError}
             />
           </div>
         )}
