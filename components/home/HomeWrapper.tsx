@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { SheetSide } from "../share/SheetSide";
 import { queryKeys } from "@/queries/queryKeys";
+import FetchMore from "../share/FetchMore";
 
 export default function HomeWrapper() {
   const supabase = useSupabaseBrowser();
@@ -115,6 +116,13 @@ export default function HomeWrapper() {
             {recipeFeedQuery.data?.map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
+            <FetchMore
+              fetchNextPage={() => {
+                console.log("fetchNextPage");
+              }}
+              hasNextPage={true}
+              isError={false}
+            />
           </div>
         )}
 
@@ -123,6 +131,13 @@ export default function HomeWrapper() {
             {logFeedQuery.data?.map((log) => (
               <LogCard key={log.id} log={log} />
             ))}
+            <FetchMore
+              fetchNextPage={() => {
+                console.log("fetchNextPage");
+              }}
+              hasNextPage={true}
+              isError={false}
+            />
           </div>
         )}
       </div>
