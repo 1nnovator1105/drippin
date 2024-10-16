@@ -122,8 +122,8 @@ export default function RecipeAddPage() {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     const options = {
-      maxSizeMB: 2.5, // 이미지 최대 용량
-      maxWidthOrHeight: 1920, // 최대 넓이(혹은 높이)
+      maxSizeMB: 1.5, // 이미지 최대 용량
+      maxWidthOrHeight: 1280, // 최대 넓이(혹은 높이)
       useWebWorker: true,
     };
 
