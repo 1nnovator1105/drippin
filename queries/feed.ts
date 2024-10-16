@@ -1,16 +1,19 @@
 import { TypedSupabaseClient } from "@/types/TypedSupabaseClient";
+import { getRange } from "@/utils/utils";
 
-export const fetchLogDetail = async (
+export const fetchRecipeFeed = async (
   supabaseClient: TypedSupabaseClient,
-  logId: string,
+  page: number,
 ) => {
   try {
+    const range = getRange(page, 5);
+
     const { data, error } = await supabaseClient
-      .from("logs")
-      .select(`*, profiles(handle, email), likes:logs_likes(*)`)
-      .eq("id", logId)
+      .from("recipes")
+      .select(`*, profiles(handle, email), likes:recipes_likes(*)`)
       .eq("is_removed", false)
-      .maybeSingle();
+      .order("created_at", { ascending: false })
+      .range(range[0], range[1]);
 
     return data;
   } catch (error) {
@@ -19,17 +22,19 @@ export const fetchLogDetail = async (
   }
 };
 
-export const fetchMyLog = async (
+export const fetchLogFeed = async (
   supabaseClient: TypedSupabaseClient,
-  userId: string,
+  page: number,
 ) => {
   try {
+    const range = getRange(page, 5);
+
     const { data, error } = await supabaseClient
       .from("logs")
       .select(`*, profiles(handle, email), likes:logs_likes(*)`)
-      .eq("user_id", userId)
       .eq("is_removed", false)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .range(range[0], range[1]);
 
     return data;
   } catch (error) {
