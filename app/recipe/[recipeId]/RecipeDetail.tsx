@@ -21,6 +21,7 @@ import { queryKeys } from "@/queries/queryKeys";
 import { fetchRecipeDetail } from "@/queries/recipe";
 import { fetchSession } from "@/queries/session";
 import { useEffect } from "react";
+import LogCard from "@/components/share/LogCard";
 
 export default function RecipeDetail({ recipeId }: { recipeId: string }) {
   const supabase = useSupabaseBrowser();
@@ -268,6 +269,15 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
               }}
             />
           </div>
+        </div>
+
+        <div className="mt-6 mb-3">
+          <div className="text-lg font-base text-[#1E1E1E] px-3">
+            이 레시피를 사용한 일지
+          </div>
+          {recipeQuery.data?.logs?.map((log) => (
+            <LogCard key={log.id} log={log} summary />
+          ))}
         </div>
       </div>
     </div>
