@@ -3,7 +3,7 @@
 import { cn } from "@/utils/cn";
 import { useEffect, useRef, useState } from "react";
 
-import CreatableSelector from "@/components/recipe/CreatableSelector";
+import CreatableSelector from "@/components/share/CreatableSelector";
 import { SelectorOption, createOption } from "@/utils/selector";
 import { Input } from "@/components/ui/input";
 import InfoTimeline from "@/components/recipe/InfoTimeline";
