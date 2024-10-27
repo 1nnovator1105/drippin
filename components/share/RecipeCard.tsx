@@ -3,15 +3,14 @@
 import Image from "next/image";
 import LikeIcon from "../icon/LikeIcon";
 import TagChip from "./TagChip";
-import { useState } from "react";
-import { cn } from "@/utils/cn";
 import { Database } from "@/types/database.types";
-import { secToKoreanTime, secToTime } from "@/utils/utils";
+import { secToKoreanTime } from "@/utils/utils";
 import Link from "next/link";
 import DefaultThumbnail from "./DefaultThumbnail";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { usePathname, useRouter } from "next/navigation";
+import { format } from "date-fns";
 
 interface RecipeCardProps {
   recipe: Database["public"]["Tables"]["recipes"]["Row"];
@@ -178,6 +177,10 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
             <div className="line-clamp-3 text-[#1E1E1E] text-base">
               <span className="text-[#757575]">@{recipe.profiles?.handle}</span>{" "}
               {recipe.recipe_description}
+            </div>
+
+            <div className="text-[#757575] text-sm">
+              {format(new Date(recipe.created_at), "yyyy년 M월 dd일")}
             </div>
           </div>
         </div>

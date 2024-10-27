@@ -22,6 +22,8 @@ import { fetchRecipeDetail } from "@/queries/recipe";
 import { fetchSession } from "@/queries/session";
 import { useEffect } from "react";
 import LogCard from "@/components/share/LogCard";
+import { logEvent } from "@/utils/analytics";
+import events from "@/utils/events";
 
 export default function RecipeDetail({ recipeId }: { recipeId: string }) {
   const supabase = useSupabaseBrowser();
@@ -97,6 +99,19 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
     },
   });
 
+  const editRecipe = () => {
+    if (!mySessionQuery.data?.session) {
+      const isConfirm = confirm("로그인하시겠어요?");
+      if (isConfirm) {
+        router.push("/my");
+      }
+      return;
+    }
+
+    logEvent(events.clickEditRecipe);
+    router.push(`/recipe/${recipeId}/edit`);
+  };
+
   const deleteRecipe = () => {
     if (!mySessionQuery.data?.session) {
       const isConfirm = confirm("로그인하시겠어요?");
@@ -162,6 +177,7 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
         showMoreOptions={
           mySessionQuery.data?.session?.user.id === recipeQuery.data?.user_id
         }
+        editAction={editRecipe}
         deleteAction={deleteRecipe}
       />
 

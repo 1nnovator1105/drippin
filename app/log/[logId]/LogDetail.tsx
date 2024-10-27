@@ -162,7 +162,7 @@ export default function LogDetail({ logId }: { logId: string }) {
           )}
           {logQuery.data?.recipe_id && (
             <Link
-              href={`/recipe/${logQuery.data?.recipe_id}/onboarding`}
+              href={`/recipe/${logQuery.data?.recipe_id}`}
               className="flex flex-row justify-center items-center bottom-0 left-0 w-full h-[50px] bg-[#2C2C2C] gap-2 cursor-pointer"
             >
               <div>
@@ -192,7 +192,7 @@ export default function LogDetail({ logId }: { logId: string }) {
                 </svg>
               </div>
 
-              <div className="text-white">레시피 진행하기</div>
+              <div className="text-white">레시피 보러가기</div>
             </Link>
           )}
         </div>
