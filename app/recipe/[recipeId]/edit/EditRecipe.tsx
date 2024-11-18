@@ -22,8 +22,10 @@ import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
 import { logEvent } from "@/utils/analytics";
 import events from "@/utils/events";
 import { queryKeys } from "@/queries/queryKeys";
+import { fetchRecipeDetail } from "@/queries/recipe";
+import Spinner from "@/components/share/Spinner";
 
-export default function RecipeAddPage() {
+export default function EditRecipe({ recipeId }: { recipeId: string }) {
   const supabase = useSupabaseBrowser();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -67,12 +69,85 @@ export default function RecipeAddPage() {
     },
   });
 
-  const recipeMutation = useMutation({
+  const recipeQuery = useQuery({
+    queryKey: queryKeys.recipeDetail(recipeId),
+    queryFn: () => fetchRecipeDetail(supabase, recipeId),
+  });
+
+  useEffect(() => {
+    if (recipeQuery.data) {
+      setRecipeName(recipeQuery.data.recipe_name);
+
+      if (recipeQuery?.data?.use_dripper) {
+        const findDripper = defaultDripperOptions.find(
+          (option) => option.value === recipeQuery?.data?.use_dripper,
+        );
+        if (findDripper) {
+          setDripper(findDripper);
+        } else {
+          setDripper(createOption(recipeQuery?.data?.use_dripper));
+        }
+      }
+      if (recipeQuery?.data?.use_filter) {
+        const findFilter = defaultFilterOptions.find(
+          (option) => option.value === recipeQuery?.data?.use_filter,
+        );
+        if (findFilter) {
+          setFilter(findFilter);
+        } else {
+          setFilter(createOption(recipeQuery?.data?.use_filter));
+        }
+      }
+
+      if (recipeQuery.data.is_ice) {
+        setIsIceRecipe(recipeQuery.data.is_ice);
+      }
+
+      if (recipeQuery.data.is_hot) {
+        setIsHotRecipe(recipeQuery.data.is_hot);
+      }
+
+      setCoffeeAmount(recipeQuery.data.coffee_amount.toString());
+
+      setWaterAmount(recipeQuery.data.water_amount.toString());
+
+      setWaterTemperature(recipeQuery.data.water_temperature.toString());
+
+      setGrindStep(recipeQuery.data.grind_step);
+
+      if (recipeQuery.data.grind_step_memo) {
+        setGrindStepMemo(recipeQuery.data.grind_step_memo);
+      }
+
+      setIsNoBloom(recipeQuery.data.is_no_bloom);
+
+      setPourCount(recipeQuery.data.pour_count);
+
+      if (recipeQuery.data.recipe_description) {
+        setRecipeDescription(recipeQuery.data.recipe_description);
+      }
+
+      if (recipeQuery.data.image_url) {
+        setImageUrl(recipeQuery.data.image_url);
+
+        setSelectedImage(recipeQuery.data.image_url);
+      }
+
+      if (recipeQuery.data.raw_brewing_info) {
+        setTimeout(() => {
+          setBrewingInfo(
+            JSON.parse(JSON.stringify(recipeQuery?.data?.raw_brewing_info)),
+          );
+        }, 16);
+      }
+    }
+  }, [recipeQuery.data]);
+
+  const recipeEditMutation = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase
         .from("recipes")
-        .insert({
-          user_id: mySessionQuery.data?.session?.user?.id || "",
+        .update({
           recipe_name: recipeName || "",
           use_dripper: dripper?.value || "",
           use_filter: filter?.value || "",
@@ -89,14 +164,15 @@ export default function RecipeAddPage() {
           recipe_description: recipeDescription || "",
           image_url: imageUrl || "",
         })
+        .eq("id", recipeId)
         .throwOnError();
 
       return data;
     },
     onSuccess: () => {
-      logEvent(events.submitAddRecipe);
+      logEvent(events.submitEditRecipe);
 
-      alert("레시피가 게시되었어요!");
+      alert("레시피가 수정되었어요!");
       router.push("/recipe");
       queryClient.invalidateQueries({ queryKey: ["drippin"] });
     },
@@ -184,18 +260,10 @@ export default function RecipeAddPage() {
   };
 
   const onChangeWaterAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(e.target.value) > 999) {
-      alert("물의 양은 최대 999g까지 입력할 수 있어요.");
-      return;
-    }
     setWaterAmount(e.target.value);
   };
 
   const onChangeWaterTemperature = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (Number(e.target.value) > 100) {
-      alert("물의 온도는 최대 100℃까지 입력할 수 있어요.");
-      return;
-    }
     setWaterTemperature(e.target.value);
   };
 
@@ -306,7 +374,7 @@ export default function RecipeAddPage() {
       return;
     }
 
-    recipeMutation.mutate();
+    recipeEditMutation.mutate();
   };
 
   useEffect(() => {
@@ -317,9 +385,9 @@ export default function RecipeAddPage() {
         left: (currentPage - 1) * container.clientWidth,
         behavior: "instant",
       });
-    }
-    if (window) {
-      window.scrollTo(0, 0);
+      if (window) {
+        window.scrollTo(0, 0);
+      }
     }
   }, [currentPage]);
 
@@ -344,6 +412,12 @@ export default function RecipeAddPage() {
       }
     }
   }, [mySessionQuery.data?.session?.user]);
+
+  if (recipeQuery.isLoading) return <Spinner />;
+
+  if (recipeQuery.data?.user_id !== mySessionQuery.data?.session?.user?.id) {
+    return <div>You are not the owner of this recipe</div>;
+  }
 
   return (
     <div
@@ -439,12 +513,9 @@ export default function RecipeAddPage() {
 
               <div>
                 <label className={"form-control w-full"}>
-                  <div className="label flex flex-col justify-between items-start">
+                  <div className="label flex justify-between items-center">
                     <p className="label-text text-base">
                       어떤 드리퍼를 사용했나요?
-                    </p>
-                    <p className="label-text text-xs text-gray-500">
-                      목록에 없는 드리퍼는 직접 입력할 수 있어요.
                     </p>
                   </div>
                   <CreatableSelector
@@ -458,12 +529,9 @@ export default function RecipeAddPage() {
 
               <div>
                 <label className={"form-control w-full"}>
-                  <div className="label flex flex-col justify-between items-start">
+                  <div className="label flex justify-between items-center">
                     <p className="label-text text-base">
                       어떤 필터를 사용했나요?
-                    </p>
-                    <p className="label-text text-xs text-gray-500">
-                      목록에 없는 필터는 직접 입력할 수 있어요.
                     </p>
                   </div>
                   <CreatableSelector

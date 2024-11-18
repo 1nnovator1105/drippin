@@ -5,9 +5,14 @@ import MoreIcon from "../icon/MoreIcon";
 interface Props {
   showMoreOptions: boolean;
   deleteAction?: () => void;
+  editAction?: () => void;
 }
 
-export default function DetailTopBar({ showMoreOptions, deleteAction }: Props) {
+export default function DetailTopBar({
+  showMoreOptions,
+  deleteAction,
+  editAction,
+}: Props) {
   const router = useRouter();
 
   return (
@@ -30,8 +35,14 @@ export default function DetailTopBar({ showMoreOptions, deleteAction }: Props) {
           <summary className="border-none">
             <MoreIcon />
           </summary>
-          <ul className="menu dropdown-content bg-base-100 rounded-box min-w-[83px] z-[1] p-3 shadow top-[30px] rounded-lg">
-            <li className="text-center" onClick={deleteAction}>
+          <ul className="menu dropdown-content bg-base-100 rounded-box w-[83px] z-[1] px-0 py-0 shadow top-[30px] rounded-lg">
+            <li
+              className="text-center text-base py-3 border-b-[1px] border-[#D9D9D9]"
+              onClick={editAction}
+            >
+              수정하기
+            </li>
+            <li className="text-center text-base py-3" onClick={deleteAction}>
               삭제하기
             </li>
           </ul>

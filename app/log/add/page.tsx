@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
 import { logEvent } from "@/utils/analytics";
 import events from "@/utils/events";
+import RecipeSelector from "@/components/share/RecipeSelector.tsx";
 
 export default function LogAddPage() {
   const supabase = useSupabaseBrowser();
@@ -36,6 +37,8 @@ export default function LogAddPage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
+  const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
+
   const mySessionQuery = useQuery({
     queryKey: ["drippin", "mySession"],
     queryFn: async () => {
@@ -55,7 +58,7 @@ export default function LogAddPage() {
           coffee_name: coffeeName,
           coffee_place: coffeePlace,
           tags: coffeeTags,
-          recipe_id: null,
+          recipe_id: selectedRecipe?.value,
         })
         .throwOnError();
 
@@ -313,6 +316,20 @@ export default function LogAddPage() {
                   onChange={handleCoffeeTags}
                 />
               </label>
+
+              <div className="mt-4">
+                <label className={"form-control w-full"}>
+                  <div className="label flex justify-between items-center">
+                    <p className="label-text text-base">
+                      어떤 레시피를 사용했나요?
+                    </p>
+                  </div>
+                  <RecipeSelector
+                    value={selectedRecipe}
+                    setValue={setSelectedRecipe}
+                  />
+                </label>
+              </div>
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
