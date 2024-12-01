@@ -53,8 +53,16 @@ export default function RecipeSelector({
     <Select
       options={options}
       captureMenuScroll={true}
-      onMenuScrollToTop={() => recipeFeedQuery.fetchPreviousPage()}
-      onMenuScrollToBottom={() => recipeFeedQuery.fetchNextPage()}
+      onMenuScrollToTop={() => {
+        if (recipeFeedQuery.hasNextPage) {
+          recipeFeedQuery.fetchPreviousPage();
+        }
+      }}
+      onMenuScrollToBottom={() => {
+        if (recipeFeedQuery.hasNextPage) {
+          recipeFeedQuery.fetchNextPage();
+        }
+      }}
       isLoading={isLoading}
       placeholder="레시피를 선택해주세요"
       value={value}
