@@ -52,7 +52,7 @@ export default function RecipeSelector({
   return (
     <Select
       options={options}
-      // captureMenuScroll={true}
+      captureMenuScroll={true}
       onMenuScrollToTop={() => {
         if (recipeFeedQuery.hasNextPage) {
           recipeFeedQuery.fetchPreviousPage();
