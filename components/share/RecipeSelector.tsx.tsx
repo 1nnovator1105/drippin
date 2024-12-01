@@ -52,6 +52,8 @@ export default function RecipeSelector({
   return (
     <Select
       options={options}
+      captureMenuScroll={true}
+      onMenuScrollToTop={() => recipeFeedQuery.fetchPreviousPage()}
       onMenuScrollToBottom={() => recipeFeedQuery.fetchNextPage()}
       isLoading={isLoading}
       placeholder="레시피를 선택해주세요"
