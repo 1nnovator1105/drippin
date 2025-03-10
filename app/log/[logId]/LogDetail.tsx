@@ -10,6 +10,8 @@ import { format } from "date-fns";
 import Spinner from "@/components/share/Spinner";
 import DetailTopBar from "@/components/share/DetailTopBar";
 import Link from "next/link";
+import { logEvent } from "@amplitude/analytics-browser";
+import events from "@/utils/events";
 
 export default function LogDetail({ logId }: { logId: string }) {
   const supabase = useSupabaseBrowser();
@@ -117,6 +119,19 @@ export default function LogDetail({ logId }: { logId: string }) {
     }
   };
 
+  const editLog = () => {
+    if (!mySessionQuery.data?.session) {
+      const isConfirm = confirm("로그인하시겠어요?");
+      if (isConfirm) {
+        router.push("/my");
+      }
+      return;
+    }
+
+    logEvent(events.clickEditLog);
+    router.push(`/log/${logId}/edit`);
+  };
+
   const deleteLog = () => {
     if (!mySessionQuery.data?.session) {
       const isConfirm = confirm("로그인하시겠어요?");
@@ -140,6 +155,7 @@ export default function LogDetail({ logId }: { logId: string }) {
         showMoreOptions={
           mySessionQuery.data?.session?.user.id === logQuery.data?.user_id
         }
+        editAction={editLog}
         deleteAction={deleteLog}
       />
 
