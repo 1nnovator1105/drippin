@@ -16,4 +16,9 @@ export default {
   clickEditRecipe: "click-edit-recipe",
   // 레시피 수정
   submitEditRecipe: "submit-edit-recipe",
+
+  // 일지 수정 시도
+  clickEditLog: "click-edit-log",
+  // 일지 수정
+  submitEditLog: "submit-edit-log",
 };
