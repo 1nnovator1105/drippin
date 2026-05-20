@@ -107,10 +107,9 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
     <Link
       href={`/recipe/${recipe.id}${qs}`}
       scroll={false}
-      className="block cursor-pointer w-full select-none px-3 pt-3"
+      className="block cursor-pointer w-full select-none border-b border-stone-200"
     >
-      <div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
-        <div className={"flex flex-col"}>
+      <div className={"flex flex-col"}>
           {!summary && (
             <div className="relative w-full h-[170px]">
               {recipe?.image_url ? (
@@ -184,7 +183,6 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
             </div>
           </div>
         </div>
-      </div>
     </Link>
   );
 }
