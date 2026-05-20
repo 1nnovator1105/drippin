@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { cn } from "@/utils/cn";
 import { usePathname, useRouter } from "next/navigation";
+import { queryKeys } from "@/queries/queryKeys";
 
 interface Props {
   log: Tables<"logs">;
@@ -19,6 +20,13 @@ export default function LogCard({ log, summary }: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const nowPageUrl = usePathname();
+
+  // 좋아요 변경 시 일지 관련 쿼리만 무효화(앱 전체 리페치 방지)
+  const invalidateLogLikes = () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.logFeed() });
+    queryClient.invalidateQueries({ queryKey: queryKeys.log() });
+    queryClient.invalidateQueries({ queryKey: ["drippin", "logs", "my"] });
+  };
 
   const mySessionQuery = useQuery({
     queryKey: ["drippin", "session"],
@@ -40,7 +48,7 @@ export default function LogCard({ log, summary }: Props) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateLogLikes();
     },
   });
 
@@ -56,7 +64,7 @@ export default function LogCard({ log, summary }: Props) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateLogLikes();
     },
   });
 

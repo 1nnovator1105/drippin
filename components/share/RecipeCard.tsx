@@ -11,6 +11,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { usePathname, useRouter } from "next/navigation";
 import { format } from "date-fns";
+import { queryKeys } from "@/queries/queryKeys";
 
 interface RecipeCardProps {
   recipe: Database["public"]["Tables"]["recipes"]["Row"];
@@ -22,6 +23,13 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
   const nowPageUrl = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  // 좋아요 변경 시 레시피 관련 쿼리만 무효화(앱 전체 리페치 방지)
+  const invalidateRecipeLikes = () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.recipeFeed() });
+    queryClient.invalidateQueries({ queryKey: queryKeys.recipe() });
+    queryClient.invalidateQueries({ queryKey: queryKeys.myRecipe() });
+  };
 
   const mySessionQuery = useQuery({
     queryKey: ["drippin", "session"],
@@ -43,7 +51,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateRecipeLikes();
     },
   });
 
@@ -59,7 +67,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateRecipeLikes();
     },
   });
 
