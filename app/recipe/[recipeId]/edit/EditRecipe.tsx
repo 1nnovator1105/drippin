@@ -743,12 +743,16 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
             <div className="carousel-item flex flex-col w-full">
               <div className="flex flex-col w-full gap-2">
                 <div className="form-control">
-                  <label className="label cursor-pointer gap-8">
+                  <div className="label flex flex-col items-start gap-0.5">
                     <span className="label-text text-base">
                       블루밍(뜸들이기)을 진행했나요?
                       <span className="text-red-500 px-1">*</span>
                     </span>
-                  </label>
+                    <span className="label-text text-xs text-gray-500">
+                      블루밍은 추출 전 소량의 물로 원두를 적셔 가스를 빼는
+                      과정이에요.
+                    </span>
+                  </div>
                 </div>
                 <div className="join w-full">
                   <input

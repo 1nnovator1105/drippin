@@ -191,10 +191,13 @@ export default function InfoTimeline({
               <div className="flex flex-col gap-5">
                 <div>
                   <label className="form-control w-full">
-                    <div className="label">
+                    <div className="label flex flex-col items-start gap-0.5">
                       <span className="label-text text-base">
                         물을 몇 그램 부었나요?
                         <span className="text-red-500 px-1">*</span>
+                      </span>
+                      <span className="label-text text-xs text-gray-500">
+                        이번 차수에 부은 양이에요. (누적 아님)
                       </span>
                     </div>
                     <input
@@ -208,10 +211,13 @@ export default function InfoTimeline({
                 </div>
                 <div>
                   <label className="form-control w-full">
-                    <div className="label">
+                    <div className="label flex flex-col items-start gap-0.5">
                       <span className="label-text text-base">
                         다음 푸어까지 몇 초 동안 소요되나요?
                         <span className="text-red-500 px-1">*</span>
+                      </span>
+                      <span className="label-text text-xs text-gray-500">
+                        이번에 부은 뒤 다음 차수까지 기다리는 시간이에요.
                       </span>
                     </div>
                     <input
