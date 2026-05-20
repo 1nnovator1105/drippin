@@ -96,7 +96,7 @@ export default function LogCard({ log, summary }: Props) {
             <div
               className={cn(
                 "relative w-full",
-                log?.image_url ? "aspect-[4/5]" : "h-[170px]",
+                log?.image_url ? "aspect-[1/1]" : "h-[170px]",
               )}
             >
               {log?.image_url ? (
