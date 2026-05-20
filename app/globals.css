@@ -124,6 +124,8 @@
   .tab {
     padding-inline-start: 0px !important;
     padding-inline-end: 0px !important;
-    padding-block-end: 5px !important;
+    height: auto !important;
+    padding-top: 8px !important;
+    padding-bottom: 6px !important;
   }
 }
