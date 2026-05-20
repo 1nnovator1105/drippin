@@ -7,9 +7,11 @@ import Spinner from "@/components/share/Spinner";
 import { logEvent } from "@/utils/analytics";
 import events from "@/utils/events";
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import FetchMore from "@/components/share/FetchMore";
+import { fetchMyLog } from "@/queries/log";
 
 export default function Log() {
   const supabase = useSupabaseBrowser();
@@ -22,18 +24,13 @@ export default function Log() {
     },
   });
 
-  const myLogQuery = useQuery({
+  const myLogQuery = useInfiniteQuery({
     queryKey: ["drippin", "logs", "my"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("logs")
-        .select(`*, profiles(handle, email), likes:logs_likes(*)`)
-        .eq("user_id", mySessionQuery.data?.session?.user.id!)
-        .eq("is_removed", false)
-        .order("created_at", { ascending: false });
-
-      return data;
-    },
+    queryFn: ({ pageParam }) =>
+      fetchMyLog(supabase, mySessionQuery.data?.session?.user.id!, pageParam),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage?.length ? allPages.length : undefined,
+    initialPageParam: 0,
     enabled: !!mySessionQuery.data?.session?.user.id,
   });
 
@@ -53,12 +50,17 @@ export default function Log() {
       <Header title="일지" />
 
       <div className="flex flex-col w-full">
-        {myLogQuery.data?.map((log) => (
-          <LogCard key={log.id} log={log} summary />
-        ))}
+        {myLogQuery.data?.pages.map((logs) =>
+          logs?.map((log) => <LogCard key={log.id} log={log} summary />),
+        )}
+        <FetchMore
+          fetchNextPage={myLogQuery.fetchNextPage}
+          hasNextPage={myLogQuery.hasNextPage}
+          isError={myLogQuery.isError}
+        />
       </div>
 
-      {!myLogQuery.data?.length && (
+      {!myLogQuery.data?.pages?.[0]?.length && (
         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center">
           아직 작성된 일지가 없어요
           <br />
