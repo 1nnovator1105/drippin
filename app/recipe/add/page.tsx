@@ -14,16 +14,15 @@ import useSupabaseBrowser from "@/utils/supabase/client";
 import {
   useIsMutating,
   useMutation,
-  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
 import { logEvent } from "@/utils/analytics";
 import events from "@/utils/events";
-import { queryKeys } from "@/queries/queryKeys";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spinner";
+import useSession from "@/hooks/useSession";
 
 export default function RecipeAddPage() {
   const supabase = useSupabaseBrowser();
@@ -61,13 +60,7 @@ export default function RecipeAddPage() {
 
   const isMutating = useIsMutating();
 
-  const mySessionQuery = useQuery({
-    queryKey: queryKeys.session(),
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const recipeMutation = useMutation({
     mutationFn: async () => {

@@ -9,6 +9,7 @@ import Spinner from "@/components/share/Spinner";
 import Header from "@/components/share/Header";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import useSession from "@/hooks/useSession";
 
 export default function MyPage() {
   const supabase = useSupabaseBrowser();
@@ -18,13 +19,7 @@ export default function MyPage() {
 
   const [newHandle, setNewHandle] = useState<string | null>(null);
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "mySession"],
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const myProfileQuery = useQuery({
     queryKey: ["drippin", "myProfile"],

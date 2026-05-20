@@ -17,6 +17,7 @@ import events from "@/utils/events";
 import RecipeSelector from "@/components/share/RecipeSelector.tsx";
 import { queryKeys } from "@/queries/queryKeys";
 import { fetchLogDetail } from "@/queries/log";
+import useSession from "@/hooks/useSession";
 
 export default function EditLog({ logId }: { logId: string }) {
   const supabase = useSupabaseBrowser();
@@ -41,13 +42,7 @@ export default function EditLog({ logId }: { logId: string }) {
 
   const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "mySession"],
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const logQuery = useQuery({
     queryKey: queryKeys.logDetail(logId),

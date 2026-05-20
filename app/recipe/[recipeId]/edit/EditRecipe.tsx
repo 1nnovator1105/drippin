@@ -24,6 +24,7 @@ import events from "@/utils/events";
 import { queryKeys } from "@/queries/queryKeys";
 import { fetchRecipeDetail } from "@/queries/recipe";
 import Spinner from "@/components/share/Spinner";
+import useSession from "@/hooks/useSession";
 
 export default function EditRecipe({ recipeId }: { recipeId: string }) {
   const supabase = useSupabaseBrowser();
@@ -61,13 +62,7 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
 
   const isMutating = useIsMutating();
 
-  const mySessionQuery = useQuery({
-    queryKey: queryKeys.session(),
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const recipeQuery = useQuery({
     queryKey: queryKeys.recipeDetail(recipeId),

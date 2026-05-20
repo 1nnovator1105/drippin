@@ -7,13 +7,14 @@ import Spinner from "@/components/share/Spinner";
 import { logEvent } from "@/utils/analytics";
 import events from "@/utils/events";
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FetchMore from "@/components/share/FetchMore";
 import { fetchMyLog } from "@/queries/log";
 import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
+import useSession from "@/hooks/useSession";
 import { Search } from "lucide-react";
 
 export default function Log() {
@@ -23,13 +24,7 @@ export default function Log() {
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 300);
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "session"],
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const myLogQuery = useInfiniteQuery({
     queryKey: ["drippin", "logs", "my", debouncedKeyword],

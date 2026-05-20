@@ -4,6 +4,7 @@ import LikeIcon from "@/components/icon/LikeIcon";
 import DefaultThumbnail from "@/components/share/DefaultThumbnail";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useSession from "@/hooks/useSession";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
@@ -56,13 +57,7 @@ export default function LogDetail({ logId }: { logId: string }) {
     },
   });
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "session"],
-    queryFn: async () => {
-      const { data } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const likeMutate = useMutation({
     mutationFn: async () => {

@@ -4,7 +4,6 @@ import { cn } from "@/utils/cn";
 import {
   useIsMutating,
   useMutation,
-  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
@@ -17,6 +16,7 @@ import events from "@/utils/events";
 import RecipeSelector from "@/components/share/RecipeSelector.tsx";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spinner";
+import useSession from "@/hooks/useSession";
 
 export default function LogAddPage() {
   const supabase = useSupabaseBrowser();
@@ -41,13 +41,7 @@ export default function LogAddPage() {
 
   const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "mySession"],
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const createLogMutation = useMutation({
     mutationFn: async () => {

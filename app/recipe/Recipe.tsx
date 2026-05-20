@@ -1,7 +1,7 @@
 "use client";
 
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import FetchMore from "@/components/share/FetchMore";
 import RecipeCard from "@/components/share/RecipeCard";
@@ -13,8 +13,8 @@ import Header from "@/components/share/Header";
 import { logEvent } from "@/utils/analytics";
 import events from "@/utils/events";
 import { queryKeys } from "@/queries/queryKeys";
-import { fetchSession } from "@/queries/session";
 import { fetchMyRecipe } from "@/queries/recipe";
+import useSession from "@/hooks/useSession";
 import useDebounce from "@/hooks/useDebounce";
 import { cn } from "@/utils/cn";
 import { Search } from "lucide-react";
@@ -29,10 +29,7 @@ export default function Recipe() {
   const [temperature, setTemperature] = useState<Temperature>("all");
   const debouncedKeyword = useDebounce(keyword, 300);
 
-  const mySessionQuery = useQuery({
-    queryKey: queryKeys.session(),
-    queryFn: () => fetchSession(supabase),
-  });
+  const mySessionQuery = useSession();
 
   const myRecipeQuery = useInfiniteQuery({
     queryKey: [...queryKeys.myRecipe(), debouncedKeyword, temperature],

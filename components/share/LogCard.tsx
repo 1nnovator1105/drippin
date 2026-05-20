@@ -4,7 +4,8 @@ import TagChip from "./TagChip";
 import { Tables } from "@/types/database.types";
 import DefaultThumbnail from "./DefaultThumbnail";
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useSession from "@/hooks/useSession";
 import Link from "next/link";
 import { cn } from "@/utils/cn";
 import { usePathname, useRouter } from "next/navigation";
@@ -28,13 +29,7 @@ export default function LogCard({ log, summary }: Props) {
     queryClient.invalidateQueries({ queryKey: ["drippin", "logs", "my"] });
   };
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "session"],
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const likeMutate = useMutation({
     mutationFn: async () => {
