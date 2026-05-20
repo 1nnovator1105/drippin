@@ -11,6 +11,7 @@ import { SheetSide } from "../share/SheetSide";
 import { queryKeys } from "@/queries/queryKeys";
 import FetchMore from "../share/FetchMore";
 import { fetchLogFeed, fetchRecipeFeed } from "@/queries/feed";
+import HomeHeader from "./HomeHeader";
 
 export default function HomeWrapper() {
   const supabase = useSupabaseBrowser();
@@ -56,6 +57,7 @@ export default function HomeWrapper() {
 
   return (
     <div className="flex flex-col pb-[88px]">
+      <HomeHeader />
       <div className="flex flex-row justify-between pt-2 items-center sticky top-0 bg-white z-[40]">
         <div className="w-full">
           <div role="tablist" className="tabs tabs-bordered tabs-lg xs:tabs-sm">
