@@ -7,11 +7,12 @@ import { Database } from "@/types/database.types";
 import { secToKoreanTime } from "@/utils/utils";
 import Link from "next/link";
 import DefaultThumbnail from "./DefaultThumbnail";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { usePathname, useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { queryKeys } from "@/queries/queryKeys";
+import useSession from "@/hooks/useSession";
 
 interface RecipeCardProps {
   recipe: Database["public"]["Tables"]["recipes"]["Row"];
@@ -31,13 +32,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
     queryClient.invalidateQueries({ queryKey: queryKeys.myRecipe() });
   };
 
-  const mySessionQuery = useQuery({
-    queryKey: ["drippin", "session"],
-    queryFn: async () => {
-      const { data, error } = await supabase.auth.getSession();
-      return data;
-    },
-  });
+  const mySessionQuery = useSession();
 
   const likeMutate = useMutation({
     mutationFn: async () => {

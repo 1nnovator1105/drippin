@@ -19,7 +19,7 @@ import linkifyHtml from "linkify-html";
 import { linkifyOptions } from "@/constants/linkify";
 import { queryKeys } from "@/queries/queryKeys";
 import { fetchRecipeDetail } from "@/queries/recipe";
-import { fetchSession } from "@/queries/session";
+import useSession from "@/hooks/useSession";
 import { useEffect } from "react";
 import LogCard from "@/components/share/LogCard";
 import { logEvent } from "@/utils/analytics";
@@ -30,10 +30,7 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const mySessionQuery = useQuery({
-    queryKey: queryKeys.session(),
-    queryFn: () => fetchSession(supabase),
-  });
+  const mySessionQuery = useSession();
 
   const recipeQuery = useQuery({
     queryKey: queryKeys.recipeDetail(recipeId),
