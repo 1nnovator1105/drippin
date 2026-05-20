@@ -1,0 +1,149 @@
+# Drippin — Base 문서
+
+> 이 문서는 Drippin 서비스의 **기반 정보(개요·가치·로드맵·정보구조·기술스택)**를 한곳에 모은 문서입니다.
+> 개발자가 제공한 로드맵·가치 개요 + 실제 사이트 탐방(2026-05-20, Playwright)을 종합해 작성했습니다.
+
+---
+
+## 1. 한 줄 정의
+
+**Drippin** 은 드립커피의 **'레시피'와 '시음 일지'에 집중한 모바일 우선 커뮤니티**다.
+레시피를 쉽게 **만들고 · 공유하고 · (타이머처럼) 재생**할 수 있고, 마신 커피를 인스타그램처럼 **가볍게 기록**할 수 있다.
+
+- 페이지 타이틀: `Drippin - 드립커피 커뮤니티`
+- 형태: Next.js(App Router) + Supabase 웹앱 · 모바일 우선(max 768px) · 카카오/구글 소셜 로그인
+
+---
+
+## 2. 제공하려는 가치
+
+### 기능적 가치
+- 드립커피 **'레시피'와 '일지'에 집중**된 커뮤니티 (잡다한 기능 없이 두 축에 집중)
+- **레시피**를 쉽게 **만들 수** 있고, 쉽게 **공유**할 수 있고, 쉽게 **재생**할 수 있다.
+  - 언제 어디서든 **별도 타이머 없이** 사이트에서 레시피를 재생해 추출 과정을 그대로 재연할 수 있도록.
+- **일지**는 인스타그램 스타일로, 커피 마신 경험을 가볍게 기록.
+  - 어디서, 어떤 원두를, 어떤 레시피로 먹었는가 등.
+
+### 심미적 가치
+- 깔끔하고 **모바일에서 가독성** 높은 디자인.
+- 모바일 디바이스에서 적절한 정보 밀도 — 글이 **너무 많아 보이지도, 너무 적어 보이지도** 않게(인스타 like).
+
+---
+
+## 3. 타깃 사용자 & 핵심 시나리오
+
+- **타깃**: 집/카페에서 드립커피를 즐기며, 레시피를 따라 내리거나 자신의 시음 경험을 기록하고 싶은 사용자.
+- **핵심 시나리오 A — 레시피 재생**: 피드/목록에서 레시피 발견 → 상세 → `레시피 진행하기` → 파라미터 확인(드리퍼/필터/비율/온도/분쇄도) → `시작하기` → **단계별 타이머**(붓는 양·시간 안내)로 추출 재연.
+- **핵심 시나리오 B — 일지 작성**: 하단탭 일지 → `새로운 일지 작성하기` → 내용 + 사진 첨부 → 게시.
+- **핵심 시나리오 C — 레시피 생성**: 4단계 위저드(기본정보 → 물과 원두 → 추출 → 추가정보)로 레시피 작성·공유.
+
+---
+
+## 4. 로드맵 & 현재 상태
+
+> ✅ 구현됨 · 🟡 부분/확인필요 · 🔴 미구현 (개발자 가안 기준 + 탐방으로 보정)
+
+### Stage 1 — 커뮤니티 (기반)
+- **피드**
+  - 레시피 조회/저장 ✅
+- **내 레시피**
+  - 조회: 레시피 재생 ✅ (`/recipe/[id]/onboarding` → `/timer`)
+  - 생성: 기존/저장된 레시피 불러오기 ✅ (`/recipe/add`, 4단계)
+  - 편집 ✅ — `app/recipe/[recipeId]/edit`
+  - 삭제 ✅
+- **내 일지**
+  - 사진 첨부 ✅
+  - 수정 ✅ — `app/log/[logId]/edit` (최근 커밋 `feat: 일지 수정 기능`)
+- **마이페이지(설정)**
+  - 닉네임 변경 ✅
+  - 프로필 이미지 🔴
+
+### Stage 2 — 커뮤니티 활성화
+- 검색 🔴 · 좋아요 ✅ · 팔로우/팔로잉 🔴 · 댓글 🔴 · 프로필 홈 🔴 · 추천 콘텐츠 🔴
+
+---
+
+## 5. 정보구조 / 라우트 맵
+
+| 라우트 | 설명 | 로그인 |
+|--------|------|--------|
+| `/` | 홈 피드. 상단 **레시피 / 일지 탭** 전환(`?tab=`), 무한스크롤 | 공개 |
+| `/recipe` | 레시피 목록 + `새로운 레시피 작성하기` | 공개 조회 |
+| `/recipe/[recipeId]` | 레시피 상세(히어로 + `레시피 진행하기`) | 공개 |
+| `/recipe/[recipeId]/onboarding` | 추출 파라미터 확인(드리퍼/필터/비율/온도/분쇄도/메모) | 공개 |
+| `/recipe/[recipeId]/timer` | **단계별 추출 타이머**(붓는 양·시간 안내, 원형 타이머) | 공개 |
+| `/recipe/[recipeId]/edit` | 레시피 편집 | 소유자 |
+| `/recipe/add` | 레시피 생성 4단계 위저드 | **필요** |
+| `/log` | 일지 목록(텍스트 중심) + `새로운 일지 작성하기` | 공개 조회 |
+| `/log/[logId]` | 일지 상세(사진 + 본문 + 해시태그 + 소유자 케밥 메뉴) | 공개 |
+| `/log/[logId]/edit` | 일지 수정 | 소유자 |
+| `/log/add` | 일지 작성(내용 + 사진) | **필요** |
+| `/my` | 내정보(이름/이메일/닉네임/로그아웃). 비로그인 시 LoginNudge | **필요** |
+| `/auth/callback` | 소셜 로그인 콜백 | — |
+
+- **하단 글로벌 내비게이션**: 홈 / 레시피 / 일지 / 내정보 (`components/nav/BottomTabNav.tsx`)
+
+---
+
+## 6. 코드 구조 (top-level)
+
+```
+app/          # Next.js App Router 라우트 (위 라우트 맵 참고)
+components/    # UI 컴포넌트 (home/, share/, nav/, recipe/, ui/, icon/, providers/ ...)
+queries/       # 데이터 패칭 (feed 등) + queryKeys
+hooks/         # 커스텀 훅
+utils/         # supabase 클라이언트, analytics, cn, selector 등
+constants/     # 상수
+types/         # 타입 (database.types.ts: supabase gen types)
+styles/        # 스타일
+supabase/      # supabase 설정
+public/        # 정적 자원
+ux-audit/      # UX 진단 산출물(스크린샷·리포트) — docs와 별개
+```
+
+주요 컴포넌트
+- `components/home/HomeWrapper.tsx` — 홈 피드(레시피/일지 탭 + 무한스크롤)
+- `components/share/RecipeCard.tsx`, `LogCard.tsx` — 피드/목록 카드
+- `components/share/CreatableSelector.tsx` — react-select 기반 드리퍼/필터 입력
+- `components/nav/BottomTabNav.tsx` — 하단 탭
+
+---
+
+## 7. 기술 스택
+
+- **프레임워크**: Next.js 14 (App Router, RSC) / React 18 / TypeScript
+- **데이터/인증**: Supabase (`@supabase/ssr`, `@supabase/supabase-js`), `@supabase-cache-helpers/postgrest-react-query`
+- **서버 상태**: TanStack React Query (+ devtools), 피드 무한스크롤(`useInfiniteQuery`)
+- **UI/스타일**: Tailwind CSS, daisyUI(`react-daisyui`), Radix UI, `lucide-react`, `next-themes`, geist 폰트
+- **폼/입력**: `react-hook-form`, `react-select`, `browser-image-compression`(사진 업로드 압축)
+- **레시피 재생**: `react-countdown-circle-timer`(원형 타이머), `swiper`(단계 전환)
+- **에디터/링크**: TipTap, `linkifyjs`/`linkify-html`
+- **유틸**: `date-fns`, `unique-names-generator`, `recharts`, `react-device-detect`, `cookies-next`
+- **분석**: Amplitude(`@amplitude/analytics-browser`), Vercel Analytics
+- **배포**: Vercel (`drippin.vercel.app`)
+- **스크립트**: `dev`(next dev) · `build` · `start` · `supabase-gen-type`(DB 타입 생성)
+
+---
+
+## 8. 디자인 / UX 원칙
+
+- **모바일 우선, max 768px** 컨테이너. 768px 이상에서는 콘텐츠가 중앙 정렬되고 양옆 여백.
+- 하단 글로벌 탭 고정 → 콘텐츠 영역은 **하단 88px 패딩**(`pb-[88px]`)으로 가림 방지.
+- 인스타그램 풍의 가벼운 일지 기록 + 정보 밀도 균형(글이 과하거나 빈약하지 않게).
+- 핵심 1차 액션을 화면당 하나로 명확히(예: 레시피 상세의 `레시피 진행하기`, 목록의 작성 FAB).
+
+---
+
+## 9. 현재 알려진 UX 이슈 (요약)
+
+> 상세·스크린샷·파일경로는 `ux-audit/findings/2026-05-20.md` 참조.
+
+- 🔴 **홈 첫 화면에 서비스 가치 제안 부재** — 상단에 탭만 있어 신규 사용자가 "무엇을 하는 곳"인지 5초 내 파악 어려움.
+- 🔴 **add 페이지 비로그인 처리** — LoginNudge 대신 폼이 잠깐 렌더된 뒤 강제 이동(이질감). `/my`의 LoginNudge 재사용 권장.
+- 🟡 **레시피 추가 진입 시 react-select 하이드레이션 mismatch** 콘솔 에러(`CreatableSelector.tsx`, `instanceId` 미지정).
+- 🟡 **홈 일지 피드(사진)와 `/log` 목록(텍스트)** 정보구조 불일치 + 목록 전체 일괄 렌더.
+- 🟢 LCP 이미지 priority, 빈 상태 카피, 목록 검색/필터 부재 등.
+
+---
+
+_최종 업데이트: 2026-05-20_

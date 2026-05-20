@@ -46,3 +46,16 @@ next-env.d.ts
 !.yarn/versions
 
 .idea
+
+# ux-audit (browser automation)
+# - login session profile: never commit
+/.playwright-profile
+# - keep folder structure (.gitkeep) but ignore captured images
+/ux-audit/screenshots/**/*.png
+/ux-audit/screenshots/**/*.jpg
+/ux-audit/screenshots/**/*.jpeg
+# - browser automation scratch output
+/.playwright-mcp
+
+# Claude Code: 로컬 개인 설정은 제외(공유 설정/명령은 추적)
+.claude/settings.local.json
