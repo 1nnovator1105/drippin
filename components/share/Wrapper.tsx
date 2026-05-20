@@ -23,7 +23,7 @@ export default function Wrapper({ children }: WrapperProps) {
 
   return (
     <div
-      className={`flex flex-col h-screen max-w-xl mx-auto bg-white md:shadow-[0_0_40px_rgba(0,0,0,0.06)] ${pretendard.variable} font-pretendard`}
+      className={`flex flex-col h-screen max-w-xl mx-auto bg-white md:shadow-[0_0_24px_rgba(0,0,0,0.04)] ${pretendard.variable} font-pretendard`}
     >
       <style jsx global>
         {`:root { --font-pretendard: ${pretendard.style.fontFamily};}}`}

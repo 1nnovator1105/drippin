@@ -109,7 +109,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
       scroll={false}
       className="block cursor-pointer w-full select-none px-3 pt-3"
     >
-      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
         <div className={"flex flex-col"}>
           {!summary && (
             <div className="relative w-full h-[170px]">

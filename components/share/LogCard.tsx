@@ -91,7 +91,7 @@ export default function LogCard({ log, summary }: Props) {
       className="block cursor-pointer w-full px-3 pt-3"
       scroll={false}
     >
-      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
         <div className="flex flex-col">
           {!summary && (
             <div
