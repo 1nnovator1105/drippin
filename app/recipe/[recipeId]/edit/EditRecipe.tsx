@@ -634,21 +634,26 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
                     </div>
                   </div>
 
-                  <div>
-                    <div className="card bg-base-300 rounded-box grid h-20 flex-grow place-items-center text-base">
-                      <Input
-                        type="number"
-                        placeholder="0"
-                        className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-base"
-                        value={waterTemperature ?? ""}
-                        onChange={onChangeWaterTemperature}
-                      />
-                    </div>
-                    <div className="label-text text-center mt-1 text-xs">
-                      물의 온도(℃)
-                    </div>
-                  </div>
                 </div>
+              </div>
+
+              <div className="mt-[30px]">
+                <div className="label">
+                  <p className="label-text text-base">
+                    물의 온도를 알려주세요.
+                    <span className="text-red-500 px-1">*</span>
+                  </p>
+                </div>
+                <div className="card bg-base-300 rounded-box grid h-20 place-items-center text-base">
+                  <Input
+                    type="number"
+                    placeholder="0"
+                    className="bg-base-300 text-center focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-base"
+                    value={waterTemperature ?? ""}
+                    onChange={onChangeWaterTemperature}
+                  />
+                </div>
+                <div className="label-text text-center mt-1 text-xs">℃</div>
               </div>
 
               <div className="mt-[30px]">
