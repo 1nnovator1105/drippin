@@ -173,7 +173,7 @@ export default function Onboarding({ recipeId }: { recipeId: string }) {
           className="flex justify-center items-center"
           href={`/recipe/${recipeId}/timer`}
         >
-          <button className="btn bg-[#2C2C2C] text-white w-full font-base">
+          <button className="btn bg-brand text-brand-foreground w-full font-base">
             시작하기
           </button>
         </Link>

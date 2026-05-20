@@ -276,7 +276,7 @@ export default function InfoTimeline({
                   </form>
                   <form method="dialog" className="flex-1">
                     <button
-                      className="btn bg-[#2C2C2C] text-[#F5F5F5] w-full"
+                      className="btn bg-brand text-brand-foreground w-full"
                       onClick={handleApply}
                     >
                       적용하기

@@ -179,7 +179,7 @@ export default function LogDetail({ logId }: { logId: string }) {
           {logQuery.data?.recipe_id && (
             <Link
               href={`/recipe/${logQuery.data?.recipe_id}`}
-              className="flex flex-row justify-center items-center bottom-0 left-0 w-full h-[50px] bg-[#2C2C2C] gap-2 cursor-pointer"
+              className="flex flex-row justify-center items-center bottom-0 left-0 w-full h-[50px] bg-brand gap-2 cursor-pointer"
             >
               <div>
                 <svg
