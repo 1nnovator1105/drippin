@@ -2,7 +2,7 @@ import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import Onboarding from "./Onboarding";
 import getQueryClient from "@/utils/getQueryClient";
 import { queryKeys } from "@/queries/queryKeys";
-import { useSupabaseServer } from "@/utils/supabase/server";
+import { getSupabaseServer } from "@/utils/supabase/server";
 import { fetchRecipeDetail } from "@/queries/recipe";
 
 export default async function RecipeOnboardingPage({
@@ -11,7 +11,7 @@ export default async function RecipeOnboardingPage({
   params: { recipeId: string };
 }) {
   const { recipeId } = params;
-  const supabase = useSupabaseServer();
+  const supabase = getSupabaseServer();
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({

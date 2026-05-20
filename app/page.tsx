@@ -2,7 +2,7 @@ import HomeWrapper from "@/components/home/HomeWrapper";
 import { fetchLogFeed, fetchRecipeFeed } from "@/queries/feed";
 import { queryKeys } from "@/queries/queryKeys";
 import getQueryClient from "@/utils/getQueryClient";
-import { useSupabaseServer } from "@/utils/supabase/server";
+import { getSupabaseServer } from "@/utils/supabase/server";
 import {
   HydrationBoundary,
   dehydrate,
@@ -11,7 +11,7 @@ import {
 
 export default async function Index() {
   const queryClient = getQueryClient();
-  const supabase = useSupabaseServer();
+  const supabase = getSupabaseServer();
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: queryKeys.recipeFeed(),

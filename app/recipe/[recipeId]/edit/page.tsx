@@ -1,7 +1,7 @@
 import { queryKeys } from "@/queries/queryKeys";
 import { fetchRecipeDetail } from "@/queries/recipe";
 import getQueryClient from "@/utils/getQueryClient";
-import { useSupabaseServer } from "@/utils/supabase/server";
+import { getSupabaseServer } from "@/utils/supabase/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import EditRecipe from "./EditRecipe";
 
@@ -11,7 +11,7 @@ export default async function EditRecipePage({
   params: { recipeId: string };
 }) {
   const { recipeId } = params;
-  const supabase = useSupabaseServer();
+  const supabase = getSupabaseServer();
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
