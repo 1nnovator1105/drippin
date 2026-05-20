@@ -115,7 +115,24 @@ export default function LogCard({ log, summary }: Props) {
             </div>
           )}
 
-          <div className="flex flex-col px-3 py-3 gap-3">
+          <div
+            className={cn(
+              "flex px-3 py-3 gap-3",
+              summary ? "flex-row items-start" : "flex-col",
+            )}
+          >
+            {summary && log.image_url && (
+              <div className="relative size-16 shrink-0 overflow-hidden rounded-md bg-stone-100">
+                <Image
+                  src={log.image_url}
+                  alt=""
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
+              </div>
+            )}
+            <div className="flex flex-col gap-3 min-w-0 flex-1">
             {!summary && (
               <div className="flex text-[#1E1E1E] font-regular items-center gap-[6px] text-sm">
                 <div onClick={conditionLikeAction}>
@@ -146,7 +163,12 @@ export default function LogCard({ log, summary }: Props) {
               </div>
             )}
 
-            <div className="line-clamp-3 text-base text-[#1E1E1E] font-regular">
+            <div
+              className={cn(
+                "text-base text-[#1E1E1E] font-regular",
+                summary ? "line-clamp-2" : "line-clamp-3",
+              )}
+            >
               <span className="text-[#757575]">@{log.profiles?.handle}</span>{" "}
               {log.content}
             </div>
@@ -162,6 +184,7 @@ export default function LogCard({ log, summary }: Props) {
                   return `#${value}`;
                 })
                 ?.join(" ")}
+            </div>
             </div>
           </div>
         </div>
