@@ -26,15 +26,26 @@ export const fetchMyLog = async (
   supabaseClient: TypedSupabaseClient,
   userId: string,
   page: number = 0,
+  keyword: string = "",
 ) => {
   try {
     const range = getRange(page, 5);
 
-    const { data, error } = await supabaseClient
+    let query = supabaseClient
       .from("logs")
       .select(`*, profiles(handle, email), likes:logs_likes(*)`)
       .eq("user_id", userId)
-      .eq("is_removed", false)
+      .eq("is_removed", false);
+
+    // 쉼표/퍼센트는 or 필터 문법을 깨뜨려 제거
+    const safeKeyword = keyword.trim().replace(/[,%]/g, "");
+    if (safeKeyword) {
+      query = query.or(
+        `content.ilike.%${safeKeyword}%,coffee_name.ilike.%${safeKeyword}%,coffee_place.ilike.%${safeKeyword}%,tags.ilike.%${safeKeyword}%`,
+      );
+    }
+
+    const { data, error } = await query
       .order("created_at", { ascending: false })
       .range(range[0], range[1]);
 
