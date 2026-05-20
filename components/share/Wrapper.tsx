@@ -23,14 +23,14 @@ export default function Wrapper({ children }: WrapperProps) {
 
   return (
     <div
-      className={`flex flex-col h-screen max-w-xl mx-auto ${pretendard.variable} font-pretendard`}
+      className={`flex flex-col h-screen max-w-xl mx-auto bg-white md:shadow-[0_0_40px_rgba(0,0,0,0.06)] ${pretendard.variable} font-pretendard`}
     >
       <style jsx global>
         {`:root { --font-pretendard: ${pretendard.style.fontFamily};}}`}
       </style>
       <div
         className={cn(
-          "flex-1 pb-[72px] border-x-[1px]",
+          "flex-1 pb-[72px] border-x border-stone-200",
           hideBottomTabNav && "pb-0",
         )}
       >

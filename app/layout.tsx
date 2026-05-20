@@ -30,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground">
+      <body className="bg-stone-100 text-foreground">
         <ReactQueryClientProvider>
           <ThemeProvider
             attribute="class"

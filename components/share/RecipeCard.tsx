@@ -107,9 +107,9 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
     <Link
       href={`/recipe/${recipe.id}${qs}`}
       scroll={false}
-      className="cursor-pointer w-full select-none"
+      className="block cursor-pointer w-full select-none px-3 pt-3"
     >
-      <div>
+      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
         <div className={"flex flex-col"}>
           {!summary && (
             <div className="relative w-full h-[170px]">
@@ -151,7 +151,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
               <div className="flex flex-row gap-2">
                 <TagChip
                   label={`${secToKoreanTime(getTotalTime())}`}
-                  className="text-black bg-[#CCC]"
+                  className="text-stone-600 bg-stone-100"
                 />
                 {recipe.is_ice && (
                   <TagChip label="ICE" className="text-white bg-[#699BF7]" />
@@ -185,7 +185,6 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
           </div>
         </div>
       </div>
-      <div className="w-full h-[2px] bg-gray-100"></div>
     </Link>
   );
 }

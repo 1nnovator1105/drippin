@@ -9,7 +9,7 @@ export default function TagChip({ label, className }: TagChipProps) {
   return (
     <div
       className={cn(
-        "py-[2px] px-2 rounded-sm font-regular text-sm text-[#1E1E1E] bg-[#CCC]",
+        "py-[2px] px-2 rounded-md font-regular text-sm text-stone-600 bg-stone-100",
         className,
       )}
     >
