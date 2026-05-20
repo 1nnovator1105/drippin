@@ -9,7 +9,7 @@ import useSession from "@/hooks/useSession";
 import Link from "next/link";
 import { cn } from "@/utils/cn";
 import { usePathname, useRouter } from "next/navigation";
-import { queryKeys } from "@/queries/queryKeys";
+import { invalidateLogQueries } from "@/utils/invalidate";
 
 interface Props {
   log: Tables<"logs">;
@@ -21,13 +21,6 @@ export default function LogCard({ log, summary }: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const nowPageUrl = usePathname();
-
-  // 좋아요 변경 시 일지 관련 쿼리만 무효화(앱 전체 리페치 방지)
-  const invalidateLogLikes = () => {
-    queryClient.invalidateQueries({ queryKey: queryKeys.logFeed() });
-    queryClient.invalidateQueries({ queryKey: queryKeys.log() });
-    queryClient.invalidateQueries({ queryKey: ["drippin", "logs", "my"] });
-  };
 
   const mySessionQuery = useSession();
 
@@ -43,7 +36,7 @@ export default function LogCard({ log, summary }: Props) {
       return data;
     },
     onSuccess: () => {
-      invalidateLogLikes();
+      invalidateLogQueries(queryClient);
     },
   });
 
@@ -59,7 +52,7 @@ export default function LogCard({ log, summary }: Props) {
       return data;
     },
     onSuccess: () => {
-      invalidateLogLikes();
+      invalidateLogQueries(queryClient);
     },
   });
 
@@ -67,7 +60,9 @@ export default function LogCard({ log, summary }: Props) {
     (like) => like.from_user_id === mySessionQuery.data?.session?.user.id,
   );
 
-  const conditionLikeAction = (e: React.MouseEvent<HTMLDivElement>) => {
+  const conditionLikeAction = (
+    e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+  ) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -105,7 +100,7 @@ export default function LogCard({ log, summary }: Props) {
               {log?.image_url ? (
                 <Image
                   src={log.image_url}
-                  alt="recipe"
+                  alt={`${log.coffee_place}에서 마신 ${log.coffee_name}`}
                   className="w-full h-full object-cover"
                   fill
                 />
@@ -128,7 +123,7 @@ export default function LogCard({ log, summary }: Props) {
               <div className="relative size-16 shrink-0 overflow-hidden rounded-md bg-stone-100">
                 <Image
                   src={log.image_url}
-                  alt=""
+                  alt={`${log.coffee_place}에서 마신 ${log.coffee_name}`}
                   fill
                   sizes="64px"
                   className="object-cover"
@@ -137,8 +132,18 @@ export default function LogCard({ log, summary }: Props) {
             )}
             <div className="flex flex-col gap-3 min-w-0 flex-1">
             {!summary && (
-              <div className="flex text-[#1E1E1E] font-regular items-center gap-[6px] text-sm">
-                <div onClick={conditionLikeAction}>
+              <div className="flex text-foreground font-regular items-center gap-[6px] text-sm">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={isLiked ? "좋아요 취소" : "좋아요"}
+                  aria-pressed={isLiked}
+                  onClick={conditionLikeAction}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      conditionLikeAction(e);
+                  }}
+                >
                   <LikeIcon
                     fill={isLiked ? "#1E1E1E" : "#FFF"}
                     stroke={"#1E1E1E"}
@@ -151,7 +156,7 @@ export default function LogCard({ log, summary }: Props) {
 
             {summary && (
               <div className="flex items-center justify-between">
-                <div className="flex text-[#1E1E1E] font-bold">
+                <div className="flex text-foreground font-bold">
                   {log.coffee_place}에서 마신 {log.coffee_name}
                 </div>
                 <div className="flex items-center gap-1">
@@ -168,15 +173,15 @@ export default function LogCard({ log, summary }: Props) {
 
             <div
               className={cn(
-                "text-base text-[#1E1E1E] font-regular",
+                "text-base text-foreground font-regular",
                 summary ? "line-clamp-2" : "line-clamp-3",
               )}
             >
-              <span className="text-[#757575]">@{log.profiles?.handle}</span>{" "}
+              <span className="text-muted-foreground">@{log.profiles?.handle}</span>{" "}
               {log.content}
             </div>
 
-            <div className="text-[#1E1E1E] text-base font-regular">
+            <div className="text-foreground text-base font-regular">
               {log.tags
                 ?.split(" ")
                 ?.map((value) => {

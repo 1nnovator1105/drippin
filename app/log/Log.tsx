@@ -66,6 +66,8 @@ export default function Log() {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="원두·카페·내용·태그 검색"
+            aria-label="일지 검색"
+            type="search"
             className="w-full rounded-lg border border-stone-200 bg-stone-50 py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-brand"
           />
         </div>

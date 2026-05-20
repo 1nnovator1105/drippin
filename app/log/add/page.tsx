@@ -17,6 +17,7 @@ import RecipeSelector from "@/components/share/RecipeSelector.tsx";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spinner";
 import useSession from "@/hooks/useSession";
+import { invalidateLogQueries } from "@/utils/invalidate";
 
 export default function LogAddPage() {
   const supabase = useSupabaseBrowser();
@@ -64,7 +65,7 @@ export default function LogAddPage() {
       logEvent(events.submitAddLog);
 
       alert("일지가 게시되었어요!");
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateLogQueries(queryClient);
       router.push("/log");
     },
     onError: (error) => {
@@ -214,6 +215,8 @@ export default function LogAddPage() {
                       className="relative w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
                       onClick={resetImage}
                     >
+                      {/* 로컬 이미지 미리보기(70px)라 next/image 불필요 */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={selectedImage}
                         alt="선택된 이미지"
@@ -323,7 +326,7 @@ export default function LogAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
+                  className="btn bg-[#FFFFFF] text-foreground border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(1)}
                 >
                   이전

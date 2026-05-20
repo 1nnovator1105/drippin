@@ -20,6 +20,7 @@ import { linkifyOptions } from "@/constants/linkify";
 import { queryKeys } from "@/queries/queryKeys";
 import { fetchRecipeDetail } from "@/queries/recipe";
 import useSession from "@/hooks/useSession";
+import { invalidateRecipeQueries } from "@/utils/invalidate";
 import { useEffect } from "react";
 import LogCard from "@/components/share/LogCard";
 import { logEvent } from "@/utils/analytics";
@@ -51,7 +52,7 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateRecipeQueries(queryClient);
       if (window.history.length > 1) {
         router.back();
       } else {
@@ -76,7 +77,7 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateRecipeQueries(queryClient);
     },
   });
 
@@ -92,7 +93,7 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateRecipeQueries(queryClient);
     },
   });
 
@@ -258,16 +259,16 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
                 className="text-black bg-[#CCC]"
               />
               {recipeQuery.data?.is_ice && (
-                <TagChip label="ICE" className="text-white bg-[#699BF7]" />
+                <TagChip label="ICE" className="text-white bg-ice" />
               )}
               {recipeQuery.data?.is_hot && (
-                <TagChip label="HOT" className="text-white bg-[#F24E1E]" />
+                <TagChip label="HOT" className="text-white bg-hot" />
               )}
             </div>
           </div>
 
-          <div className="text-[#1E1E1E] text-base">
-            <span className="text-[#757575]">
+          <div className="text-foreground text-base">
+            <span className="text-muted-foreground">
               @{recipeQuery.data?.profiles?.handle}
             </span>{" "}
             <div
@@ -285,7 +286,7 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
         </div>
 
         <div className="mt-6 mb-3">
-          <div className="text-lg font-base text-[#1E1E1E] px-3">
+          <div className="text-lg font-base text-foreground px-3">
             이 레시피를 사용한 일지
           </div>
           {recipeQuery.data?.logs?.map((log) => (

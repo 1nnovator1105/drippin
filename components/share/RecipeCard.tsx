@@ -11,8 +11,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { usePathname, useRouter } from "next/navigation";
 import { format } from "date-fns";
-import { queryKeys } from "@/queries/queryKeys";
 import useSession from "@/hooks/useSession";
+import { invalidateRecipeQueries } from "@/utils/invalidate";
 
 interface RecipeCardProps {
   recipe: Database["public"]["Tables"]["recipes"]["Row"];
@@ -24,13 +24,6 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
   const nowPageUrl = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  // 좋아요 변경 시 레시피 관련 쿼리만 무효화(앱 전체 리페치 방지)
-  const invalidateRecipeLikes = () => {
-    queryClient.invalidateQueries({ queryKey: queryKeys.recipeFeed() });
-    queryClient.invalidateQueries({ queryKey: queryKeys.recipe() });
-    queryClient.invalidateQueries({ queryKey: queryKeys.myRecipe() });
-  };
 
   const mySessionQuery = useSession();
 
@@ -46,7 +39,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
       return data;
     },
     onSuccess: () => {
-      invalidateRecipeLikes();
+      invalidateRecipeQueries(queryClient);
     },
   });
 
@@ -62,7 +55,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
       return data;
     },
     onSuccess: () => {
-      invalidateRecipeLikes();
+      invalidateRecipeQueries(queryClient);
     },
   });
 
@@ -85,7 +78,9 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
     (like) => like.from_user_id === mySessionQuery.data?.session?.user.id,
   );
 
-  const conditionLikeAction = (e: React.MouseEvent<HTMLDivElement>) => {
+  const conditionLikeAction = (
+    e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+  ) => {
     e.stopPropagation();
     e.preventDefault();
 
@@ -118,7 +113,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
               {recipe?.image_url ? (
                 <Image
                   src={recipe?.image_url}
-                  alt="recipe"
+                  alt={recipe.recipe_name}
                   className="w-full h-full object-cover"
                   fill
                 />
@@ -133,8 +128,18 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
 
           <div className="flex flex-col px-3 py-3 gap-3">
             {!summary && (
-              <div className="flex text-[#1E1E1E] font-regular items-center gap-[6px] text-sm">
-                <div onClick={conditionLikeAction}>
+              <div className="flex text-foreground font-regular items-center gap-[6px] text-sm">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={isLiked ? "좋아요 취소" : "좋아요"}
+                  aria-pressed={isLiked}
+                  onClick={conditionLikeAction}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      conditionLikeAction(e);
+                  }}
+                >
                   <LikeIcon
                     fill={isLiked ? "#1E1E1E" : "#FFF"}
                     stroke={"#1E1E1E"}
@@ -145,7 +150,7 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
               </div>
             )}
 
-            <div className="flex font-bold text-base text-[#1E1E1E]">
+            <div className="flex font-bold text-base text-foreground">
               {recipe.recipe_name}
             </div>
 
@@ -156,15 +161,15 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
                   className="text-stone-600 bg-stone-100"
                 />
                 {recipe.is_ice && (
-                  <TagChip label="ICE" className="text-white bg-[#699BF7]" />
+                  <TagChip label="ICE" className="text-white bg-ice" />
                 )}
                 {recipe.is_hot && (
-                  <TagChip label="HOT" className="text-white bg-[#F24E1E]" />
+                  <TagChip label="HOT" className="text-white bg-hot" />
                 )}
               </div>
 
               {summary && (
-                <div className="flex text-[#1E1E1E] items-center gap-1 text-sm">
+                <div className="flex text-foreground items-center gap-1 text-sm">
                   <LikeIcon
                     fill="#1E1E1E"
                     stroke="#1E1E1E"
@@ -176,12 +181,12 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
               )}
             </div>
 
-            <div className="line-clamp-3 text-[#1E1E1E] text-base">
-              <span className="text-[#757575]">@{recipe.profiles?.handle}</span>{" "}
+            <div className="line-clamp-3 text-foreground text-base">
+              <span className="text-muted-foreground">@{recipe.profiles?.handle}</span>{" "}
               {recipe.recipe_description}
             </div>
 
-            <div className="text-[#757575] text-sm">
+            <div className="text-muted-foreground text-sm">
               {format(new Date(recipe.created_at), "yyyy년 M월 dd일")}
             </div>
           </div>

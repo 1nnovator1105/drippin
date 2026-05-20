@@ -104,6 +104,8 @@ export default function InfoTimeline({
 
   useEffect(() => {
     getAllBeforeWater();
+    // getAllBeforeWater는 매 렌더 재생성되어 의존성에 넣으면 루프 → 의도적 제외
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allInfo, water, time]);
 
   useEffect(() => {
@@ -163,7 +165,7 @@ export default function InfoTimeline({
         {hasNext && (
           <div
             className={cn(
-              "timeline-box bg-[#F0F0F0] label-text timeline-end flex flex-col items-center leading-tight p-[10px] border-none rounded-lg text-xs",
+              "timeline-box bg-stone-100 label-text timeline-end flex flex-col items-center leading-tight p-[10px] border-none rounded-lg text-xs",
               (water === 0 || time === 0) && hasPrev
                 ? "text-gray-200"
                 : "text-gray-900",
@@ -270,7 +272,7 @@ export default function InfoTimeline({
 
                 <div className="flex flex-row gap-2">
                   <form method="dialog" className="flex-1">
-                    <button className="btn bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] w-full">
+                    <button className="btn bg-[#FFFFFF] text-foreground border-[#2C2C2C] w-full">
                       취소
                     </button>
                   </form>
