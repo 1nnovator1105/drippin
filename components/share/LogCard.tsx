@@ -88,11 +88,10 @@ export default function LogCard({ log, summary }: Props) {
   return (
     <Link
       href={`/log/${log.id}${qs}`}
-      className="cursor-pointer w-full"
+      className="block cursor-pointer w-full border-b border-stone-200"
       scroll={false}
     >
-      <div>
-        <div className="flex flex-col">
+      <div className="flex flex-col">
           {!summary && (
             <div
               className={cn(
@@ -166,8 +165,6 @@ export default function LogCard({ log, summary }: Props) {
             </div>
           </div>
         </div>
-      </div>
-      <div className="w-full h-[2px] bg-gray-100"></div>
     </Link>
   );
 }
