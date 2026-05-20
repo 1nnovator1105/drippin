@@ -152,7 +152,7 @@ export default function InfoTimeline({
             className={cn(
               "label-text timeline-start",
               isFillPrevWaterAndTime()
-                ? "text-rose-500 font-bold"
+                ? "text-brand font-bold"
                 : "text-gray-200",
             )}
           >
@@ -163,13 +163,16 @@ export default function InfoTimeline({
         {hasNext && (
           <div
             className={cn(
-              "timeline-box bg-[#F0F0F0] label-text timeline-end p-[10px] border-none rounded-lg text-xs",
+              "timeline-box bg-[#F0F0F0] label-text timeline-end flex flex-col items-center leading-tight p-[10px] border-none rounded-lg text-xs",
               (water === 0 || time === 0) && hasPrev
                 ? "text-gray-200"
                 : "text-gray-900",
             )}
           >
-            {totalWater}g/{secToTime(totalTime)}
+            <span className="text-[10px] text-gray-400">누적</span>
+            <span>
+              {totalWater}g/{secToTime(totalTime)}
+            </span>
           </div>
         )}
 
@@ -196,7 +199,8 @@ export default function InfoTimeline({
                     </div>
                     <input
                       type="text"
-                      value={water?.toString() ?? ""}
+                      value={water ? water.toString() : ""}
+                      placeholder="0"
                       onChange={onChangeWater}
                       className="input input-bordered w-full max-h-10"
                     />
@@ -212,7 +216,8 @@ export default function InfoTimeline({
                     </div>
                     <input
                       type="text"
-                      value={time?.toString() ?? ""}
+                      value={time ? time.toString() : ""}
+                      placeholder="0"
                       onChange={onChangeTime}
                       className="input input-bordered w-full max-h-10"
                     />
