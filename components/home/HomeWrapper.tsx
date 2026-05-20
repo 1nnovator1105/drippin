@@ -7,7 +7,6 @@ import { cn } from "@/utils/cn";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { SheetSide } from "../share/SheetSide";
 import { queryKeys } from "@/queries/queryKeys";
 import FetchMore from "../share/FetchMore";
 import { fetchLogFeed, fetchRecipeFeed } from "@/queries/feed";
@@ -136,8 +135,6 @@ export default function HomeWrapper() {
           </div>
         )}
       </div>
-
-      <SheetSide side="bottom" />
     </div>
   );
 }
