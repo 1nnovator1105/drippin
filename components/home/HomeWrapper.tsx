@@ -58,21 +58,23 @@ export default function HomeWrapper() {
   return (
     <div className="flex flex-col pb-[88px]">
       <HomeHeader />
-      <div className="flex flex-row justify-between pt-2 items-center sticky top-0 bg-white z-[40]">
+      <div className="flex flex-row justify-between items-center sticky top-0 bg-white z-[40]">
         <div className="w-full">
-          <div role="tablist" className="tabs tabs-bordered tabs-lg xs:tabs-sm">
+          <div role="tablist" className="tabs tabs-bordered">
             <input
               type="radio"
               name="my_tabs"
               role="tab"
               className={cn(
-                "tab text-xl border-b-transparent",
-                selectedTab === "레시피" ? "text-gray-900" : "text-gray-400",
+                "tab text-lg font-bold border-b-transparent",
+                selectedTab === "레시피" ? "text-brand" : "text-gray-400",
               )}
               aria-label="레시피"
-              style={{
-                borderColor: selectedTab !== "레시피" ? "border-gray-400" : "",
-              }}
+              style={
+                selectedTab === "레시피"
+                  ? { borderBottomColor: "hsl(var(--brand))" }
+                  : undefined
+              }
               defaultChecked={selectedTab === "레시피"}
               onChange={() => {
                 setSelectedTab("레시피");
@@ -83,13 +85,15 @@ export default function HomeWrapper() {
               name="my_tabs"
               role="tab"
               className={cn(
-                "tab text-xl",
-                selectedTab === "일지" ? "text-gray-900" : "text-gray-400",
+                "tab text-lg font-bold",
+                selectedTab === "일지" ? "text-brand" : "text-gray-400",
               )}
               aria-label="일지"
-              style={{
-                borderColor: selectedTab !== "일지" ? "border-gray-400" : "",
-              }}
+              style={
+                selectedTab === "일지"
+                  ? { borderBottomColor: "hsl(var(--brand))" }
+                  : undefined
+              }
               defaultChecked={selectedTab === "일지"}
               onChange={() => {
                 setSelectedTab("일지");
