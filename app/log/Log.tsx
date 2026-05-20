@@ -69,7 +69,7 @@ export default function Log() {
       {mySessionQuery.data?.session?.user.id && !myLogQuery.isLoading && (
         <Link
           href="/log/add"
-          className="fixed bottom-[88px] flex py-[10px] px-[20px] bg-black rounded-3xl text-white self-center"
+          className="fixed bottom-[88px] flex py-[10px] px-[20px] bg-brand rounded-3xl text-brand-foreground self-center"
           onClick={preventClick}
           style={{
             boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
