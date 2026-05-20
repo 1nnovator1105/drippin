@@ -24,56 +24,62 @@ export default function BottomTabNav() {
       }}
     >
       <button
-        // className={pathname === "/" ? "active" : ""}
+        className={cn(pathname === "/" ? "text-brand" : "text-gray-400")}
         onClick={() => route("/")}
       >
         <BottomTabHomeIcon />
         <span
           className={cn(
             "btm-nav-label text-sm font-bold",
-            pathname === "/" ? "text-gray-900" : "text-gray-400",
+            pathname === "/" ? "text-brand" : "text-gray-400",
           )}
         >
           홈
         </span>
       </button>
       <button
-        // className={pathname === "/notes" ? "active" : ""}
+        className={cn(
+          pathname.includes("/recipe") ? "text-brand" : "text-gray-400",
+        )}
         onClick={() => route("/recipe")}
       >
         <BottomTabRecipeIcon />
         <span
           className={cn(
             "btm-nav-label text-sm font-bold",
-            pathname.includes("/recipe") ? "text-gray-900" : "text-gray-400",
+            pathname.includes("/recipe") ? "text-brand" : "text-gray-400",
           )}
         >
           레시피
         </span>
       </button>
       <button
-        // className={isMyPage ? "active" : ""}
+        className={cn(
+          pathname.includes("/log") ? "text-brand" : "text-gray-400",
+        )}
         onClick={() => route(`/log`)}
       >
         <BottomTabLogIcon />
         <span
           className={cn(
             "btm-nav-label text-sm font-bold",
-            pathname.includes("/log") ? "text-gray-900" : "text-gray-400",
+            pathname.includes("/log") ? "text-brand" : "text-gray-400",
           )}
         >
           일지
         </span>
       </button>
       <button
-        // className={isMyPage ? "active" : ""}
+        className={cn(
+          pathname.includes("/my") ? "text-brand" : "text-gray-400",
+        )}
         onClick={() => route(`/my`)}
       >
         <BottomTabMyPageIcon />
         <span
           className={cn(
             "btm-nav-label text-sm font-bold",
-            pathname.includes("/my") ? "text-gray-900" : "text-gray-400",
+            pathname.includes("/my") ? "text-brand" : "text-gray-400",
           )}
         >
           내정보
