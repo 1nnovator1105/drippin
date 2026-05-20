@@ -72,6 +72,8 @@ export default function Recipe() {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="레시피 이름·설명 검색"
+            aria-label="레시피 검색"
+            type="search"
             className="w-full rounded-lg border border-stone-200 bg-stone-50 py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-brand"
           />
         </div>

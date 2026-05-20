@@ -10,7 +10,7 @@ export default function DefaultThumbnail({ title, handle }: Props) {
     <div className="relative w-full h-[170px]">
       <Image
         src={"/assets/images/default.png"}
-        alt="recipe"
+        alt={title}
         className="w-full h-full object-cover"
         fill
       />

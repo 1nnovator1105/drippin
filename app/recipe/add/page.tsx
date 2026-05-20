@@ -23,6 +23,7 @@ import events from "@/utils/events";
 import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spinner";
 import useSession from "@/hooks/useSession";
+import { invalidateRecipeQueries } from "@/utils/invalidate";
 
 export default function RecipeAddPage() {
   const supabase = useSupabaseBrowser();
@@ -93,7 +94,7 @@ export default function RecipeAddPage() {
 
       alert("레시피가 게시되었어요!");
       router.push("/recipe");
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateRecipeQueries(queryClient);
     },
     onError: (error) => {
       alert(
@@ -643,7 +644,7 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-foreground border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(1)}
                 >
                   이전
@@ -790,7 +791,7 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-foreground border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(2)}
                 >
                   이전
@@ -844,6 +845,8 @@ export default function RecipeAddPage() {
                       className="relative w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
                       onClick={resetImage}
                     >
+                      {/* 사용자가 선택한 이미지의 로컬 미리보기(70px)라 next/image 불필요 */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={selectedImage}
                         alt="선택된 이미지"
@@ -878,7 +881,7 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-foreground border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(3)}
                 >
                   이전

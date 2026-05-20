@@ -39,6 +39,8 @@ export default function CountdownTimer({
 
   useEffect(() => {
     setRemainingTime(value.time ?? 0);
+    // tryCount(차수 전환)에만 리셋 의도 → value.time 의존성 의도적 제외
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tryCount]);
 
   // brewingInfo의 현재 index까지의 누적 water값을 구하는 함수

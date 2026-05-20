@@ -5,6 +5,7 @@ import DefaultThumbnail from "@/components/share/DefaultThumbnail";
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSession from "@/hooks/useSession";
+import { invalidateLogQueries } from "@/utils/invalidate";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
@@ -44,7 +45,7 @@ export default function LogDetail({ logId }: { logId: string }) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateLogQueries(queryClient);
       if (window.history.length > 1) {
         router.back();
       } else {
@@ -71,7 +72,7 @@ export default function LogDetail({ logId }: { logId: string }) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateLogQueries(queryClient);
     },
   });
 
@@ -87,7 +88,7 @@ export default function LogDetail({ logId }: { logId: string }) {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateLogQueries(queryClient);
     },
   });
 
@@ -222,8 +223,8 @@ export default function LogDetail({ logId }: { logId: string }) {
             </span>
           </div>
 
-          <div className="text-[#1E1E1E] text-base">
-            <span className="text-[#757575]">
+          <div className="text-foreground text-base">
+            <span className="text-muted-foreground">
               @{logQuery.data?.profiles?.handle}
             </span>{" "}
             <div
@@ -246,7 +247,7 @@ export default function LogDetail({ logId }: { logId: string }) {
               ?.join(" ")}
           </div>
 
-          <div className="mt-1 text-sm text-[#757575]">
+          <div className="mt-1 text-sm text-muted-foreground">
             {format(
               new Date(logQuery.data?.created_at || ""),
               "yyyy년 MM월 dd일",

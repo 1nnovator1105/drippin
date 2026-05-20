@@ -50,6 +50,8 @@ export default function Timer({ recipeId }: { recipeId: string }) {
         JSON.parse(JSON.stringify(recipeQuery.data.raw_brewing_info)),
       );
     }
+    // 레시피 데이터 로드 시 1회 초기화 의도 → brewingInfo.length 의존성 의도적 제외
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipeQuery.data]);
 
   return (

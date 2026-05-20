@@ -58,7 +58,7 @@ export default function MyPage() {
     onSuccess: () => {
       alert("닉네임이 변경되었어요");
 
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      queryClient.invalidateQueries({ queryKey: ["drippin", "myProfile"] });
     },
     onError: (error) => {
       console.error(error);

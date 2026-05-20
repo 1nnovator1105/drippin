@@ -25,6 +25,7 @@ import { queryKeys } from "@/queries/queryKeys";
 import { fetchRecipeDetail } from "@/queries/recipe";
 import Spinner from "@/components/share/Spinner";
 import useSession from "@/hooks/useSession";
+import { invalidateRecipeQueries } from "@/utils/invalidate";
 
 export default function EditRecipe({ recipeId }: { recipeId: string }) {
   const supabase = useSupabaseBrowser();
@@ -136,6 +137,8 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
         }, 16);
       }
     }
+    // 매 렌더 새로 생성되는 default 옵션 배열을 의존성에 넣으면 루프 → 의도적 제외
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipeQuery.data]);
 
   const recipeEditMutation = useMutation({
@@ -169,7 +172,7 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
 
       alert("레시피가 수정되었어요!");
       router.push("/recipe");
-      queryClient.invalidateQueries({ queryKey: ["drippin"] });
+      invalidateRecipeQueries(queryClient);
     },
     onError: (error) => {
       alert(
@@ -406,6 +409,8 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
         router.push("/");
       }
     }
+    // 세션 사용자 변화에만 반응하는 리다이렉트 가드 → 나머지 의존성 의도적 제외
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mySessionQuery.data?.session?.user]);
 
   if (recipeQuery.isLoading) return <Spinner />;
@@ -717,7 +722,7 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-foreground border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(1)}
                 >
                   이전
@@ -864,7 +869,7 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-foreground border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(2)}
                 >
                   이전
@@ -918,6 +923,8 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
                       className="relative w-[70px] h-[70px] border-[1px] border-gray-300 rounded-md overflow-hidden"
                       onClick={resetImage}
                     >
+                      {/* 로컬 이미지 미리보기(70px)라 next/image 불필요 */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={selectedImage}
                         alt="선택된 이미지"
@@ -952,7 +959,7 @@ export default function EditRecipe({ recipeId }: { recipeId: string }) {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md bg-[#FFFFFF] text-[#1E1E1E] border-[#2C2C2C] flex-1"
+                  className="btn btn-md bg-[#FFFFFF] text-foreground border-[#2C2C2C] flex-1"
                   onClick={() => setCurrentPage(3)}
                 >
                   이전

@@ -68,6 +68,8 @@ const config = {
           foreground: "hsl(var(--brand-foreground))",
           soft: "hsl(var(--brand-soft))",
         },
+        ice: "hsl(var(--ice))",
+        hot: "hsl(var(--hot))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
