@@ -1,6 +1,6 @@
 import getQueryClient from "@/utils/getQueryClient";
 import LogDetail from "./LogDetail";
-import { useSupabaseServer } from "@/utils/supabase/server";
+import { getSupabaseServer } from "@/utils/supabase/server";
 import { queryKeys } from "@/queries/queryKeys";
 import { fetchSession } from "@/queries/session";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ export default async function LogDetailPage({
 }) {
   const { logId } = params;
   const queryClient = getQueryClient();
-  const supabase = useSupabaseServer();
+  const supabase = getSupabaseServer();
 
   await queryClient.prefetchQuery({
     queryKey: queryKeys.session(),

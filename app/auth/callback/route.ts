@@ -1,4 +1,4 @@
-import { useSupabaseServer } from "@/utils/supabase/server";
+import { getSupabaseServer } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const redirectTo = requestUrl.searchParams.get("redirect_to")?.toString();
 
   if (code) {
-    const supabase = useSupabaseServer();
+    const supabase = getSupabaseServer();
     await supabase.auth.exchangeCodeForSession(code);
   }
 
