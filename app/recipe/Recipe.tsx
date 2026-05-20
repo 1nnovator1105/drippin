@@ -1,8 +1,9 @@
 "use client";
 
 import useSupabaseBrowser from "@/utils/supabase/client";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import FetchMore from "@/components/share/FetchMore";
 import KakaoButton from "../auth/callback/kakao-button";
 import RecipeCard from "@/components/share/RecipeCard";
 import { useEffect } from "react";
@@ -25,10 +26,13 @@ export default function Recipe() {
     queryFn: () => fetchSession(supabase),
   });
 
-  const myRecipeQuery = useQuery({
+  const myRecipeQuery = useInfiniteQuery({
     queryKey: queryKeys.myRecipe(),
-    queryFn: () =>
-      fetchMyRecipe(supabase, mySessionQuery.data?.session?.user.id!),
+    queryFn: ({ pageParam }) =>
+      fetchMyRecipe(supabase, mySessionQuery.data?.session?.user.id!, pageParam),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage?.length ? allPages.length : undefined,
+    initialPageParam: 0,
     enabled: !!mySessionQuery.data?.session?.user.id,
   });
 
@@ -48,12 +52,19 @@ export default function Recipe() {
       <Header title="레시피" />
 
       <div className="flex flex-col w-full">
-        {myRecipeQuery.data?.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} summary />
-        ))}
+        {myRecipeQuery.data?.pages.map((recipes) =>
+          recipes?.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} summary />
+          )),
+        )}
+        <FetchMore
+          fetchNextPage={myRecipeQuery.fetchNextPage}
+          hasNextPage={myRecipeQuery.hasNextPage}
+          isError={myRecipeQuery.isError}
+        />
       </div>
 
-      {!myRecipeQuery.data?.length && (
+      {!myRecipeQuery.data?.pages?.[0]?.length && (
         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center">
           아직 작성된 레시피가 없어요
           <br />
