@@ -254,7 +254,7 @@ export default function LogAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn w-full bg-[#2C2C2C] text-[#F5F5F5]"
+                  className="btn w-full bg-brand text-brand-foreground"
                   onClick={() => setCurrentPage(2)}
                 >
                   다음
@@ -336,7 +336,7 @@ export default function LogAddPage() {
                 </button>
 
                 <button
-                  className="btn bg-[#2C2C2C] text-[#F5F5F5] flex-1"
+                  className="btn bg-brand text-brand-foreground flex-1"
                   onClick={handleSubmit}
                 >
                   게시하기

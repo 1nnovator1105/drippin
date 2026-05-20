@@ -358,7 +358,7 @@ export default function RecipeAddPage() {
             <div
               className={cn(
                 "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5] font-bold text-lg",
-                currentPage === 1 && "bg-black text-white",
+                currentPage === 1 && "bg-brand text-brand-foreground",
               )}
               onClick={() => setCurrentPage(1)}
             >
@@ -371,7 +371,7 @@ export default function RecipeAddPage() {
             <div
               className={cn(
                 "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5]  font-bold text-lg",
-                currentPage === 2 && "bg-black text-white",
+                currentPage === 2 && "bg-brand text-brand-foreground",
               )}
               onClick={() => setCurrentPage(2)}
             >
@@ -384,7 +384,7 @@ export default function RecipeAddPage() {
             <div
               className={cn(
                 "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5] font-bold text-lg",
-                currentPage === 3 && "bg-black text-white",
+                currentPage === 3 && "bg-brand text-brand-foreground",
               )}
               onClick={() => setCurrentPage(3)}
             >
@@ -397,7 +397,7 @@ export default function RecipeAddPage() {
             <div
               className={cn(
                 "w-[40px] h-[40px] rounded-full border-[1px] border-black bg-white flex justify-center items-center text-black z-[5] font-bold text-lg",
-                currentPage === 4 && "bg-black text-white",
+                currentPage === 4 && "bg-brand text-brand-foreground",
               )}
               onClick={() => setCurrentPage(4)}
             >
@@ -507,7 +507,7 @@ export default function RecipeAddPage() {
 
               <div className="fixed bottom-[88px] flex justify-between items-center w-full max-w-xl self-center gap-3 px-4">
                 <button
-                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
+                  className="btn btn-md bg-brand text-brand-foreground flex-1"
                   onClick={() => setCurrentPage(2)}
                 >
                   다음
@@ -657,7 +657,7 @@ export default function RecipeAddPage() {
                 </button>
 
                 <button
-                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
+                  className="btn btn-md bg-brand text-brand-foreground flex-1"
                   onClick={() => setCurrentPage(3)}
                 >
                   다음
@@ -804,7 +804,7 @@ export default function RecipeAddPage() {
                 </button>
 
                 <button
-                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
+                  className="btn btn-md bg-brand text-brand-foreground flex-1"
                   onClick={() => setCurrentPage(4)}
                 >
                   다음
@@ -892,7 +892,7 @@ export default function RecipeAddPage() {
                 </button>
 
                 <button
-                  className="btn btn-md bg-[#2C2C2C] text-[#F5F5F5] flex-1"
+                  className="btn btn-md bg-brand text-brand-foreground flex-1"
                   onClick={handleSubmit}
                 >
                   게시하기

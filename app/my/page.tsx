@@ -140,7 +140,7 @@ export default function MyPage() {
           <div className="label flex flex-row items-start justify-between items-center">
             <p className="label-text text-base">닉네임</p>
             <button
-              className="btn btn-sm btn-outline bg-black text-white"
+              className="btn btn-sm btn-outline bg-brand text-brand-foreground"
               onClick={updateHandle}
             >
               변경하기
