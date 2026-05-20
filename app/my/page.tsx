@@ -8,6 +8,7 @@ import LoginNudge from "@/components/auth/LoginNudge";
 import Spinner from "@/components/share/Spinner";
 import Header from "@/components/share/Header";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export default function MyPage() {
   const supabase = useSupabaseBrowser();
@@ -153,19 +154,30 @@ export default function MyPage() {
             onChange={onChangeNewHandle}
           />
         </label>
-      </div>
 
-      <div className="my-8">
-        <Link
-          className="block"
-          href="https://walla.my/drippin-user"
-          target="_blank"
-          onClick={preventClick}
-        >
-          <button className="w-full py-4 bg-[#F0F0F0] text-center text-lg font-semibold">
-            만족도 조사하고, 커피 받아가세요 ☕
-          </button>
-        </Link>
+        <div className="form-control w-full mt-4">
+          <div className="label flex flex-col items-start justify-start">
+            <p className="label-text text-base">설문조사</p>
+          </div>
+          <Link
+            className="block"
+            href="https://walla.my/drippin-user"
+            target="_blank"
+            onClick={preventClick}
+          >
+            <div className="flex items-center justify-between rounded-lg border border-border bg-brand-soft px-4 py-3">
+              <div className="flex flex-col">
+                <span className="font-semibold text-brand">
+                  만족도 조사하고 커피 받아가세요 ☕
+                </span>
+                <span className="text-xs text-muted-foreground mt-0.5">
+                  3분 설문 참여 시 추첨으로 블루보틀 기프티콘을 드려요
+                </span>
+              </div>
+              <ChevronRight className="size-5 shrink-0 text-brand" />
+            </div>
+          </Link>
+        </div>
       </div>
 
       <div className="fixed bottom-[88px] flex justify-center items-center w-full max-w-xl self-center">
