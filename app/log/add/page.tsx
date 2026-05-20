@@ -15,6 +15,8 @@ import CircleCloseIcon from "@/components/icon/CircleCloseIcon";
 import { logEvent } from "@/utils/analytics";
 import events from "@/utils/events";
 import RecipeSelector from "@/components/share/RecipeSelector.tsx";
+import LoginNudge from "@/components/auth/LoginNudge";
+import Spinner from "@/components/share/Spinner";
 
 export default function LogAddPage() {
   const supabase = useSupabaseBrowser();
@@ -168,16 +170,10 @@ export default function LogAddPage() {
     }
   }, [logDescription]);
 
-  useEffect(() => {
-    // 세션이 없으면 이전 페이지로 이동
-    if (mySessionQuery.isSuccess && !mySessionQuery.data?.session?.user) {
-      if (window.history.length > 1) {
-        router.back();
-      } else {
-        router.push("/");
-      }
-    }
-  }, [mySessionQuery.data?.session?.user]);
+  // 세션 확인 중에는 스피너, 비로그인 시에는 로그인 안내를 노출한다.
+  if (mySessionQuery.isLoading) return <Spinner />;
+
+  if (!mySessionQuery.data?.session) return <LoginNudge />;
 
   return (
     <div
