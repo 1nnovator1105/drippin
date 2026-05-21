@@ -1,220 +1,38 @@
-"use client";
+import getQueryClient from "@/utils/getQueryClient";
+import { getSupabaseServer } from "@/utils/supabase/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { queryKeys } from "@/queries/queryKeys";
+import { fetchSession } from "@/queries/session";
+import MyContent from "@/components/my/MyContent";
 
-import { toast } from "sonner";
+export default async function MyPage() {
+  const queryClient = getQueryClient();
+  const supabase = getSupabaseServer();
 
-import useSupabaseBrowser from "@/utils/supabase/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import LoginNudge from "@/components/auth/LoginNudge";
-import Spinner from "@/components/share/Spinner";
-import Header from "@/components/share/Header";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
-import useSession from "@/hooks/useSession";
-import MyStats from "@/components/my/MyStats";
-import { isHandleTaken } from "@/queries/profile";
+  const sessionData = await fetchSession(supabase);
+  queryClient.setQueryData(queryKeys.session(), sessionData);
 
-export default function MyPage() {
-  const supabase = useSupabaseBrowser();
+  // 로그인 상태면 프로필도 서버에서 미리 채워 클라 워터폴(세션→프로필) 제거
+  const userId = sessionData?.session?.user.id;
+  if (userId) {
+    await queryClient.prefetchQuery({
+      queryKey: ["drippin", "myProfile"],
+      queryFn: async () => {
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", userId)
+          .single();
+        return data;
+      },
+    });
+  }
 
-  const queryClient = useQueryClient();
-  const router = useRouter();
-
-  const [newHandle, setNewHandle] = useState<string | null>(null);
-
-  const mySessionQuery = useSession();
-
-  const myProfileQuery = useQuery({
-    queryKey: ["drippin", "myProfile"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", mySessionQuery.data?.session?.user.id!)
-        .throwOnError()
-        .single();
-
-      if (data?.handle) {
-        setNewHandle(data.handle);
-      }
-
-      return data;
-    },
-    enabled: !!mySessionQuery.data?.session?.user.id,
-  });
-
-  const updateHandleMutation = useMutation({
-    mutationFn: async (handle: string) => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .update({ handle: newHandle })
-        .eq("id", mySessionQuery.data?.session?.user.id!)
-        .throwOnError();
-
-      if (error) {
-        console.error(error);
-        throw error;
-      }
-
-      return data;
-    },
-    onSuccess: () => {
-      toast.success("닉네임이 변경되었어요");
-
-      queryClient.invalidateQueries({ queryKey: ["drippin", "myProfile"] });
-    },
-    onError: (error) => {
-      console.error(error);
-      toast.error("닉네임 변경에 실패했어요. 다시 시도해주세요.");
-    },
-  });
-
-  const updateHandle = async () => {
-    const userId = mySessionQuery.data?.session?.user.id;
-    if (!newHandle || !userId) return;
-
-    const taken = await isHandleTaken(supabase, newHandle, userId);
-    if (taken) {
-      toast.error("이미 사용 중인 닉네임이에요. 다른 닉네임을 입력해주세요.");
-      return;
-    }
-
-    updateHandleMutation.mutate(newHandle);
-  };
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    // all query invalidate
-    queryClient.invalidateQueries();
-  };
-
-  const onChangeNewHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewHandle(e.target.value);
-  };
-
-  const preventClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    window.open("https://walla.my/drippin-user", "_blank");
-  };
-
-  useEffect(() => {
-    if (myProfileQuery.data?.handle) {
-      setNewHandle(myProfileQuery.data.handle);
-    }
-  }, [myProfileQuery.data?.handle]);
-
-  if (mySessionQuery.isLoading) return <Spinner />;
-
-  if (!mySessionQuery.data?.session) return <LoginNudge />;
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <>
-      <Header title="내정보" />
-      <div className="px-4 py-2">
-        <Link
-          href={`/profile/${encodeURIComponent(
-            myProfileQuery.data?.handle ?? newHandle ?? "",
-          )}`}
-          className="mb-4 block"
-        >
-          <div className="flex items-center justify-between rounded-lg border border-border bg-brand-soft px-4 py-3">
-            <div className="flex flex-col">
-              <span className="font-semibold text-brand">
-                @{myProfileQuery.data?.handle ?? newHandle}
-              </span>
-              <span className="mt-0.5 text-xs text-muted-foreground">
-                내 프로필 보기
-              </span>
-            </div>
-            <ChevronRight className="size-5 shrink-0 text-brand" />
-          </div>
-        </Link>
-
-        {myProfileQuery.data?.user_name && (
-          <label className="form-control w-full">
-            <div className="label flex flex-col items-start justify-start">
-              <p className="label-text text-base">이름</p>
-            </div>
-            <input
-              type="text"
-              placeholder="이름"
-              className="input input-bordered w-full focus:outline-none"
-              value={myProfileQuery.data?.user_name || ""}
-              disabled
-              readOnly
-            />
-          </label>
-        )}
-
-        <label className="form-control w-full mt-4">
-          <div className="label flex flex-col items-start justify-start">
-            <p className="label-text text-base">이메일</p>
-          </div>
-          <input
-            type="text"
-            placeholder="이메일"
-            className="input input-bordered w-full focus:outline-none"
-            value={myProfileQuery.data?.email || ""}
-            readOnly
-            disabled
-          />
-        </label>
-
-        <label className="form-control w-full mt-4">
-          <div className="label flex flex-row items-start justify-between items-center">
-            <p className="label-text text-base">닉네임</p>
-            <button
-              className="btn btn-sm btn-outline bg-brand text-brand-foreground"
-              onClick={updateHandle}
-            >
-              변경하기
-            </button>
-          </div>
-          <input
-            type="text"
-            placeholder="닉네임"
-            className="input input-bordered w-full focus:outline-none"
-            value={newHandle || ""}
-            onChange={onChangeNewHandle}
-          />
-        </label>
-
-        <MyStats />
-
-        <div className="form-control w-full mt-4">
-          <div className="label flex flex-col items-start justify-start">
-            <p className="label-text text-base">설문조사</p>
-          </div>
-          <Link
-            className="block"
-            href="https://walla.my/drippin-user"
-            target="_blank"
-            onClick={preventClick}
-          >
-            <div className="flex items-center justify-between rounded-lg border border-border bg-brand-soft px-4 py-3">
-              <div className="flex flex-col">
-                <span className="font-semibold text-brand">
-                  만족도 조사하고 커피 받아가세요 ☕
-                </span>
-                <span className="text-xs text-muted-foreground mt-0.5">
-                  3분 설문 참여 시 추첨으로 블루보틀 기프티콘을 드려요
-                </span>
-              </div>
-              <ChevronRight className="size-5 shrink-0 text-brand" />
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      <div className="flex justify-center items-center py-8">
-        <button
-          className="btn btn-sm btn-outline border-[#999999] p-2 text-[#999999]"
-          onClick={handleSignOut}
-        >
-          로그아웃
-        </button>
-      </div>
-    </>
+    <HydrationBoundary state={dehydratedState}>
+      <MyContent />
+    </HydrationBoundary>
   );
 }
