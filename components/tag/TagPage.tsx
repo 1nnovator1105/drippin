@@ -25,21 +25,21 @@ export default function TagPage({ tag }: { tag: string }) {
 
   return (
     <div className="flex flex-col pb-[88px]">
-      <div className="border-b border-stone-200 bg-brand-soft px-4 pb-4 pt-2">
-        <button
-          aria-label="뒤로"
-          onClick={() => router.back()}
-          className="-ml-1.5 mb-1 flex size-8 items-center justify-center text-brand"
-        >
-          <ChevronLeft className="size-6" />
-        </button>
+      <div className="border-b border-stone-200 bg-brand-soft px-2 pb-3 pt-2">
         <div className="flex items-center gap-1.5">
-          <Tag className="size-5 text-brand" strokeWidth={2.5} />
-          <h1 className="text-xl font-bold tracking-tight text-brand">
+          <button
+            aria-label="뒤로"
+            onClick={() => router.back()}
+            className="flex size-8 shrink-0 items-center justify-center text-brand"
+          >
+            <ChevronLeft className="size-6" />
+          </button>
+          <Tag className="size-5 shrink-0 text-brand" strokeWidth={2.5} />
+          <h1 className="truncate text-lg font-bold tracking-tight text-brand">
             #{tag}
           </h1>
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-0.5 pl-[3.25rem] text-sm text-muted-foreground">
           이 태그가 담긴 일지
         </p>
       </div>
