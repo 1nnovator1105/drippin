@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 import LikeIcon from "@/components/icon/LikeIcon";
 import DefaultThumbnail from "@/components/share/DefaultThumbnail";
 import useSupabaseBrowser from "@/utils/supabase/client";
@@ -54,7 +56,7 @@ export default function LogDetail({ logId }: { logId: string }) {
     },
     onError: (error) => {
       console.error(error);
-      alert("로그 삭제에 실패했습니다.");
+      toast.error("로그 삭제에 실패했습니다.");
     },
   });
 
@@ -101,10 +103,9 @@ export default function LogDetail({ logId }: { logId: string }) {
     e.preventDefault();
 
     if (!mySessionQuery.data?.session) {
-      const isConfirm = confirm("로그인하시겠어요?");
-      if (isConfirm) {
-        router.push("/my");
-      }
+      toast("로그인이 필요해요", {
+      action: { label: "로그인", onClick: () => router.push("/my") },
+    });
       return;
     }
 
@@ -117,10 +118,9 @@ export default function LogDetail({ logId }: { logId: string }) {
 
   const editLog = () => {
     if (!mySessionQuery.data?.session) {
-      const isConfirm = confirm("로그인하시겠어요?");
-      if (isConfirm) {
-        router.push("/my");
-      }
+      toast("로그인이 필요해요", {
+      action: { label: "로그인", onClick: () => router.push("/my") },
+    });
       return;
     }
 
@@ -130,17 +130,16 @@ export default function LogDetail({ logId }: { logId: string }) {
 
   const deleteLog = () => {
     if (!mySessionQuery.data?.session) {
-      const isConfirm = confirm("로그인하시겠어요?");
-      if (isConfirm) {
-        router.push("/my");
-      }
+      toast("로그인이 필요해요", {
+      action: { label: "로그인", onClick: () => router.push("/my") },
+    });
       return;
     }
 
-    const deleteConfirm = confirm("정말로 삭제하시겠어요?");
-    if (!deleteConfirm) return;
-
-    deleteMutate.mutate();
+    toast("정말 삭제할까요?", {
+      action: { label: "삭제", onClick: () => deleteMutate.mutate() },
+      cancel: { label: "취소", onClick: () => {} },
+    });
   };
 
   if (logQuery.isLoading) return <Spinner />;

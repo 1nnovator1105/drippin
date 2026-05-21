@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { cn } from "@/utils/cn";
 import { useEffect, useRef, useState } from "react";
 
@@ -92,12 +94,12 @@ export default function RecipeAddPage() {
     onSuccess: () => {
       logEvent(events.submitAddRecipe);
 
-      alert("레시피가 게시되었어요!");
+      toast.success("레시피가 게시되었어요!");
       router.push("/recipe");
       invalidateRecipeQueries(queryClient);
     },
     onError: (error) => {
-      alert(
+      toast.error(
         "레시피가 게시되지 않았어요. 잠시 후 시도해주세요. 반복될 경우, 관리자에게 문의해주세요.",
       );
     },
@@ -141,7 +143,7 @@ export default function RecipeAddPage() {
           .upload(fileName, compressedFile);
 
         if (error) {
-          alert("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
+          toast.error("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
           return;
         }
 
@@ -150,7 +152,7 @@ export default function RecipeAddPage() {
         setImageUrl(publicUrl.data.publicUrl);
       }
     } catch (error) {
-      alert("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
+      toast.error("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
     }
   };
 
@@ -181,7 +183,7 @@ export default function RecipeAddPage() {
 
   const onChangeWaterAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) > 999) {
-      alert("물의 양은 최대 999g까지 입력할 수 있어요.");
+      toast.error("물의 양은 최대 999g까지 입력할 수 있어요.");
       return;
     }
     setWaterAmount(e.target.value);
@@ -189,7 +191,7 @@ export default function RecipeAddPage() {
 
   const onChangeWaterTemperature = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (Number(e.target.value) > 100) {
-      alert("물의 온도는 최대 100℃까지 입력할 수 있어요.");
+      toast.error("물의 온도는 최대 100℃까지 입력할 수 있어요.");
       return;
     }
     setWaterTemperature(e.target.value);
@@ -256,27 +258,27 @@ export default function RecipeAddPage() {
 
   const validateForSubmit = () => {
     if (!recipeName) {
-      alert("레시피 이름을 입력해주세요.");
+      toast.error("레시피 이름을 입력해주세요.");
       return false;
     }
 
     if (!coffeeAmount) {
-      alert("커피의 양을 입력해주세요.");
+      toast.error("커피의 양을 입력해주세요.");
       return false;
     }
 
     if (!waterAmount) {
-      alert("물의 양을 입력해주세요.");
+      toast.error("물의 양을 입력해주세요.");
       return false;
     }
 
     if (!waterTemperature) {
-      alert("물의 온도를 입력해주세요.");
+      toast.error("물의 온도를 입력해주세요.");
       return false;
     }
 
     if (!isIceRecipe && !isHotRecipe) {
-      alert("아이스와 핫 중 하나는 선택해주세요.");
+      toast.error("아이스와 핫 중 하나는 선택해주세요.");
       return false;
     }
 
@@ -286,11 +288,11 @@ export default function RecipeAddPage() {
     );
 
     if (noTimeBrewInfo.length > 0) {
-      alert("모든 시간을 입력해주세요.");
+      toast.error("모든 시간을 입력해주세요.");
       return false;
     }
     if (!recipeDescription) {
-      alert("레시피 설명을 입력해주세요.");
+      toast.error("레시피 설명을 입력해주세요.");
       return false;
     }
 
@@ -746,7 +748,7 @@ export default function RecipeAddPage() {
                         if (pourCount < 5) {
                           setPourCount(pourCount + 1);
                         } else {
-                          alert("물붓기는 최대 5번까지 가능해요.");
+                          toast.error("물붓기는 최대 5번까지 가능해요.");
                         }
                       }}
                     >

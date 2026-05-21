@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -56,13 +58,13 @@ export default function MyPage() {
       return data;
     },
     onSuccess: () => {
-      alert("닉네임이 변경되었어요");
+      toast.success("닉네임이 변경되었어요");
 
       queryClient.invalidateQueries({ queryKey: ["drippin", "myProfile"] });
     },
     onError: (error) => {
       console.error(error);
-      alert("닉네임 변경에 실패했어요. 다시 시도해주세요.");
+      toast.error("닉네임 변경에 실패했어요. 다시 시도해주세요.");
     },
   });
 

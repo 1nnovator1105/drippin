@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { cn } from "@/utils/cn";
 import {
   useIsMutating,
@@ -64,12 +66,12 @@ export default function LogAddPage() {
     onSuccess: () => {
       logEvent(events.submitAddLog);
 
-      alert("일지가 게시되었어요!");
+      toast.success("일지가 게시되었어요!");
       invalidateLogQueries(queryClient);
       router.push("/log");
     },
     onError: (error) => {
-      alert(
+      toast.error(
         "일지가 게시되지 않았어요. 잠시 후 시도해주세요. 반복될 경우, 관리자에게 문의해주세요.",
       );
     },
@@ -86,12 +88,12 @@ export default function LogAddPage() {
 
   const handleSubmit = () => {
     if (coffeeName === "" || coffeePlace === "" || coffeeTags === "") {
-      alert("커피 이름, 장소, 태그를 입력해주세요.");
+      toast.error("커피 이름, 장소, 태그를 입력해주세요.");
       return;
     }
 
     if (logDescription === "") {
-      alert("일지 내용을 입력해주세요.");
+      toast.error("일지 내용을 입력해주세요.");
       return;
     }
 
@@ -133,7 +135,7 @@ export default function LogAddPage() {
           .upload(fileName, compressedFile);
 
         if (error) {
-          alert("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
+          toast.error("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
           return;
         }
 
@@ -142,7 +144,7 @@ export default function LogAddPage() {
         setImageUrl(publicUrl.data.publicUrl);
       }
     } catch (error) {
-      alert("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
+      toast.error("이미지가 업로드되지 않았어요. 잠시 후 시도해주세요.");
     }
   };
 
