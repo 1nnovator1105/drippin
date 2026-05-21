@@ -180,7 +180,7 @@ export default function MyPage() {
         </div>
       </div>
 
-      <div className="fixed bottom-[88px] flex justify-center items-center w-full max-w-xl self-center">
+      <div className="flex justify-center items-center py-8">
         <button
           className="btn btn-sm btn-outline border-[#999999] p-2 text-[#999999]"
           onClick={handleSignOut}

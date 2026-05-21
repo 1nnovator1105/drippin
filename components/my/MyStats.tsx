@@ -66,7 +66,7 @@ export default function MyStats() {
 
         {stats.topPlaces.length > 0 && (
           <div>
-            <p className="mb-1 text-xs text-muted-foreground">자주 간 카페</p>
+            <p className="mb-1 text-xs text-muted-foreground">자주 마신 곳</p>
             <div className="flex flex-col gap-1">
               {stats.topPlaces.map((p) => (
                 <div
