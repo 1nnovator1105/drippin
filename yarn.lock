@@ -6134,18 +6134,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-daisyui@npm:^5.0.4":
-  version: 5.0.4
-  resolution: "react-daisyui@npm:5.0.4"
-  peerDependencies:
-    daisyui: ^4.12.10
-    react: ">=16"
-    react-dom: ">=16"
-    tailwindcss: ">=3.2.7"
-  checksum: 10c0/5c21767576387d06589a78557159c3ad1287235038e3416bfbc5ea93f00c97a5b72aba4c41278f922075892556293da8b1c01a90807ed7ed78ae70c023390dbb
-  languageName: node
-  linkType: hard
-
 "react-device-detect@npm:^2.2.3":
   version: 2.2.3
   resolution: "react-device-detect@npm:2.2.3"
@@ -6549,7 +6537,6 @@ __metadata:
     prettier: "npm:^3.3.3"
     react: "npm:18.2.0"
     react-countdown-circle-timer: "npm:^3.2.1"
-    react-daisyui: "npm:^5.0.4"
     react-device-detect: "npm:^2.2.3"
     react-dom: "npm:18.2.0"
     react-hook-form: "npm:^7.53.0"
