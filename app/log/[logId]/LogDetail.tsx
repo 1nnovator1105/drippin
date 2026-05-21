@@ -223,9 +223,14 @@ export default function LogDetail({ logId }: { logId: string }) {
           </div>
 
           <div className="text-foreground text-base">
-            <span className="text-muted-foreground">
+            <Link
+              href={`/profile/${encodeURIComponent(
+                logQuery.data?.profiles?.handle ?? "",
+              )}`}
+              className="text-muted-foreground hover:underline"
+            >
               @{logQuery.data?.profiles?.handle}
-            </span>{" "}
+            </Link>{" "}
             <div
               dangerouslySetInnerHTML={{
                 __html: logQuery.data?.content?.replace(/\n/g, "<br/>") || "",

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import useSession from "@/hooks/useSession";
 import MyStats from "@/components/my/MyStats";
+import { isHandleTaken } from "@/queries/profile";
 
 export default function MyPage() {
   const supabase = useSupabaseBrowser();
@@ -69,10 +70,17 @@ export default function MyPage() {
     },
   });
 
-  const updateHandle = () => {
-    if (newHandle) {
-      updateHandleMutation.mutate(newHandle);
+  const updateHandle = async () => {
+    const userId = mySessionQuery.data?.session?.user.id;
+    if (!newHandle || !userId) return;
+
+    const taken = await isHandleTaken(supabase, newHandle, userId);
+    if (taken) {
+      toast.error("이미 사용 중인 닉네임이에요. 다른 닉네임을 입력해주세요.");
+      return;
     }
+
+    updateHandleMutation.mutate(newHandle);
   };
 
   const handleSignOut = async () => {
@@ -104,6 +112,25 @@ export default function MyPage() {
     <>
       <Header title="내정보" />
       <div className="px-4 py-2">
+        <Link
+          href={`/profile/${encodeURIComponent(
+            myProfileQuery.data?.handle ?? newHandle ?? "",
+          )}`}
+          className="mb-4 block"
+        >
+          <div className="flex items-center justify-between rounded-lg border border-border bg-brand-soft px-4 py-3">
+            <div className="flex flex-col">
+              <span className="font-semibold text-brand">
+                @{myProfileQuery.data?.handle ?? newHandle}
+              </span>
+              <span className="mt-0.5 text-xs text-muted-foreground">
+                내 프로필 보기
+              </span>
+            </div>
+            <ChevronRight className="size-5 shrink-0 text-brand" />
+          </div>
+        </Link>
+
         {myProfileQuery.data?.user_name && (
           <label className="form-control w-full">
             <div className="label flex flex-col items-start justify-start">

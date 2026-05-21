@@ -267,9 +267,14 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
           </div>
 
           <div className="text-foreground text-base">
-            <span className="text-muted-foreground">
+            <Link
+              href={`/profile/${encodeURIComponent(
+                recipeQuery.data?.profiles?.handle ?? "",
+              )}`}
+              className="text-muted-foreground hover:underline"
+            >
               @{recipeQuery.data?.profiles?.handle}
-            </span>{" "}
+            </Link>{" "}
             <div
               dangerouslySetInnerHTML={{
                 __html: linkifyHtml(
