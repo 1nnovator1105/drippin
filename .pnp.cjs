@@ -69,7 +69,6 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.3.3"],\
           ["react", "npm:18.2.0"],\
           ["react-countdown-circle-timer", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:3.2.1"],\
-          ["react-daisyui", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.0.4"],\
           ["react-device-detect", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:2.2.3"],\
           ["react-dom", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:18.2.0"],\
           ["react-hook-form", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.53.0"],\
@@ -7963,40 +7962,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["react-daisyui", [\
-      ["npm:5.0.4", {\
-        "packageLocation": "../../../.yarn/berry/cache/react-daisyui-npm-5.0.4-4921e38460-10c0.zip/node_modules/react-daisyui/",\
-        "packageDependencies": [\
-          ["react-daisyui", "npm:5.0.4"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.0.4", {\
-        "packageLocation": "./.yarn/__virtual__/react-daisyui-virtual-09b20b3652/4/.yarn/berry/cache/react-daisyui-npm-5.0.4-4921e38460-10c0.zip/node_modules/react-daisyui/",\
-        "packageDependencies": [\
-          ["react-daisyui", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.0.4"],\
-          ["@types/daisyui", null],\
-          ["@types/react", "npm:18.2.46"],\
-          ["@types/react-dom", "npm:18.2.18"],\
-          ["@types/tailwindcss", null],\
-          ["daisyui", "npm:4.12.10"],\
-          ["react", "npm:18.2.0"],\
-          ["react-dom", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:18.2.0"],\
-          ["tailwindcss", "npm:3.4.1"]\
-        ],\
-        "packagePeers": [\
-          "@types/daisyui",\
-          "@types/react-dom",\
-          "@types/react",\
-          "@types/tailwindcss",\
-          "daisyui",\
-          "react-dom",\
-          "react",\
-          "tailwindcss"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["react-device-detect", [\
       ["npm:2.2.3", {\
         "packageLocation": "../../../.yarn/berry/cache/react-device-detect-npm-2.2.3-307eab666a-10c0.zip/node_modules/react-device-detect/",\
@@ -8489,7 +8454,6 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.3.3"],\
           ["react", "npm:18.2.0"],\
           ["react-countdown-circle-timer", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:3.2.1"],\
-          ["react-daisyui", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.0.4"],\
           ["react-device-detect", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:2.2.3"],\
           ["react-dom", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:18.2.0"],\
           ["react-hook-form", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.53.0"],\
