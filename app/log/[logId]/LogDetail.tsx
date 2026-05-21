@@ -238,17 +238,22 @@ export default function LogDetail({ logId }: { logId: string }) {
             />
           </div>
 
-          <div className="mt-1 text-sm">
+          <div className="mt-1 flex flex-wrap gap-x-2 text-sm">
             {logQuery.data?.tags
-              ?.split(" ")
-              ?.map((value) => {
-                if (value.startsWith("#")) {
-                  return value;
-                }
-
-                return `#${value}`;
-              })
-              ?.join(" ")}
+              ?.split(/\s+/)
+              .filter(Boolean)
+              .map((value) => {
+                const bare = value.replace(/^#/, "");
+                return (
+                  <Link
+                    key={value}
+                    href={`/tag/${encodeURIComponent(bare)}`}
+                    className="text-brand hover:underline"
+                  >
+                    #{bare}
+                  </Link>
+                );
+              })}
           </div>
 
           <div className="mt-1 text-sm text-muted-foreground">
