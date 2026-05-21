@@ -8,6 +8,7 @@ import useSupabaseBrowser from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useSession from "@/hooks/useSession";
 import { invalidateLogQueries } from "@/utils/invalidate";
+import { fetchLogDetail } from "@/queries/log";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
@@ -25,13 +26,7 @@ export default function LogDetail({ logId }: { logId: string }) {
   const logQuery = useQuery({
     queryKey: ["drippin", "log", logId],
     queryFn: async () => {
-      const { data } = await supabase
-        .from("logs")
-        .select(`*, profiles(handle, email), likes:logs_likes(*)`)
-        .eq("id", logId)
-        .eq("is_removed", false)
-        .maybeSingle();
-      return data;
+      return fetchLogDetail(supabase, logId);
     },
   });
 
@@ -203,7 +198,11 @@ export default function LogDetail({ logId }: { logId: string }) {
                 </svg>
               </div>
 
-              <div className="text-white">레시피 보러가기</div>
+              <div className="truncate px-2 text-white">
+                {logQuery.data?.recipes?.recipe_name
+                  ? `‘${logQuery.data.recipes.recipe_name}’ 레시피 보러가기`
+                  : "레시피 보러가기"}
+              </div>
             </Link>
           )}
         </div>

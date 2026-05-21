@@ -9,7 +9,7 @@ export const fetchRecipeDetail = async (
     const { data } = await supabaseClient
       .from("recipes")
       .select(
-        "*, profiles(handle, email), likes:recipes_likes(*), logs:logs(*)",
+        "*, profiles(handle, email), likes:recipes_likes(*), logs:logs(*, profiles(handle, email), likes:logs_likes(*))",
       )
       .eq("id", recipeId)
       .eq("is_removed", false)

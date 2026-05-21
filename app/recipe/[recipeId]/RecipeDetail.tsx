@@ -290,12 +290,20 @@ export default function RecipeDetail({ recipeId }: { recipeId: string }) {
         </div>
 
         <div className="mt-6 mb-3">
-          <div className="text-lg font-base text-foreground px-3">
+          <div className="px-3 text-lg font-base text-foreground">
             이 레시피를 사용한 일지
+            {!!recipeQuery.data?.logs?.length &&
+              ` (${recipeQuery.data.logs.length})`}
           </div>
-          {recipeQuery.data?.logs?.map((log) => (
-            <LogCard key={log.id} log={log} summary />
-          ))}
+          {recipeQuery.data?.logs?.length ? (
+            recipeQuery.data.logs.map((log) => (
+              <LogCard key={log.id} log={log} summary />
+            ))
+          ) : (
+            <div className="px-3 py-8 text-center text-sm text-muted-foreground">
+              아직 이 레시피로 작성된 일지가 없어요
+            </div>
+          )}
         </div>
       </div>
     </div>
