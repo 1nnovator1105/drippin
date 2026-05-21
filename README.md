@@ -1,224 +1,85 @@
-# Drippin - 드립커피 커뮤니티 플랫폼
+# ☕ Drippin — 드립커피 커뮤니티
 
-<p align="center">
-  <img src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png" alt="Drippin Logo" width="600">
-</p>
+> 드립커피의 **'레시피'와 '시음 일지'에 집중한 모바일 우선 커뮤니티.**
+> 레시피를 쉽게 **만들고 · 공유하고 · (타이머처럼) 재생**하고, 마신 커피를 인스타그램처럼 **가볍게 기록**한다.
 
-<p align="center">
-  드립커피를 사랑하는 사람들을 위한 레시피 공유 및 브루잉 로그 커뮤니티
-</p>
+🔗 **배포**: [drippin.vercel.app](https://drippin.vercel.app)
 
-<p align="center">
-  <a href="#주요-기능">주요 기능</a> •
-  <a href="#기술-스택">기술 스택</a> •
-  <a href="#시작하기">시작하기</a> •
-  <a href="#프로젝트-구조">프로젝트 구조</a> •
-  <a href="#개발-가이드">개발 가이드</a> •
-  <a href="#배포">배포</a>
-</p>
+---
 
 ## 📖 소개
 
-Drippin은 드립커피 애호가들이 자신만의 레시피를 공유하고, 브루잉 경험을 기록하며, 커피 커뮤니티와 소통할 수 있는 플랫폼입니다. Next.js 14와 Supabase를 기반으로 구축되어 실시간 데이터 동기화와 원활한 사용자 경험을 제공합니다.
+Drippin은 드립커피 애호가가 자신의 레시피를 공유하고, 브루잉 경험을 기록하는 플랫폼입니다.
+**코어는 "내 기록·재생 도구"**, 그 위에 검색·태그·프로필 같은 가벼운 커뮤니티를 얹는 구조입니다(토스증권 모델). 자세한 철학과 로드맵은 [`docs/`](./docs/)를 참고하세요.
 
 ## ✨ 주요 기능
 
-### 레시피 관리
-
-- **레시피 작성 및 공유**: 자신만의 드립커피 레시피를 상세하게 기록하고 공유
-- **단계별 브루잉 가이드**: 시간과 물의 양을 포함한 상세한 브루잉 단계 제공
-- **타이머 기능**: 각 브루잉 단계별 카운트다운 타이머 내장
-- **온보딩 플로우**: 레시피 따라하기를 위한 가이드 제공
-
-### 브루잉 로그
-
-- **일일 브루잉 기록**: 매일의 커피 브루잉 경험을 사진과 함께 기록
-- **레시피 연결**: 사용한 레시피와 로그를 연결하여 추적
-- **커뮤니티 피드**: 다른 사용자들의 브루잉 로그 탐색
-
-### 사용자 기능
-
-- **소셜 로그인**: Google, Kakao 계정을 통한 간편 로그인
-- **마이페이지**: 내 레시피와 로그 관리
-- **좋아요 시스템**: 마음에 드는 레시피와 로그에 좋아요 표시
-- **무한 스크롤**: 피드에서 끊김 없는 콘텐츠 탐색
-
-### UI/UX 특징
-
-- **모바일 최적화**: 모바일 퍼스트 디자인과 하단 탭 네비게이션
-- **실시간 업데이트**: Supabase 실시간 구독을 통한 즉각적인 데이터 동기화
-- **반응형 디자인**: 모든 디바이스에서 최적화된 경험 제공
+- **레시피**: 4단계 위저드로 작성 · 공유 · 편집 · 삭제, 그리고 **단계별 타이머로 추출 재생**(별도 타이머 앱 불필요)
+- **일지**: 사진과 함께 가볍게 기록 · 수정 · 삭제, 해시태그
+- **피드**: 홈에서 레시피/일지 탭 무한스크롤, 검색·필터·좋아요
+- **프로필 홈** (`/profile/[handle]`): 한 사용자의 레시피·일지 모음
+- **태그 페이지** (`/tag/[tag]`): 특정 태그가 담긴 일지 모음
+- **내 기록 요약** (`/my`): 이번 달 잔 수·누적·자주 마신 곳·6개월 추이
+- **소셜 로그인**: Google · Kakao
 
 ## 🛠 기술 스택
 
-### Frontend
+- **프레임워크**: Next.js 14 (App Router, RSC) / React 18 / TypeScript
+- **데이터·인증**: Supabase (`@supabase/ssr`) + `@supabase-cache-helpers`
+- **서버 상태**: TanStack React Query (피드/목록 `useInfiniteQuery` 무한스크롤)
+- **UI**: Tailwind CSS + daisyUI + shadcn/ui(Radix) + `lucide-react` + `next-themes`
+- **폼/입력**: `react-hook-form`, `react-select`, `browser-image-compression`
+- **레시피 재생**: `react-countdown-circle-timer`, `swiper`
+- **기타**: `sonner`(토스트), `recharts`(통계), Amplitude · Vercel Analytics
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript (Strict Mode)
-- **Styling**:
-  - Tailwind CSS
-  - shadcn/ui 컴포넌트
-  - DaisyUI
-- **State Management**:
-  - React Query (TanStack Query) - 서버 상태 관리
-  - React Hook Form - 폼 상태 관리
-
-### Backend & Infrastructure
-
-- **Database**: Supabase (PostgreSQL)
-- **Authentication**: Supabase Auth (OAuth - Google, Kakao)
-- **Real-time**: Supabase Realtime subscriptions
-- **Image Storage**: Supabase Storage + Next.js Image Optimization
-
-### Development Tools
-
-- **Package Manager**: Yarn 4.4.1
-- **Code Quality**: TypeScript, ESLint
-- **Type Generation**: Supabase CLI for database types
-- **Analytics**: Vercel Analytics
-- **Rich Text Editor**: Tiptap
-
-### Key Libraries
-
-- `@supabase/ssr`: 쿠키 기반 인증 관리
-- `@tanstack/react-query`: 데이터 페칭 및 캐싱
-- `react-countdown-circle-timer`: 타이머 UI
-- `browser-image-compression`: 이미지 최적화
-- `swiper`: 이미지 슬라이더
-- `next-scroll-restorer`: 스크롤 위치 복원
+> 전체 스택과 "왜 이 선택인지"는 [`docs/engineering/tech-stack.md`](./docs/engineering/tech-stack.md).
 
 ## 🚀 시작하기
 
-### 사전 요구사항
+```bash
+yarn install
+yarn dev          # localhost:3000
+```
 
-- Node.js 18.0 이상
-- Yarn 4.4.1
-- Supabase 계정 및 프로젝트
+필요 환경 변수(Supabase 프로젝트 URL/anon key 등)는 `.env.local`에 설정합니다.
+
+| 스크립트 | 설명 |
+|---|---|
+| `yarn dev` | 개발 서버 |
+| `yarn build` / `yarn start` | 프로덕션 빌드 / 서버 |
+| `yarn typecheck` | `tsc --noEmit` |
+| `yarn lint` | `next lint` |
+| `yarn supabase-gen-type` | Supabase DB 타입 생성 → `types/database.types.ts` |
+
+> 패키지 매니저는 **Yarn 4 (berry/PnP)**.
 
 ## 📁 프로젝트 구조
 
 ```
-drippin/
-├── app/                      # Next.js App Router 페이지
-│   ├── recipe/              # 레시피 관련 페이지
-│   │   ├── [recipeId]/      # 레시피 상세 페이지
-│   │   │   ├── edit/        # 레시피 수정
-│   │   │   ├── onboarding/  # 레시피 온보딩
-│   │   │   └── timer/       # 브루잉 타이머
-│   │   └── add/             # 레시피 추가
-│   ├── log/                 # 브루잉 로그 페이지
-│   │   ├── [logId]/         # 로그 상세
-│   │   └── add/             # 로그 추가
-│   ├── auth/                # 인증 관련
-│   │   └── callback/        # OAuth 콜백 처리
-│   ├── my/                  # 마이페이지
-│   └── page.tsx             # 홈 피드
-│
-├── components/              # React 컴포넌트
-│   ├── ui/                  # shadcn/ui 기본 컴포넌트
-│   ├── share/               # 공통 컴포넌트
-│   ├── recipe/              # 레시피 전용 컴포넌트
-│   ├── home/                # 홈 페이지 컴포넌트
-│   ├── nav/                 # 네비게이션
-│   ├── icon/                # 아이콘 컴포넌트
-│   └── providers/           # Context Providers
-│
-├── queries/                 # React Query 관련
-│   ├── queryKeys.ts         # 쿼리 키 관리
-│   ├── feed.ts              # 피드 데이터 페칭
-│   ├── recipe.ts            # 레시피 CRUD
-│   ├── log.ts               # 로그 CRUD
-│   └── session.ts           # 세션 관리
-│
-├── types/                   # TypeScript 타입 정의
-│   ├── database.types.ts    # Supabase 자동 생성 타입
-│   ├── brew.ts              # 브루잉 관련 타입
-│   └── TypedSupabaseClient.ts
-│
-├── utils/                   # 유틸리티 함수
-│   ├── supabase/           # Supabase 클라이언트
-│   │   ├── client.ts       # 브라우저 클라이언트
-│   │   ├── server.ts       # 서버 클라이언트
-│   │   └── middleware.ts   # 세션 미들웨어
-│   ├── analytics.ts        # Amplitude 분석
-│   └── getQueryClient.ts   # React Query 클라이언트
-│
-├── hooks/                   # 커스텀 React Hooks
-├── public/                  # 정적 파일
-└── styles/                  # 글로벌 스타일
+app/          # App Router 라우트 (서버 페이지 = 데이터 prefetch)
+components/    # home/ share/ nav/ recipe/ my/ profile/ tag/ auth/ ui/ icon/ providers/
+queries/       # 데이터 패칭 함수 + queryKeys + invalidate
+hooks/  utils/  constants/  types/  styles/  supabase/  public/
+docs/          # 기획(product) · 기술(engineering) · 정신(spirit) 문서
+ux-audit/      # UX 진단 산출물(스크린샷·리포트)
 ```
 
-## 💻 개발 가이드
+라우트 맵과 구현 패턴(서버/클라 경계, prefetch, 캐시 무효화)은 [`docs/engineering/architecture.md`](./docs/engineering/architecture.md)를 참고하세요.
 
-### 코딩 컨벤션
+## 📚 문서
 
-1. **Import 규칙**
+| 문서 | 내용 |
+|---|---|
+| [`docs/`](./docs/) | 문서 인덱스 |
+| [`docs/product/`](./docs/product/) | 개요 · 포지셔닝/로드맵 · 정보구조 |
+| [`docs/engineering/`](./docs/engineering/) | 기술 스택 · 아키텍처 · 컨벤션 |
+| [`docs/spirit/`](./docs/spirit/) | 변하지 않을 제품·디자인 정신 |
+| [`CLAUDE.md`](./CLAUDE.md) | 위 문서들의 요약 + 협업/작업 규칙 |
 
-   - 절대 경로 사용: `@/` prefix 활용
-   - 순서: React → 외부 라이브러리 → 내부 모듈
+## 🤝 기여
 
-2. **컴포넌트 구조**
-
-   - Server Components를 기본으로 사용
-   - Client Components는 필요한 경우에만 `'use client'` 지시문 사용
-   - 페이지 컴포넌트는 데이터 페칭에 집중
-   - 비즈니스 로직은 Feature 컴포넌트에 구현
-
-3. **Supabase 클라이언트 사용**
-
-   ```typescript
-   // Server Component에서
-   import { useSupabaseServer } from "@/utils/supabase/server";
-   const supabase = useSupabaseServer();
-
-   // Client Component에서
-   import useSupabaseBrowser from "@/utils/supabase/client";
-   const supabase = useSupabaseBrowser();
-   ```
-
-4. **React Query 패턴**
-
-   - 모든 서버 상태는 React Query로 관리
-   - Query Keys는 `queries/queryKeys.ts`에서 중앙 관리
-
-5. **타입 안전성**
-   - 모든 Supabase 작업에 `TypedSupabaseClient` 사용
-   - 데이터베이스 스키마 변경 시 타입 재생성 필수
-
-## 🚢 배포
-
-### Vercel 배포
-
-1. [Vercel](https://vercel.com)에 GitHub 저장소 연결
-2. 환경 변수 설정
-3. 자동 배포 설정 활성화
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/drippin)
-
-## 커밋 가이드
-
-1. Fork 후 feature 브랜치 생성
-2. 변경사항 커밋
-3. Pull Request 생성
-
-커밋 메시지 컨벤션:
-
-- `feat:` 새로운 기능
-- `fix:` 버그 수정
-- `docs:` 문서 수정
-- `style:` 코드 포맷팅
-- `refactor:` 코드 리팩토링
-- `test:` 테스트 추가
-- `chore:` 빌드 작업 등
-
-## 🔗 관련 링크
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Supabase Documentation](https://supabase.com/docs)
-- [React Query Documentation](https://tanstack.com/query/latest)
-- [Tailwind CSS](https://tailwindcss.com)
-- [shadcn/ui](https://ui.shadcn.com)
+브랜치(`feat-`/`fix-`/`docs-` …) → 한글 Conventional Commits → PR(`main` 대상, 변경/테스트 설명 포함). 자세한 규칙은 [`docs/engineering/conventions.md`](./docs/engineering/conventions.md).
 
 ---
 
-이 README 문서는 생성형 AI의 도움을 받아 작성되었습니다.
+_이 README는 생성형 AI의 도움을 받아 작성·갱신되었습니다._
