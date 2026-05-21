@@ -12,6 +12,7 @@ import Header from "@/components/share/Header";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import useSession from "@/hooks/useSession";
+import MyStats from "@/components/my/MyStats";
 
 export default function MyPage() {
   const supabase = useSupabaseBrowser();
@@ -151,6 +152,8 @@ export default function MyPage() {
             onChange={onChangeNewHandle}
           />
         </label>
+
+        <MyStats />
 
         <div className="form-control w-full mt-4">
           <div className="label flex flex-col items-start justify-start">
