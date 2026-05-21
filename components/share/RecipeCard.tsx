@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 import Image from "next/image";
 import LikeIcon from "../icon/LikeIcon";
 import TagChip from "./TagChip";
@@ -85,10 +87,9 @@ export default function RecipeCard({ recipe, summary }: RecipeCardProps) {
     e.preventDefault();
 
     if (!mySessionQuery.data?.session) {
-      const isConfirm = confirm("로그인하시겠어요?");
-      if (isConfirm) {
-        router.push("/my");
-      }
+      toast("로그인이 필요해요", {
+      action: { label: "로그인", onClick: () => router.push("/my") },
+    });
       return;
     }
 

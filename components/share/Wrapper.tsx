@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { init } from "@/utils/analytics";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/cn";
+import { Toaster } from "sonner";
 
 interface WrapperProps {
   children: React.ReactNode;
@@ -37,6 +38,7 @@ export default function Wrapper({ children }: WrapperProps) {
         {children}
       </div>
       {!hideBottomTabNav && <BottomTabNav />}
+      <Toaster position="top-center" richColors closeButton />
     </div>
   );
 }
