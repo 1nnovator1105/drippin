@@ -11,7 +11,7 @@ import RecipeCard from "@/components/share/RecipeCard";
 import LogCard from "@/components/share/LogCard";
 import FetchMore from "@/components/share/FetchMore";
 import Spinner from "@/components/share/Spinner";
-import BackIcon from "@/components/icon/BackIcon";
+import { ChevronLeft, User } from "lucide-react";
 import { cn } from "@/utils/cn";
 
 export default function ProfileHome({ handle }: { handle: string }) {
@@ -59,19 +59,21 @@ export default function ProfileHome({ handle }: { handle: string }) {
 
   return (
     <div className="flex flex-col pb-[88px]">
-      <div className="flex items-center gap-2 px-3 py-2">
+      {/* 프로필 헤더 */}
+      <div className="border-b border-stone-200 bg-brand-soft px-4 pb-4 pt-2">
         <button
           aria-label="뒤로"
           onClick={() => router.back()}
-          className="p-1"
+          className="-ml-1.5 mb-1 flex size-8 items-center justify-center text-brand"
         >
-          <BackIcon />
+          <ChevronLeft className="size-6" />
         </button>
-      </div>
-
-      {/* 프로필 헤더 */}
-      <div className="bg-brand-soft px-4 pb-4 pt-2">
-        <p className="text-xl font-bold text-brand">@{profile.handle}</p>
+        <div className="flex items-center gap-1.5">
+          <User className="size-5 text-brand" strokeWidth={2.5} />
+          <h1 className="text-xl font-bold tracking-tight text-brand">
+            @{profile.handle}
+          </h1>
+        </div>
         <p className="mt-1 text-sm text-muted-foreground">
           레시피 {profile.recipeCount} · 일지 {profile.logCount}
         </p>
