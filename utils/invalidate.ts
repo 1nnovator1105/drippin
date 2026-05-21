@@ -18,4 +18,5 @@ export const invalidateLogQueries = (queryClient: QueryClient) => {
   queryClient.invalidateQueries({ queryKey: queryKeys.logFeed() });
   queryClient.invalidateQueries({ queryKey: queryKeys.log() });
   queryClient.invalidateQueries({ queryKey: ["drippin", "logs", "my"] });
+  queryClient.invalidateQueries({ queryKey: ["drippin", "stats"] });
 };
