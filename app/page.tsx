@@ -13,17 +13,19 @@ export default async function Index() {
   const queryClient = getQueryClient();
   const supabase = getSupabaseServer();
 
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: queryKeys.recipeFeed(),
-    queryFn: ({ pageParam }) => fetchRecipeFeed(supabase, pageParam),
-    initialPageParam: 0,
-  });
-
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: queryKeys.logFeed(),
-    queryFn: ({ pageParam }) => fetchLogFeed(supabase, pageParam),
-    initialPageParam: 0,
-  });
+  // 두 피드 프리페치를 병렬로 — 순차 await로 인한 TTFB 지연 방지
+  await Promise.all([
+    queryClient.prefetchInfiniteQuery({
+      queryKey: queryKeys.recipeFeed(),
+      queryFn: ({ pageParam }) => fetchRecipeFeed(supabase, pageParam),
+      initialPageParam: 0,
+    }),
+    queryClient.prefetchInfiniteQuery({
+      queryKey: queryKeys.logFeed(),
+      queryFn: ({ pageParam }) => fetchLogFeed(supabase, pageParam),
+      initialPageParam: 0,
+    }),
+  ]);
 
   const dehydratedState = dehydrate(queryClient);
 
